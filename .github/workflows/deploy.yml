@@ -1,4 +1,4 @@
-name: CI
+name: Deploy to GH Pages
 
 on: [push]
 
@@ -12,6 +12,9 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+    - run: |
+        git config user.email "boot@github.com"
+        git config user.name "GH Actions Boot"
     - name: Install Dependencies
       run: yarn
     - name: Deploy to GH-Pages
