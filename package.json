@@ -1,6 +1,7 @@
 {
   "name": "js-challenge",
   "version": "0.1.0",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.19.1",
     "chart.js": "^2.9.3",
