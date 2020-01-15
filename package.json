@@ -4,6 +4,7 @@
   "dependencies": {
     "axios": "^0.19.1",
     "chart.js": "^2.9.3",
+    "gh-pages": "^2.2.0",
     "markdown-it": "^10.0.0",
     "prismjs": "^1.19.0",
     "react": "^16.12.0",
@@ -30,7 +31,9 @@
     "start": "yarn loadQuestions && react-scripts start",
     "build": "yarn loadQuestions && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,5 +49,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage": "https://EdGraVill.github.io/js-challenge"
 }
