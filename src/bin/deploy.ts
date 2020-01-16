@@ -1,6 +1,6 @@
 import * as ghpages from 'gh-pages';
 
-ghpages.publish('dist', {
+ghpages.publish('build', {
   repo: `https://${process.env.GH_TOKEN}@github.com/EdGraVill/js-challenge.git`,
   silent: true,
 }, (err) => {
