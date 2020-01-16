@@ -19,3 +19,5 @@ jobs:
       run: yarn
     - name: Deploy to GH-Pages
       run: yarn deploy
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}

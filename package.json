@@ -17,6 +17,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@types/chart.js": "^2.9.9",
+    "@types/gh-pages": "^2.0.1",
     "@types/jest": "^24.0.0",
     "@types/markdown-it": "^0.0.9",
     "@types/node": "^13.1.6",
@@ -34,7 +35,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npx ts-node -T --skip-project ./src/bin/deploy.ts"
   },
   "eslintConfig": {
     "extends": "react-app"

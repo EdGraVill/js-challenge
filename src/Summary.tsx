@@ -100,7 +100,7 @@ const Summary: React.FC<SummaryProps> = ({ safeAnswers }) => {
 
   return (
     <Container>
-      <Title>Your'e awesome!</Title>
+      <Title>You're awesome!</Title>
       <ChartContainer>
         {Canvas}
       </ChartContainer>
