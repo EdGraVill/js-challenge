@@ -1,12 +1,13 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import MarkdownIt from 'markdown-it';
 import { getAnswers } from './getQuestions';
-import { checkAnswersIntegrity } from './util';
-import CodeSnippet from './UI/CodeSnippet';
-import AnswerButton from './UI/AnswerButton';
-import Button from './UI/Button';
-import Explanation from './UI/Explanation';
+import { checkAnswersIntegrity } from '../util';
+import CodeSnippet from '../UI/CodeSnippet';
+import AnswerButton from '../UI/AnswerButton';
+import Button from '../UI/Button';
+import Explanation from './Explanation';
+import useLocalizedText from './useLocalizedText';
 
 const markdown = new MarkdownIt();
 
@@ -19,13 +20,15 @@ const Container = styled.article`
 `;
 
 const QuestionText = styled.h2`
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 2rem;
-  margin: 0;
-  max-width: 600px;
-  padding: 0;
-  text-align: center;
-  width: 90%;
+  ${({ theme: { fonts } }: { theme: Theme }) => css`
+    font-family: ${fonts.titles};
+    font-size: 1.5rem;
+    margin: 0;
+    max-width: 600px;
+    padding: 0;
+    text-align: center;
+    width: 90%;
+  `}
 `;
 
 const Options = styled.div`
@@ -61,6 +64,7 @@ const Question: React.FC<QuestionProps> = ({ goTo, questionIx, safeAnswersHook: 
   const [selected, setSelectedLow] = React.useState<number | null>(null);
   const [answer, setAnswer] = React.useState<{ rightAnswer: number, explanation: string[] } | null>(null);
   const explanationRef = React.useRef<HTMLDivElement>(null);
+  const l = useLocalizedText();
 
   const setSelected = (selection: number) => () => {
     if (checkAnswersIntegrity(safeAnswers)) {
@@ -97,7 +101,7 @@ const Question: React.FC<QuestionProps> = ({ goTo, questionIx, safeAnswersHook: 
 
   return <Container>
     <QuestionText>{question}</QuestionText>
-    <CodeSnippet code={problem} languaje="javascript" />
+    <CodeSnippet code={problem} language="javascript" />
     <Options>
       {options.map((option, ix) => (
         <AnswerButton
@@ -114,13 +118,13 @@ const Question: React.FC<QuestionProps> = ({ goTo, questionIx, safeAnswersHook: 
         disabled={questionIx === 0}
         onClick={goTo(questionIx - 1)}
       >
-        Previous
+        {l('question.previous')}
       </Button>
       <Button
         disabled={safeAnswers.find(([id]) => secureQuestion.id === id)![1] === null}
         onClick={goTo(questionIx + 1)}
       >
-        Next
+        {l('question.next')}
       </Button>
     </Actions>
     {answer && (

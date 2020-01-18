@@ -1,6 +1,4 @@
-import { randomBetween } from './util';
-
-const CURRENT_LANGUAJE = 'en-US';
+import { randomBetween } from '../util';
 
 const getTakens = (): Answer[] => {
   const takenRaw = localStorage.getItem('taken') || '[]';
@@ -30,11 +28,11 @@ const secureQuestion = (q: Question): SecureQuestion => {
   };
 };
 
-const getQuestions = async (): Promise<SecureQuestion[]> => {
+const getQuestions = async (currentLanguage: string): Promise<SecureQuestion[]> => {
   let taken = getTakens();
   taken = taken.filter(([ix, selected]) => selected !== null);
 
-  const { default: questions }: { default: Question[] } = await import(`./questions/${CURRENT_LANGUAJE}.json`);
+  const { default: questions }: { default: Question[] } = await import(`../questions/${currentLanguage}.json`);
 
   if (taken.length + 10 >= questions.length) {
     taken = taken.slice(Math.floor(taken.length * .3))
@@ -52,7 +50,7 @@ const getQuestions = async (): Promise<SecureQuestion[]> => {
   try {
     return selectedQuestions.map(secureQuestion);
   } catch (error) {
-    const newQuestions = await getQuestions();
+    const newQuestions = await getQuestions(currentLanguage);
 
     return newQuestions;
   }

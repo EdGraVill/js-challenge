@@ -1,0 +1,701 @@
+[
+  {
+    "answer": 3,
+    "explanation": [
+      "Unutar funkcije, najprije deklarišemo varijablu `name` s` var`\nključne riječi. To znači da se varijabla podiže (memorijski prostor je postavljen\ntijekom faze izrade) sa zadanom vrijednošću `undefined`,\ndok zapravo ne dođemo do linije gdje definiramo varijablu. Mi\njoš nismo definirali varijablu na liniji gdje pokušavamo prijaviti\nvarijabla `name`, tako da još uvijek sadrži vrijednost` undefined`.",
+      "Varijable s ključnom riječi `let` (i` const`) su podignute, ali za razliku od njih\n`var`, ne bivaju <i> inicijalizirane </i>. Nisu dostupni prije\nlinije na kojo ih proglašavamo (inicijaliziramo). To se naziva \"temporal dead zone\".\nKada pokušamo pristupiti varijablama prije nego što budu deklarirane,\nJavaScript iz bacuje `ReferenceError`."
+    ],
+    "id": 0,
+    "options": [
+      "\"Lydia\" i \"undefined\"",
+      "\"Lydia\" i \"ReferenceError\"",
+      "\"ReferenceError\" i \"21\"",
+      "`undefined` i` ReferenceError`"
+    ],
+    "problem": "function sayHi() {\n  console.log(name);\n  console.log(age);\n  var name = \"Lydia\";\n  let age = 21;\n}\n\nsayHi();\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Zbog reda događaja u JavaScriptu, povratni poziv `setTimeout`\nfunction se zove * nakon što je izvršena petlja. Od\nvarijabla `i` u prvoj petlji je deklarirana pomoću ključne riječi` var`,\nta je vrijednost bila globalna. Tijekom petlje povećavamo vrijednost `i`\nsvaki put '1', koristeći unarni operator `++`. Do vremena\nPozvana je function povratnog poziva `setTimeout`,` i` je bila jednaka `3` u\nu prvom primjeru.",
+      "U drugoj petlji, varijabla `i` je deklarirana pomoću` let`\nključna riječ: varijable deklarirane s ključnom riječi `let` (i` const`) su\nblock-scoped (blok je sve između `{}`). Tijekom svake iteracije,\n`i` će imati novu vrijednost, a svaka vrijednost će biti obuhvaćena unutar petlje."
+    ],
+    "id": 1,
+    "options": [
+      "`0 1 2` i` 0 1 2`",
+      "\"0 1 2\" i \"3 3 3\"",
+      "\"3 3 3\" i \"0 1 2\""
+    ],
+    "problem": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}\n\nfor (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Imajte na umu da je vrijednost \"promjera\" uobičajena function, dok je vrijednost promjera\nvrijednost \"perimetra\" je function strelice.",
+      "Sa functionma strelica, ključna riječ \"this\" odnosi se na njegovo trenutno\nokolno područje, za razliku od uobičajenih function! To znači kada\nnazovemo 'perimetar', ne odnosi se na objekt oblika, već na njegov\nokruženje (primjerice, prozor).",
+      "Na tom objektu nema vrijednosti `radius` koja vraća` undefined`."
+    ],
+    "id": 2,
+    "options": [
+      "\"20\" i \"62.83185307179586\"",
+      "\"20\" i \"NaN\"",
+      "\"20\" i \"63\"",
+      "\"NaN\" i \"63\""
+    ],
+    "problem": "const shape = {\n  radius: 10,\n  diameter() {\n    return this.radius * 2;\n  },\n  perimeter: () => 2 * Math.PI * this.radius\n};\n\nshape.diameter();\nshape.perimeter();\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Unary plus pokušava pretvoriti operand u broj. \"true\" je \"1\",\ni \"false\" je \"0\".",
+      "Niz '' Lydia '' je istinita vrijednost. Ono što zapravo tražimo jest\n\"je li ta istinita vrijednost lažna?\". Ovo vraća \"false\"."
+    ],
+    "id": 3,
+    "options": [
+      "\"1\" i \"false\"",
+      "\"false\" i \"NaN\"",
+      "\"false\" i \"false\""
+    ],
+    "problem": "+true;\n!\"Lydia\";\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "U JavaScriptu su svi key-evi objekta stringovi (osim ako to nije simbol). Čak\niako ih možda ne * upisujemo kao * nizove, oni se uvijek pretvaraju\nu String ispod \"haube\".",
+      "JavaScript tumači (ili odlaže) izjave. Kada koristimo zagradu\nnotacija, on vidi prvu otvarnu zagradu ```i nastavlja dalje do nje\npronalazi završnu zagradu `]`. Tek tada će procijeniti\nizjava.",
+      "`mouse [bird.size]`: Prvo procjenjuje `bird.size`, što je` `small``.\n`mouse [\" small \"]` vraća \"true\"",
+      "Međutim, s točkastom notacijom, to se ne događa. `miša 'nema a\nkey naziva se 'bird', što znači da je `mouse.bird`` undefined`. Zatim,\ntražimo \"veličinu\" koristeći točkovni zapis: `mouse.bird.size '. Od\n`mouse.bird` je` undefined`, zapravo pitamo `undefined.size`.\nTo nije valjano, a bit će u pitanju pogreška slična onoj\n`Cannot read property \"size\" of undefined`."
+    ],
+    "id": 4,
+    "options": [
+      "`mouse.bird.size 'nije valjan",
+      "`mouse [bird.size]` nije važeća",
+      "`miš [bird [\" veličina \"]]` nije važeća",
+      "Svi su valjani"
+    ],
+    "problem": "const bird = {\n  size: \"small\"\n};\n\nconst mouse = {\n  name: \"Mickey\",\n  small: true\n};\n",
+    "question": "Koja je istina?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "U JavaScriptu, svi objekti međusobno djeluju * referencom * kada ih postavljaju\njednaki.",
+      "Prvo, varijabla `c` sadrži vrijednost objekta. Kasnije dodijelimo `d`\ns istom referencom koju `c 'ima na objekt.",
+      "<img src = \"https://i.imgur.com/ko5k0fs.png\" width = \"200\">",
+      "Kada promijenite jedan objekt, mijenjate ih sve."
+    ],
+    "id": 5,
+    "options": [
+      "\"Zdravo\"",
+      "'Hej'",
+      "`undefined`",
+      "\"ReferenceError\"",
+      "`TypeError`"
+    ],
+    "problem": "let c = { greeting: \"Hey!\" };\nlet d;\n\nd = c;\nc.greeting = \"Hello\";\nconsole.log(d.greeting);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`new Number ()` je ugrađeni konstruktor function. Iako izgleda\nkao broj, to zapravo nije broj: ima gomilu ekstra dodataka\npa je zbog toga objekt.",
+      "Kada koristimo `==` operatora, on samo provjerava ima li isti\n*vrijednost*. Obje imaju vrijednost `3`, pa se vraća 'true'.",
+      "Međutim, kada koristimo `===` operator, obje vrijednosti * i * trebaju biti\nisto. To nije: `new Number ()` nije broj, to je ** objekt **.\nOba vraćaju \"false\""
+    ],
+    "id": 6,
+    "options": [
+      "`true`` false` `true`",
+      "`false`` false` `true`",
+      "`true`` false` `false`",
+      "`false`` true` `true`"
+    ],
+    "problem": "let a = 3;\nlet b = new Number(3);\nlet c = 3;\n\nconsole.log(a == b);\nconsole.log(a === b);\nconsole.log(b === c);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "function `colorChange` je statična. Namijenjene su statičkim metodama\nžive samo na konstruktoru u kojem su stvoreni i ne mogu biti proslijeđeni \nbilo kojem childu. Budući da je `freddie` child, function je\nnije proslijeđena, i nije dostupan na `freddie` instanci: a\nIzbačen je `TypeError`."
+    ],
+    "id": 7,
+    "options": [
+      "'narančasta'",
+      "\"ljubičasta\"",
+      "\"zelena\"",
+      "`TypeError`"
+    ],
+    "problem": "class Chameleon {\n  static colorChange(newColor) {\n    this.newColor = newColor;\n    return this.newColor;\n  }\n\n  constructor({ newColor = \"green\" } = {}) {\n    this.newColor = newColor;\n  }\n}\n\nconst freddie = new Chameleon({ newColor: \"purple\" });\nfreddie.colorChange(\"orange\");\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Zapisuje objekt, jer smo upravo stvorili prazan objekt na\nglobalni objekt! Kada smo pogrešno ukucali `pozdrav` kao` greeting`, JS\ninterpreter je zapravo to vidio kao `global.greeting = {}` (ili\n`window.greeting = {}` u pregledniku).",
+      "Kako bismo to izbjegli, možemo koristiti `` use strict ''. To osigurava to\nda ste deklarirali varijablu prije nego je postavite na bilo što."
+    ],
+    "id": 8,
+    "options": [
+      "`{}`",
+      "`ReferenceErrorgreetign nije definiran '",
+      "`undefined`"
+    ],
+    "problem": "let greeting;\ngreetign = {}; // Typo!\nconsole.log(greetign);\n\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "To je moguće u JavaScriptu, jer su funkcije objekti!\n(Sve osim primitivnih tipova su objekti)",
+      "function je posebna vrsta objekta. Kod koji sami napišete\nnije stvarna function. function je objekt sa svojstvima.\nOva nekretnina je nepovratna."
+    ],
+    "id": 9,
+    "options": [
+      "Ništa, ovo je u redu!",
+      "`SyntaxError`. Na ovaj način ne možete dodavati svojstva funkciji.",
+      "`undefined`",
+      "\"ReferenceError\""
+    ],
+    "problem": "function bark() {\n  console.log(\"Woof!\");\n}\n\nbark.animal = \"dog\";\n",
+    "question": "Što se događa kada to učinimo?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Ne možete dodati svojstva konstruktoru kao što možete s uobičajenim\nobjekti. Ako želite dodati značajku svim objektima odjednom, imate\numjesto toga koristiti prototip. Dakle, u ovom slučaju,",
+      "bi učinio `member.getFullName ()`. Zašto je to korisno? Reći će mo\nda smo tu metodu dodali samom konstruktoru. Možda ne svaki\nPrimjer \"Person\" trebao je ovu metodu. To bi trošilo puno memorije\nscopa (prostora), jer bi oni još uvijek imali tu svojinu, koja uzima memoriju\nscopa za svaku instancu. Umjesto toga, ako ga samo dodamo prototipu, mi\nće mo je imati na jednom mjestu u memoriji, ali svi imaju pristup!"
+    ],
+    "id": 10,
+    "options": [
+      "`TypeError`",
+      "`SyntaxError`",
+      "\"Lydia Hallie\"",
+      "`undefined`` undefined`"
+    ],
+    "problem": "function Person(firstName, lastName) {\n  this.firstName = firstName;\n  this.lastName = lastName;\n}\n\nconst member = new Person(\"Lydia\", \"Hallie\");\nPerson.getFullName = function() {\n  return `${this.firstName} ${this.lastName}`;\n};\n\nconsole.log(member.getFullName());\n",
+    "question": "Kakav je rezultat?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Za `sarah` nismo koristili ključnu riječ` new`. Kada koristite \"new\", to\nodnosi se na new prazni objekt koji stvaramo. Međutim, ako ne dodate\n`new` se odnosi na ** globalni objekt **!",
+      "Rekli smo da je \"this.ime\" jednako \"Sarah\" i `this.prezime`\njednak je \"Smithu\". Ono što smo zapravo učinili jest definiranje\n`global.ime = 'Sarah'` i` global.prezime =' Smith'`. `sarah`\nsam je ostavljen 'undefined'."
+    ],
+    "id": 11,
+    "options": [
+      "`Person {ime:\" Lydia \", prezime:\" Hallie \"} i` undefined`",
+      "`Person {ime:\" Lydia \", prezime:\" Hallie \"} i\n  `Person {ime:\" Sarah \", prezime:\" Smith \"}`",
+      "`Person {ime:\" Lydia \", prezime:\" Hallie \"}` i `{}`",
+      "`Person {ime:\" Lydia \", prezime:\" Hallie \"} i\n  `ReferenceError`"
+    ],
+    "problem": "function Person(firstName, lastName) {\n  this.firstName = firstName;\n  this.lastName = lastName;\n}\n\nconst lydia = new Person(\"Lydia\", \"Hallie\");\nconst sarah = Person(\"Sarah\", \"Smith\");\n\nconsole.log(lydia);\nconsole.log(sarah);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Tijekom ** capturing ** događaj prolazi kroz pretka\nelemente do ciljnog elementa. Zatim doseže ** target **\ni ** bubbling **.",
+      "<img src = \"https://i.imgur.com/N18oRgd.png\" width = \"200\">"
+    ],
+    "id": 12,
+    "options": [
+      "Target > Capturing > Bubbling",
+      "Bubbling > Target > Capturing",
+      "Target > Bubbling > Capturing",
+      "Capturing > Target > Bubbling"
+    ],
+    "problem": "",
+    "question": "Koje su tri faze propagiranja događaja?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Svi objekti imaju prototipove, osim ** osnovnog objekta **. Uporište\nobjekt ima pristup nekim metodama i svojstvima, kao što je `.toString`.\nTo je razlog zašto možete koristiti ugrađene JavaScript metode! Sve od\ntakve su metode dostupne na prototipu. Iako JavaScript ne može\npronaći ga izravno na vašem objektu, ide niz lanac prototipa i\nnalazi ga tamo, što ga čini dostupnim."
+    ],
+    "id": 13,
+    "options": [
+      "lažno",
+      ""
+    ],
+    "problem": "",
+    "question": "Svi objekti imaju prototipove."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "JavaScript je ** dinamički upisani jezik **: ne navodimo što\nvrste su određene varijable. Vrijednosti se mogu automatski pretvoriti u\ndrugi tip bez vašeg znanja, koji se zove * implicitni tip\nprisila *. ** Prisila ** pretvara iz jednog tipa u drugi.",
+      "U ovom primjeru JavaScript pretvara broj `1` u niz, u\nkako bi function imala smisla i vratila vrijednost. Tijekom\ndodavanje numeričkog tipa (`1`) i tipa niza (` '2'`), broja\nse tretira kao niz. Možemo slično spojiti\n\"\" Zdravo \"+\" Svijet \"`, tako da se ovdje događa ``````````````````\nvraća `\" 12 \"`."
+    ],
+    "id": 14,
+    "options": [
+      "\"NaN\"",
+      "`TypeError`",
+      "\"12\"",
+      "`3`"
+    ],
+    "problem": "function sum(a, b) {\n  return a + b;\n}\n\nsum(1, \"2\");\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "** postfix ** unarni operator `++`:",
+      "Vraća vrijednost (ovo vraća `0`)",
+      "Povećava vrijednost (broj je sada `1`)",
+      "** prefiks ** unary operator `++`:",
+      "Povećava vrijednost (broj je sada `2`)",
+      "Vraća vrijednost (ovo vraća `2`)",
+      "Ovo vraća `0 2 2`."
+    ],
+    "id": 15,
+    "options": [
+      "`1`` 1` `2`",
+      "`1`` 2` `2`",
+      "`0`` 2` `2`",
+      "`0`` 1` `2`"
+    ],
+    "problem": "let number = 0;\nconsole.log(number++);\nconsole.log(++number);\nconsole.log(number);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Ako koristite literale s oznakom predložaka, vrijednost prvog argumenta je\nuvijek niz vrijednosti vrijednosti niza. Preostali argumenti dobivaju\nvrijednosti prošlih izraza!"
+    ],
+    "id": 16,
+    "options": [
+      "`` Lydia` ``````````````````````````````````````",
+      "```````````````````````````````````````````````````````````````````````````",
+      "`` Lydia` ``````````````````````````````````````````````````````````"
+    ],
+    "problem": "function getPersonInfo(one, two, three) {\n  console.log(one);\n  console.log(two);\n  console.log(three);\n}\n\nconst person = \"Lydia\";\nconst age = 21;\n\ngetPersonInfo`${person} is ${age} years old`;\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Prilikom ispitivanja jednakosti, primitivi se uspoređuju prema njihovoj * vrijednosti *, dok\nobjekti se uspoređuju prema njihovoj * referenci *. JavaScript provjerava ako\nobjekti imaju referencu na isto mjesto u memoriji.",
+      "Dva predmeta koje uspoređujemo nemaju: objekt mi\nproslijeđeno kao parametar odnosi se na drugo mjesto u memoriji od\nobjekt koji smo koristili kako bismo provjerili jednakost.",
+      "Zato i `{age: 18} === {age: 18}` i\n`{age: 18} == {age: 18}` return `false '."
+    ],
+    "id": 17,
+    "options": [
+      "\"Vi ste odrasla osoba!\"",
+      "\"Vi ste još uvijek odrasla osoba.\"",
+      "'Hmm .. Nemam godina za koju pretpostavljam'"
+    ],
+    "problem": "function checkAge(data) {\n  if (data === { age: 18 }) {\n    console.log(\"You are an adult!\");\n  } else if (data == { age: 18 }) {\n    console.log(\"You are still an adult.\");\n  } else {\n    console.log(`Hmm.. You don't have an age I guess`);\n  }\n}\n\ncheckAge({ age: 18 });\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Operator spread (`... args`.) Vraća niz s argumentima.\narray je objekt, pa `typeof args` vraća` `objekt '`"
+    ],
+    "id": 18,
+    "options": [
+      "`\" broj \"",
+      "`` niz ''",
+      "`` objekt ''",
+      "\"NaN\""
+    ],
+    "problem": "\nfunction getAge(...args) {\n  console.log(typeof args);\n}\n\ngetAge(21);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Sa `` use strict '', možete se uvjeriti da nije slučajno\ndeklarisana globalna varijabla. Nikada nismo objavili varijablu \"age\" i\nbudući da koristimo `` use strict '', ona će načiniti referentnu pogrešku. Ako mi\nnije koristio \"\" strict \", to bi išlo od vlasništva\n`age` bi se dodao u globalni objekt."
+    ],
+    "id": 19,
+    "options": [
+      "`21`",
+      "`undefined`",
+      "\"ReferenceError\"",
+      "`TypeError`"
+    ],
+    "problem": "function getAge() {\n  \"use strict\";\n  age = 21;\n  console.log(age);\n}\n\ngetAge();\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`eval` procjenjuje kodove koji su prošli kao niz. Ako je to izraz,\nkao u ovom slučaju, on ocjenjuje izraz. Izraz je\n`10 * 10 + 5`. Ovo vraća broj \"105\"."
+    ],
+    "id": 20,
+    "options": [
+      "\"105\"",
+      "`\" 105 \"`",
+      "`TypeError`",
+      "`\" 10 * 10 + 5 \"`"
+    ],
+    "problem": "const sum = eval(\"10*10+5\");\n",
+    "question": "Što je vrijednost `suma '?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Podaci spremljeni u `sessionStorage` se uklanjaju nakon zatvaranja * tab *.",
+      "Ako ste koristili `localStorage`, podaci bi bili tamo zauvijek, osim ako\nna primjer, `localStorage.clear ()` je pozvan."
+    ],
+    "id": 21,
+    "options": [
+      "Kada korisnik zatvori karticu.",
+      "Kada korisnik zatvori cijeli preglednik, ne samo karticu.",
+      "Kada korisnik isključi svoje računalo."
+    ],
+    "problem": "sessionStorage.setItem(\"cool_secret\", 123);\n",
+    "question": "Koliko dugo je cool \\ _secret dostupan?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Pomoću ključne riječi `var` možete deklarirati više varijabli s istom\nIme. Varijabla će tada sadržavati zadnju vrijednost.",
+      "To ne možete učiniti s `let` ili` const` jer su blokirani."
+    ],
+    "id": 22,
+    "options": [
+      "`8`",
+      "\"10\"",
+      "`SyntaxError`",
+      "\"ReferenceError\""
+    ],
+    "problem": "var num = 8;\nvar num = 10;\n\nconsole.log(num);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Sve tipke objekta (osim simbola) su žice ispod haube, čak i ako\nne upisujete sami kao niz znakova. To je razlog zašto\n`obj.hasOwnProperty ('1')` također vraća true.",
+      "To ne radi tako za skup. U našem setu ne postoji \"1\":\n`set.has ('1')` vraća `false`. Ima numerički tip \"1\",\n`set.has (1)` vraća `true`."
+    ],
+    "id": 23,
+    "options": [
+      "`false`` true` `false`` true`",
+      "`false`` true` `true`` true`",
+      "`true`` true` `false`` true`",
+      "`true`` true` `true`` true`"
+    ],
+    "problem": "const obj = { 1: \"a\", 2: \"b\", 3: \"c\" };\nconst set = new Set([1, 2, 3, 4, 5]);\n\nobj.hasOwnProperty(\"1\");\nobj.hasOwnProperty(1);\nset.has(\"1\");\nset.has(1);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Ako imate dva ključa s istim imenom, ključ će biti zamijenjen. To\ni dalje će biti na prvom mjestu, ali s posljednjom navedenom vrijednošću."
+    ],
+    "id": 24,
+    "options": [
+      "`{a:\" jedan \", b:\" dva \"}`",
+      "`{b:\" dva \", a:\" tri \"}`",
+      "`{a:\" tri \", b:\" dva \"}`",
+      "`SyntaxError`"
+    ],
+    "problem": "const obj = { a: \"one\", b: \"two\", a: \"three\" };\nconsole.log(obj);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Kontekst izvršenja baze je kontekst globalnog izvršavanja: to je ono što je\ndostupno svugdje u vašem kodu."
+    ],
+    "id": 25,
+    "options": [
+      "lažno",
+      "to ovisi",
+      ""
+    ],
+    "problem": "",
+    "question": "Globalni kontekst izvođenja JavaScripta za vas stvara dvije stvari: globalni objekt i \"ovu\" ključnu riječ."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Izjava `continue` preskače iteraciju ako je određeno stanje\nvraća \"true\"."
+    ],
+    "id": 26,
+    "options": [
+      "`1`` 2`",
+      "`1`` 2` `3`",
+      "`1`` 2` `4`",
+      "`1`` 3` `4`"
+    ],
+    "problem": "for (let i = 1; i < 5; i++) {\n  if (i === 3) continue;\n  console.log(i);\n}\n\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`String 'je ugrađeni konstruktor, kojem možemo dodati svojstva. ja\nsamo je dodao metodu u svoj prototip. Primitivni nizovi su\nautomatski se pretvara u string objekt, generiran stringom\nprototipna function. Dakle, svi nizovi (objekti stringova) imaju pristup tome\nnačin!"
+    ],
+    "id": 27,
+    "options": [
+      "`` Već daj Lizijinu pizzu! ``",
+      "`TypeErrornije function`",
+      "`SyntaxError`",
+      "`undefined`"
+    ],
+    "problem": "String.prototype.giveLydiaPizza = () => {\n  return \"Just give Lydia pizza already!\";\n};\n\nconst name = \"Lydia\";\n\nname.giveLydiaPizza();\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Tipke objekta automatski se pretvaraju u nizove. Pokušavamo\npostavite objekt kao ključ za objekt \"a\", s vrijednošću \"123\".",
+      "Međutim, kada stringificiramo objekt, on postaje `` [Objekt objekt] '`. Tako\nono što ovdje govorimo je da je `a [\" Objekt objekt \"] = 123`. Onda, mi\nmože ponovno pokušati učiniti isto. \"c\" je još jedan objekt koji jesmo\nimplicitno ograničavaju. Dakle, `a [\" Objekt objekt \"] = 456`.",
+      "Zatim zapisujemo `a [b]`, što je zapravo `a [\" Objekt objekt \"]`. Upravo smo postavili\nda na `456`, tako da se vraća` 456`."
+    ],
+    "id": 28,
+    "options": [
+      "'123'",
+      "\"456\"",
+      "`undefined`",
+      "\"ReferenceError\""
+    ],
+    "problem": "const a = {};\nconst b = { key: \"b\" };\nconst c = { key: \"c\" };\n\na[b] = 123;\na[c] = 456;\n\nconsole.log(a[b]);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Imamo funkciju \"setTimeout\" i prvo je pozvali. Ipak, bio je prijavljen\nposljednji.",
+      "To je zato što u preglednicima nemamo samo runtime engine, mi\ntakođer imaju nešto što se zove \"WebAPI\". \"WebAPI\" nam daje\n`setTimeout` function za početak, i na primjer DOM.",
+      "Nakon što je * callback * preusmjeren na WebAPI, function `setTimeout`\nsam (ali ne i povratni poziv!) iskače iz stog.",
+      "<img src = \"https://i.imgur.com/X5wsHOg.png\" width = \"200\">",
+      "Sada se `foo` poziva i` `Prvo`` se bilježi.",
+      "<img src = \"https://i.imgur.com/Pvc0dGq.png\" width = \"200\">",
+      "`foo` je iskačen iz stog, i` baz` se poziva. \"Treći\" dobiva\nprijavljeni.",
+      "<img src = \"https://i.imgur.com/WhA2bCP.png\" width = \"200\">",
+      "WebAPI ne može jednostavno dodati stvari u stog kad god je spreman.\nUmjesto toga, on povlači funkciju povratnog poziva u nešto što se zove\n*red*.",
+      "<img src = \"https://i.imgur.com/NSnDZmU.png\" width = \"200\">",
+      "Ovo je mjesto gdje petlja događaja počinje raditi. ** ** krug događaja ** gleda\nred i red za zadatke. Ako je stog prazan, uzima prvi\nstvar u redu i gura je u stog.",
+      "<img src = \"https://i.imgur.com/uyiScAI.png\" width = \"200\">",
+      "`bar` se priziva,` `Second`` se bilježi, i on se pojavio\nstog."
+    ],
+    "id": 29,
+    "options": [
+      "`Prvi`` Drugi` `Treći`",
+      "`Prvi`` Treći` `Drugi`",
+      "`Drugi`` Prvi` `Treći`",
+      "`Drugi`` Treći` `Prvi`"
+    ],
+    "problem": "const foo = () => console.log(\"First\");\nconst bar = () => setTimeout(() => console.log(\"Second\"));\nconst baz = () => console.log(\"Third\");\n\nbar();\nfoo();\nbaz();\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Najdublji ugniježđeni element koji je uzrokovao događaj je cilj\ndogađaj. Možete zaustaviti mjehuriće 'event.stopPropagation'"
+    ],
+    "id": 30,
+    "options": [
+      "Vanjski 'div'",
+      "Unutarnji 'div'",
+      "`gumb '",
+      "Niz svih ugniježđenih elemenata."
+    ],
+    "problem": "\n<div onclick=\"console.log('first div')\">\n  <div onclick=\"console.log('second div')\">\n    <button onclick=\"console.log('button')\">\n      Click!\n    </button>\n  </div>\n</div>\n\n",
+    "question": "Što je event.target kada kliknete na gumb?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Ako kliknemo `p`, vidimo dva zapisa:` p` i `div`. Tijekom događaja\nrazmnožavanje, postoje 3 faze: hvatanje, ciljanje i mjehuriće. Po\nzadani, rukovatelji događaja izvršavaju se u fazi mjehurića (osim ako vi\npostavite `useCapture` na` true`). Ide od najdubljih ugniježđenih elemenata\nvan."
+    ],
+    "id": 31,
+    "options": [
+      "`p`` div`",
+      "`div`` p`",
+      "p",
+      "\"div\""
+    ],
+    "problem": "<div onclick=\"console.log('div')\">\n  <p onclick=\"console.log('p')\">\n    Click here!\n  </p>\n</div>\n",
+    "question": "Kada kliknete na paragraf, što je zapisani izlaz?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "S oba, možemo proslijediti objekt kojem želimo ključnu riječ \"this\"\nodnosi se na. Međutim, `.call` se također * izvršava odmah *!",
+      "`.bind.` vraća * copy * funkcije, ali s vezanim kontekstom! To\nse ne izvršava odmah."
+    ],
+    "id": 32,
+    "options": [
+      "`undefined is 21`` Lydia je 21`",
+      "function funkcije",
+      "`Lydia je 21`` Lydia je 21`",
+      "`Lydia je 21`` function`"
+    ],
+    "problem": "const person = { name: \"Lydia\" };\n\nfunction sayHi(age) {\n  console.log(`${this.name} is ${age}`);\n}\n\nsayHi.call(person, 21);\nsayHi.bind(person, 21);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "function `sayHi` vraća vraćenu vrijednost odmah\npozvana function (IIFE). Ova function vratila je `0`, što je tip\n` \"Broj\"`.",
+      "FYI: postoji samo 7 ugrađenih tipova: `null`,` undefined`, `boolean`,\n\"broj\", \"niz\", \"objekt\" i \"simbol\". `` function '' nije tip,\nbudući da su funkcije objekti, to je tipa `` objekta '`."
+    ],
+    "id": 33,
+    "options": [
+      "`\" objekt \"`",
+      "`\" broj \"",
+      "function \"\"",
+      "`\" undefined \"`"
+    ],
+    "problem": "function sayHi() {\n  return (() => 0)();\n}\n\ntypeof sayHi();\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Postoji samo šest krivotvorenih vrijednosti:",
+      "`undefined`",
+      "\"null\"",
+      "\"NaN\"",
+      "`0`",
+      "`''` (prazan niz)",
+      "\"false\"",
+      "Konstruktori function, kao što su 'new Number' i 'new Boolean' su istiniti."
+    ],
+    "id": 34,
+    "options": [
+      "`0`,` ```,` undefined`",
+      "`0`,` new Number (0) `,` '' `,` new Boolean (false) `,` undefined '",
+      "`0`,` '' `,` new Boolean (false) `,` undefined`",
+      "Svi su oni lažni"
+    ],
+    "problem": "0;\nnew Number(0);\n(\"\");\n(\" \");\nnew Boolean(false);\nundefined;\n",
+    "question": "Koja od ovih vrijednosti su neistinite?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`typeof 1` vraća` `broj ''. `typeof\" number \"` return `` string \"`"
+    ],
+    "id": 35,
+    "options": [
+      "`\" broj \"",
+      "niz \"\"",
+      "`` objekt ''",
+      "`\" undefined \"`"
+    ],
+    "problem": "console.log(typeof typeof 1);\n\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Kada postavite vrijednost na element u nizu koji premašuje duljinu\niz niza, JavaScript stvara nešto što se naziva \"prazni utori\". To\nzapravo imaju vrijednost `undefined`, ali vidjet ćete nešto poput:",
+      "`[1, 2, 3, 7 x prazno, 11]`",
+      "ovisno o tome gdje ga pokrećete (razlikuje se za svaki preglednik, čvor,\nitd)"
+    ],
+    "id": 36,
+    "options": [
+      "`[1, 2, 3, 7 x null, 11]`",
+      "`[1, 2, 3, 11]`",
+      "`[1, 2, 3, 7 x prazno, 11]`",
+      "`SyntaxError`"
+    ],
+    "problem": "const numbers = [1, 2, 3];\nnumbers[10] = 11;\nconsole.log(numbers);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Blok `catch` prima argument` x`. To nije isti `x` kao\nvarijablu kada proslijedimo argumente. Ova varijabla `x` je blokirana.",
+      "Kasnije smo postavili ovu varijablu bloka koja je jednaka `1` i postavili vrijednost\nvarijable `y '. Sada, zapisujemo blok-scoped varijablu `x`, koja je\njednako \"1\".",
+      "Izvan 'catch' bloka, `x 'je i dalje` undefined`, a `y` je` 2`.\nKada želimo `console.log (x)` izvan `catch` bloka, to\nvraća `undefined` i` y` vraća `2`."
+    ],
+    "id": 37,
+    "options": [
+      "`1`` undefined `` 2`",
+      "`undefined`` undefined` `undefined`",
+      "`1`` 1` `2`",
+      "`1`` undefined` `undefined`"
+    ],
+    "problem": "(() => {\n  let x, y;\n  try {\n    throw new Error();\n  } catch (x) {\n    (x = 1), (y = 2);\n    console.log(x);\n  }\n  console.log(x);\n  console.log(y);\n})();\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "JavaScript ima samo primitivne tipove i objekte.",
+      "Primitivni tipovi su \"boolean\", \"null\", \"undefined\", \"bigint\", \"number\",\n'string' i 'simbol'.",
+      "Ono što razlikuje primitiv od objekta je to što primitivci to ne čine\nimaju bilo kakva svojstva ili metode; međutim, to ćete primijetiti\n`'foo'.toUpperCase ()` vrednuje za' 'FOO'` i ne rezultira a\n`TypeError`. To je zato što kada pokušate pristupiti svojstvu ili metodi\nna primitivnom poput stringa, JavaScript će implicitet omotati objekt\nkoristeći jednu od klasa omotača, tj. `String ', a zatim odmah\nodbacite omotač nakon što se izraz procijeni. Svi primitivci\nosim \"null\" i \"undefined\" pokazuju ovo ponašanje."
+    ],
+    "id": 38,
+    "options": [
+      "primitivni ili objektni",
+      "function ili objekt",
+      "trik pitanje! samo objekti",
+      "broj ili objekt"
+    ],
+    "problem": "",
+    "question": "Sve u JavaScriptu je ili ..."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "\"[1, 2]\" je naša početna vrijednost. To je vrijednost s kojom počinjemo i\nvrijednost prvog `acc`. Tijekom prvog kruga, \"acc\" je \"[1,2]\",\ni `cur` je` [0, 1] `. Spojimo ih, što rezultira\n`[1, 2, 0, 1]`.",
+      "Tada je `[1, 2, 0, 1]` `acc` i` [2, 3] `````. Ulančavamo se\ni dobiti `[1, 2, 0, 1, 2, 3]`"
+    ],
+    "id": 39,
+    "options": [
+      "`[0, 1, 2, 3, 1, 2]`",
+      "`[6, 1, 2]`",
+      "\"[1, 2, 0, 1, 2, 3]\"",
+      "`[1, 2, 6]`"
+    ],
+    "problem": "[[0, 1], [2, 3]].reduce(\n  (acc, cur) => {\n    return acc.concat(cur);\n  },\n  [1, 2]\n);\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`null` je lažan. `! null` vraća 'true'. `! true 'vraća\" false \".",
+      "```` je neistinit. `!\" `` vraća `true '. `! true 'vraća\" false \".",
+      "\"1\" je istina. `! 1` vraća 'false'. `! false 'vraća' true '."
+    ],
+    "id": 40,
+    "options": [
+      "`false`` true` `false`",
+      "`false`` false` `true`",
+      "`false`` true` `true`",
+      "`true`` true` `false`"
+    ],
+    "problem": "!!null;\n!!\"\";\n!!1;\n",
+    "question": "Što je izlaz?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Vraća jedinstveni ID. Taj se ID može koristiti za brisanje tog intervala\n`clearInterval ()` function."
+    ],
+    "id": 41,
+    "options": [
+      "jedinstveni ID",
+      "određena količina milisekundi",
+      "prošla function",
+      "`undefined`"
+    ],
+    "problem": "setInterval(() => console.log(\"Hi\"), 1000);\n",
+    "question": "Što se vraća metoda `setInterval`?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Niz je iterabilan. Operator širenja mapira svaki znak\niterabilan na jedan element."
+    ],
+    "id": 42,
+    "options": [
+      "`[\" L \",\" y \",\" d \",\" i \",\" a \"]`",
+      "`[\" Lydia \"]`",
+      "`[[],\" Lydia \"]`",
+      "`[[\" L \",\" y \",\" d \",\" i \",\" a \"]]`"
+    ],
+    "problem": "[...\"Lydia\"];\n",
+    "question": "Što se to vraća?"
+  }
+]

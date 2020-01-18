@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { Chart } from 'chart.js';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { SettingsContext, themes } from '../util';
+import useLocalizedText from './useLocalizedText';
 
 const Container = styled.article`
   align-items: center;
@@ -17,22 +19,26 @@ const ChartContainer = styled.div`
 `;
 
 const Text = styled.p`
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 1.1rem;
-  line-height: 2rem;
-  margin: 0 0 5rem;
-  text-align: center;
-  width: 90%;
+  ${({ theme: { fonts } }: { theme: Theme }) => css`
+    font-family: ${fonts.titles};
+    font-size: 1.1rem;
+    line-height: 2rem;
+    margin: 0 0 5rem;
+    text-align: center;
+    width: 90%;
+  `}
 `;
 
 const Title = styled.h2`
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 2rem;
-  margin: 0;
-  max-width: 600px;
-  padding: 0;
-  text-align: center;
-  width: 90%;
+  ${({ theme: { fonts } }: { theme: Theme }) => css`
+    font-family: ${fonts.titles};
+    font-size: 2rem;
+    margin: 0;
+    max-width: 600px;
+    padding: 0;
+    text-align: center;
+    width: 90%;
+  `}
 `;
 
 interface SummaryProps {
@@ -42,6 +48,7 @@ interface SummaryProps {
 const useChart = (): [React.FunctionComponentElement<any>, (right: number) => void, Chart] => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const [chart, setChart] = React.useState<Chart | null>(null);
+  const currentTheme = React.useContext(SettingsContext);
 
   React.useEffect(() => {
     if (canvasRef.current && chart === null) {
@@ -52,8 +59,8 @@ const useChart = (): [React.FunctionComponentElement<any>, (right: number) => vo
           datasets: [{
             data: [10, 0],
             backgroundColor: [
-              '#dedede',
-              '#008272',
+              themes[currentTheme.theme].colors.inlineCodeBackground,
+              themes[currentTheme.theme].colors.right,
             ],
           }],
         },
@@ -71,7 +78,7 @@ const useChart = (): [React.FunctionComponentElement<any>, (right: number) => vo
         },
       }));
     }
-  }, [chart]);
+  }, [chart, currentTheme.theme]);
 
   const updateData = React.useCallback((right: number) => {
     if (chart) {
@@ -91,6 +98,7 @@ const useChart = (): [React.FunctionComponentElement<any>, (right: number) => vo
 
 const Summary: React.FC<SummaryProps> = ({ safeAnswers }) => {
   const goods = safeAnswers.filter(([_1, _2, isRight]) => isRight).length;
+  const l = useLocalizedText();
 
   const [Canvas, updateData] = useChart();
 
@@ -100,11 +108,11 @@ const Summary: React.FC<SummaryProps> = ({ safeAnswers }) => {
 
   return (
     <Container>
-      <Title>You're awesome!</Title>
+      <Title>{l('summary.title')}</Title>
       <ChartContainer>
         {Canvas}
       </ChartContainer>
-      <Text>{goods}/10 - You can go to specific question and see the explanation</Text>
+      <Text>{goods}{l('summary.body')}</Text>
     </Container>
   );
 };

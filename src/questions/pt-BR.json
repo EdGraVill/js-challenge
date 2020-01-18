@@ -1,0 +1,821 @@
+[
+  {
+    "answer": 3,
+    "explanation": [
+      "Dentro da função, nós primeiro declaramos a variável `name` usando a palavra-chave `var`. Isso significa que a variavel é elevada(hoisted) (O espaço na memória é separado durante a fase de criação) com o valor padrão `undefined`, até que chegue na linha onde definimos a variável. Ainda não definimos a variável na linha onde tentamos usar colocar no log o valor da variável `name`, portanto ela ainda tem o valor `undefined`.",
+      "Variáveis com a palavra-chave `let` (e `const`) são elevadas, mas diferente de `var`, não são <i>inicializadas</i>. Elas não acessíveis antes da linha em que as declaramos (ou inicializamos). Esse é um conceito chamado de \"temporal dead zone\". Quando tentamos acessar essas variáveis antes de serem declaradas, o JavaScript lança um `ReferenceError`"
+    ],
+    "id": 0,
+    "options": [
+      "`Lydia` e `undefined`",
+      "`Lydia` e `ReferenceError`",
+      "`ReferenceError` e `21`",
+      "`undefined` e `ReferenceError`"
+    ],
+    "problem": "function sayHi() {\n  console.log(name);\n  console.log(age);\n  var name = \"Lydia\";\n  let age = 21;\n}\n\nsayHi();\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Por causa da fila de eventos em JavaScript, a callback de `setTimeout` é chamada <i>depois</i> do laço ter sido executado. Já que a variável `i` no primeiro laço foi declarada usando a palavra-chave `var`, seu valor era global. Durante o laço, incrementamos o valor de `i` por `1` em cada repetição, usando o operador unário `++`. Quando a callback de `setTimeout` foi chamada, `i` valia `3`.",
+      "No segundo laço, a variável `i` foi declarada usando a palavra-chave `let`: Variáveis declaradas com `let` (e `const`) só são acessíveis nos escopos de seus blocos (um bloco é qualquer código entre `{ }`). Durante cada repetição do laço, `i` vai ter um novo valor, e cada valor tem seu escopo dentro do laço."
+    ],
+    "id": 1,
+    "options": [
+      "`0 1 2` e `0 1 2`",
+      "`0 1 2` e `3 3 3`",
+      "`3 3 3` e `0 1 2`"
+    ],
+    "problem": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}\n\nfor (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Perceba que o valor de `diameter` é uma função normal, enquanto que o valor de `perimeter` é uma arrow function.",
+      "Com arrow functions, a palavra-chave `this` faz referência ao escopo atual em que está inserida, diferente de funções normais! Isso significa que quando nós chamamos `perimeter`, ela não faz referência ao objeto <i>shape</i>, mas ao seu escopo atual (por exemplo, <i>window</i>).",
+      "Não há `radius` fora de <i>shape</i>, então retorna `undefined`."
+    ],
+    "id": 2,
+    "options": [
+      "`20` e `62.83185307179586`",
+      "`20` e `NaN`",
+      "`20` e `63`",
+      "`NaN` e `63`"
+    ],
+    "problem": "const shape = {\n  radius: 10,\n  diameter() {\n    return this.radius * 2;\n  },\n  perimeter: () => 2 * Math.PI * this.radius\n};\n\nshape.diameter();\nshape.perimeter();\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "O operador unário `+` tenta converter um operando para um número. `true` é `1`, e `false` é `0`.",
+      "A string `'Lydia'` tem valor truthy*. O que estamos realmente perguntando é \"Esse valor truthy é falsy?\". Isso retorna `false`."
+    ],
+    "id": 3,
+    "options": [
+      "`1` and `false`",
+      "`false` and `NaN`",
+      "`false` and `false`"
+    ],
+    "problem": "+true;\n!\"Lydia\";\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "No JavaScript, todas chaves dos objetos são strings (a não ser que sejam um símbolo). Ainda que não possamos <i>digitá-las</i> como strings, elas são sempre convertidas para string sob o capô.",
+      "JavaScript interpreta afirmações. Quando usamos a notação de colchetes, ele vê o colchete de abertura `[` e continua lendo até encontrar o colchete que o fecha `]`. Só então vai avaliar e rodar as afirmações.",
+      "`mouse[bird.size]`: Primeiro avalia `bird.size`, que é `\"small\"`. `mouse[\"small\"]` retorna `true`",
+      "Por outro lado, com a notação de ponto `.`, isso não acontece. `mouse` não tem uma chave chamada `bird`, o que significa que `mouse.bird` é `undefined`. Então, pedimos pelo `size` usando a notação de ponto: `mouse.bird.size`. Uma vez que `mouse.bird` é `undefined`, estamos realmente pedindo `undefined.size`. Isso não é válido, e irá gerar um erro similar a `Cannot read property \"size\" of undefined`."
+    ],
+    "id": 5,
+    "options": [
+      "`mouse.bird.size` não é válido",
+      "`mouse[bird.size]` não é válido",
+      "`mouse[bird[\"size\"]]` não é válido",
+      "Todos são válidos"
+    ],
+    "problem": "const bird = {\n  size: \"small\"\n};\n\nconst mouse = {\n  name: \"Mickey\",\n  small: true\n};\n",
+    "question": "Qual é a alternativa correta?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Em JavaScript, todos objetos interagem por <i>referência</i> quando os colocamos um igual ao outro.",
+      "Primeiro, a variável `c` guarda o valor de um objeto. Depois, declaramos `d` com a mesma referencia que `c` tem para o objeto.",
+      "<img src=\"https://i.imgur.com/ko5k0fs.png\" width=\"200\">",
+      "Quando você muda um objeto, você muda todos eles."
+    ],
+    "id": 6,
+    "options": [
+      "`Hello`",
+      "`Hey`",
+      "`undefined`",
+      "`ReferenceError`",
+      "`TypeError`"
+    ],
+    "problem": "let c = { greeting: \"Hey!\" };\nlet d;\n\nd = c;\nc.greeting = \"Hello\";\nconsole.log(d.greeting);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`new Number()` é uma funcção construtura padrão do JavaScript. Ainda que parece com um número, não é realmente um número: Tem um monte de funções extras e é um objeto.",
+      "Quando usamos o operador `==`, só conferimos se ambas tem o mesmo <i>valor</i>. Ambas tem o valor de `3`, então retorna `true`.",
+      "Contudo, quando usamos o operador `===`, ambos valor <i>e</i> tipo tem de ser o mesmo. E não são: `new Number()` não é um número, é um **objeto**. Ambos retornam `false`."
+    ],
+    "id": 7,
+    "options": [
+      "`true` `false` `true`",
+      "`false` `false` `true`",
+      "`true` `false` `false`",
+      "`false` `true` `true`"
+    ],
+    "problem": "let a = 3;\nlet b = new Number(3);\nlet c = 3;\n\nconsole.log(a == b);\nconsole.log(a === b);\nconsole.log(b === c);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "A função `colorChange` é estática. Métodos estáticos são designados para viver somente nos construtores em que são criados, e filhos não herdam esses métodos.\nJá que `freddie` é filho de `Chameleon`, a função não é herdada, e não está disponível para `freddie`: Um erro `TypeError` é gerado."
+    ],
+    "id": 8,
+    "options": [
+      "`orange`",
+      "`purple`",
+      "`green`",
+      "`TypeError`"
+    ],
+    "problem": "class Chameleon {\n  static colorChange(newColor) {\n    this.newColor = newColor;\n    return this.newColor;\n  }\n\n  constructor({ newColor = \"green\" } = {}) {\n    this.newColor = newColor;\n  }\n}\n\nconst freddie = new Chameleon({ newColor: \"purple\" });\nfreddie.colorChange(\"orange\");\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Cria o log do objeto, pois criamos um objeto vazio no objeto global! Quando erramos a digitação de `greeting` como `greetign`, o interpretador do JavaScript viu isso como `global.greetign = {}` (ou `window.greetign = {}` em um navegador).",
+      "Para evitar esse comportamento, podemos usar `\"use strict\"`. Isso garante que você  tenha declarado uma variável antes de poder inicializá-la com algum valor."
+    ],
+    "id": 9,
+    "options": [
+      "`{}`",
+      "`ReferenceErrorgreetign is not defined`",
+      "`undefined`"
+    ],
+    "problem": "let greeting;\ngreetign = {}; // Erro de digitação!\nconsole.log(greetign);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Isso é possível em JavaScript, pois funções são objetos! (Tudo menos tipos primitivos são objetos)",
+      "Uma função é um tipo especial de objeto. O código que você escreve não é a verdadeira função. A função é um objeto com propriedades. E essa propriedade é invocável."
+    ],
+    "id": 10,
+    "options": [
+      "Nada, isso é ok!",
+      "`SyntaxError`. Não se pode adicionar propriedades em uma função dessa maneira.",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "function bark() {\n  console.log(\"Woof!\");\n}\n\nbark.animal = \"dog\";\n",
+    "question": "O que acontece quando fazemos isso?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Você não pode adicionar propriedades para um construtor igual aos objetos normais. Se você quer adicionar uma funcionalidade para todos objetos ao mesmo tempo, você deve usar o prototype.",
+      "Então nesse caso",
+      "faria `member.getFullName()` funcionar. Por quê isso é beneficial? Digamos que tivéssemos esse método no próprio construtor. Talvez nem toda instância de `Person` precisasse desse método. Isso gastaria muita memória, uma vez que cada instância teria esse propriedade e teria seu espaço alocado. Ao invés disso, se adicionarmos somente ao protótipo, alocamos somente um único espaço na memória, e todas instâncias de `Person` ainda tem acesso ao método."
+    ],
+    "id": 11,
+    "options": [
+      "`TypeError`",
+      "`SyntaxError`",
+      "`Lydia Hallie`",
+      "`undefined` `undefined`"
+    ],
+    "problem": "function Person(firstName, lastName) {\n  this.firstName = firstName;\n  this.lastName = lastName;\n}\n\nconst member = new Person(\"Lydia\", \"Hallie\");\nPerson.getFullName = function() {\n  return `${this.firstName} ${this.lastName}`;\n};\n\nconsole.log(member.getFullName());\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Na `sarah`, não usamos a palavra-chave `new`. Quando usamos `new`, se refere ao novo objeto vazio que criamos. Contudo, se não usarmos `new`, nos referimos ao **objeto global**!",
+      "Afirmamos que `this.firstName` vale `\"Sarah\"` e `this.lastName` vale `\"Smith\"`. O que realmente fizemos foi definir `global.firstName = 'Sarah'` e `global.lastName = 'Smith'`. A `sarah` ainda é `undefined`."
+    ],
+    "id": 12,
+    "options": [
+      "`Person {firstName\"Lydia\", lastName\"Hallie\"}` e `undefined`",
+      "`Person {firstName\"Lydia\", lastName\"Hallie\"}` e `Person {firstName\"Sarah\", lastName\"Smith\"}`",
+      "`Person {firstName\"Lydia\", lastName\"Hallie\"}` e `{}`",
+      "\"Lydia\", lastName\"Hallie\"}` e `ReferenceError`"
+    ],
+    "problem": "function Person(firstName, lastName) {\n  this.firstName = firstName;\n  this.lastName = lastName;\n}\n\nconst lydia = new Person(\"Lydia\", \"Hallie\");\nconst sarah = Person(\"Sarah\", \"Smith\");\n\nconsole.log(lydia);\nconsole.log(sarah);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Durate a fase do **capturing**, o evento percorre os elementos pais até chegar no elemento algo. Isso alcança o elemento **target**, e o **bubbling** começa.",
+      "*Nota do tradutor: _bubbling_ descreve uma forma específica de propagação de eventos. Em tradução livre é \"borbulhar\", que indica como os eventos \"sobem\" a cadeia onde estão aninhados, mas prefiro por manter o original, visto que é o nome dessa forma de propagação.",
+      "<img src=\"https://i.imgur.com/N18oRgd.png\" width=\"200\">"
+    ],
+    "id": 13,
+    "options": [
+      "Target > Capturing > Bubbling",
+      "Bubbling > Target > Capturing",
+      "Target > Bubbling > Capturing",
+      "Capturing > Target > Bubbling"
+    ],
+    "problem": "",
+    "question": "Quais são as três fases na propagação de eventos?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Todos objetos tem protótipos, exceto pelo **base object**. O base object tem acesso à alguns métodos e propriedades, como `.toString`. É o motivo de podermos usar métodos já embutidos no JavaScript! Todos métodos desse tipo já estão embutidos no protótipo. Apesar do JavaScript não encontrar algum método diretamente no seu objeto, ele percorre a cadeia de protótipos até encontrar no base, o que torna acessível para todo objeto."
+    ],
+    "id": 14,
+    "options": [
+      "Verdadeiro",
+      "Falso"
+    ],
+    "problem": "",
+    "question": "Todos objetos tem protótipos."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "JavaScript é uma **linguagem dinamicamente tipada**: Não especificamos quais tipos nossas variáveis são. Valores pode ser automaticamente convertidos em outro tipo sem você saber, o que é chamado de <i>coerção implicita de tipo</i>. **Coerção** é converter de um tipo em outro.",
+      "Nesse exemplo, JavaScript converte o número `1` em uma string, para que a função faça sentido e retorne um valor. Durante a adição de um tipo numérico (`1`) e uma string (`'2'`), o número é tratado como uma string. Podemos concatenar strings como `\"Hello\" + \"World\"`, então o que está acontecendo aqui é `\"1\" + \"2\"` que retorna `\"12\"`."
+    ],
+    "id": 15,
+    "options": [
+      "`NaN`",
+      "`TypeError`",
+      "`\"12\"`",
+      "`3`"
+    ],
+    "problem": "function sum(a, b) {\n  return a + b;\n}\n\nsum(1, \"2\");\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "O operador unário no **sufixo**  `++`:",
+      "Retorna o valor (retorna o valor `0`)",
+      "Incrementa o valor (numero agora é `1`)",
+      "O operador unário **prefixo** `++`:",
+      "Incrementa o valor (numero agora é `2`)",
+      "Retorna o valor (Retorna o valor `2`)",
+      "Isso retorna `0 2 2`."
+    ],
+    "id": 16,
+    "options": [
+      "`1` `1` `2`",
+      "`1` `2` `2`",
+      "`0` `2` `2`",
+      "`0` `1` `2`"
+    ],
+    "problem": "let number = 0;\nconsole.log(number++);\nconsole.log(++number);\nconsole.log(number);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Se usamos template literals marcadas, ou tagged template literals, o valor do primeiro argumento é sempre um array com a string, separada pelos tagged template liberals. Os argumentos restantes recebem os valores das expressões passadas!"
+    ],
+    "id": 17,
+    "options": [
+      "`\"Lydia\"` `21` `[\"\", \" is \", \" years old\"]`",
+      "`[\"\", \" is \", \" years old\"]` `\"Lydia\"` `21`",
+      "`\"Lydia\"` `[\"\", \" is \", \" years old\"]` `21`"
+    ],
+    "problem": "function getPersonInfo(one, two, three) {\n  console.log(one);\n  console.log(two);\n  console.log(three);\n}\n\nconst person = \"Lydia\";\nconst age = 21;\n\ngetPersonInfo`${person} is ${age} years old`;\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Quando testamos igualdade, primitivos são comparados por seus _valores_, enquanto objetos são comparados por suas  _referências_. O JavaScript confere se os objetos tem a referência para o mesmo local na memória.",
+      "Os dois objetos que estamos comparando não são assim: O objeto que passamos como parâmetro faz referência a uma posição na memória diferente daquela que o objeto que usamos para conferir a igualdade.",
+      "É por isso que ambos `{ age: 18 } === { age: 18 }` E `{ age: 18 } == { age: 18 }` retornam `false`."
+    ],
+    "id": 18,
+    "options": [
+      "`You are an adult!`",
+      "`You are still an adult.`",
+      "`Hmm.. You don't have an age I guess`"
+    ],
+    "problem": "function checkAge(data) {\n  if (data === { age: 18 }) {\n    console.log(\"You are an adult!\");\n  } else if (data == { age: 18 }) {\n    console.log(\"You are still an adult.\");\n  } else {\n    console.log(`Hmm.. You don't have an age I guess`);\n  }\n}\n\ncheckAge({ age: 18 });\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "O operador _spread_ (`...args`.) retorna um array com os argumentos. Um array é um objeto, então `typeof args` retorna `\"object\"`"
+    ],
+    "id": 19,
+    "options": [
+      "`\"number\"`",
+      "`\"array\"`",
+      "`\"object\"`",
+      "`\"NaN\"`"
+    ],
+    "problem": "function getAge(...args) {\n  console.log(typeof args);\n}\n\ngetAge(21);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Com `\"use strict\"`, você pode ter certeza que não declarou variáveis globais. Nunca declaramos a variável `age`, e já que usamos `\"use strict\"`, ira gerar um erro de referência. Se não tivéssemos usado `\"use strict\"`, teria funcionado, uma vez que a propriedade `age` teria sido adicionada ao objeto global."
+    ],
+    "id": 20,
+    "options": [
+      "`21`",
+      "`undefined`",
+      "`ReferenceError`",
+      "`TypeError`"
+    ],
+    "problem": "function getAge() {\n  \"use strict\";\n  age = 21;\n  console.log(age);\n}\n\ngetAge();\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`eval` executa o código mesmo se passado como string. Se é uma expressão, como nesse caso, ele cálcula a expressão. A expressão é `10 * 10 + 5`. Isso retorna o número `105`."
+    ],
+    "id": 21,
+    "options": [
+      "`105`",
+      "`\"105\"`",
+      "`TypeError`",
+      "`\"10*10+5\"`"
+    ],
+    "problem": "const sum = eval(\"10*10+5\");\n",
+    "question": "Qual o valor de `sum`?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Dados guardados em `sessionStorage` são removidos depois de fechar a _guia_.",
+      "Se usássemos `localStorage`, o dado seria guardado para sempre, exceto se `localStorage.clear()` fosse chamado."
+    ],
+    "id": 22,
+    "options": [
+      "Sempre, o dado não é perdido.",
+      "Quando o usuário fechar a guia.",
+      "Quando o usuário fechar o navegador inteiro.",
+      "Quando o usuário desligar o computador."
+    ],
+    "problem": "sessionStorage.setItem(\"cool_secret\", 123);\n",
+    "question": "Por quanto tempo cool_secret é acessível?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Coma a palavra-chave `var`, você pode declarar várias variáveis com o mesmo nome. A variável vai guardar o último valor.",
+      "Você não pode fazer isso com `let` ou `const` uma vez que eles conferem o bloco de escopo em que estão inseridos."
+    ],
+    "id": 23,
+    "options": [
+      "`8`",
+      "`10`",
+      "`SyntaxError`",
+      "`ReferenceError`"
+    ],
+    "problem": "var num = 8;\nvar num = 10;\n\nconsole.log(num);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Todas as chaves de objetos (exceto símbolos) são strings debaixo do capô, mesmo que você não digite como uma string. É por isso que `obj.hasOwnProperty('1')` também retorna `true`.",
+      "Não funciona assim para `Set`. Não tem um `'1'` no nosso set: `set.has('1')` retorna `false`. Temos o tipo número `1`, então `set.has(1)` retorna `true`."
+    ],
+    "id": 24,
+    "options": [
+      "`false` `true` `false` `true`",
+      "`false` `true` `true` `true`",
+      "`true` `true` `false` `true`",
+      "`true` `true` `true` `true`"
+    ],
+    "problem": "const obj = { 1: \"a\", 2: \"b\", 3: \"c\" };\nconst set = new Set([1, 2, 3, 4, 5]);\n\nobj.hasOwnProperty(\"1\");\nobj.hasOwnProperty(1);\nset.has(\"1\");\nset.has(1);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Se temos duas chaves com o mesmo nome, a última irá substituir a primeira. Ainda vai estar na primeira posição, mas com o último valor específicado."
+    ],
+    "id": 25,
+    "options": [
+      "`{ a\"one\", b\"two\" }`",
+      "`{ b\"two\", a\"three\" }`",
+      "`{ a\"three\", b\"two\" }`",
+      "`SyntaxError`"
+    ],
+    "problem": "const obj = { a: \"one\", b: \"two\", a: \"three\" };\nconsole.log(obj);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "O contexto base de execução é o contexto global: É aquilo que está acessível em qualquer lugar do código."
+    ],
+    "id": 26,
+    "options": [
+      "Verdadeiro",
+      "Falso",
+      "Depende"
+    ],
+    "problem": "",
+    "question": "O contexto global de execução do JavaScrit cria duas coisas para você: O objeto global, e a palavra-chave `this`."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "A palavra-chave `continue` pula uma iteração se a condição retorna `true`."
+    ],
+    "id": 27,
+    "options": [
+      "`1` `2`",
+      "`1` `2` `3`",
+      "`1` `2` `4`",
+      "`1` `3` `4`"
+    ],
+    "problem": "for (let i = 1; i < 5; i++) {\n  if (i === 3) continue;\n  console.log(i);\n}\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`String` é um construtor embutido, no qual podemos adicionar propriedades. Nesse caso adicionamos um método ao seu protótipo. Tipos primitivos `string` são automaticamente convertidos em um objeto string, gerado pelo construtor `String`. Assim, todas as strings (que são objetos string) tem acesso ao método."
+    ],
+    "id": 28,
+    "options": [
+      "`\"Just give Lydia pizza already!\"`",
+      "`TypeErrornot a function`",
+      "`SyntaxError`",
+      "`undefined`"
+    ],
+    "problem": "String.prototype.giveLydiaPizza = () => {\n  return \"Just give Lydia pizza already!\";\n};\n\nconst name = \"Lydia\";\n\nname.giveLydiaPizza();\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Chaves de objeto são automaticamente convertidas em strings. Estamos tentando usar um objeto como chave do objeto `a`, com o valor de `123`.",
+      "Contudo, quando transformamos um objeto em string, ele vira um `\"[object Object]\"`. Então, o que estamos afirmando é `a[\"object Object\"] = 123`. Após, tentamos a mesma coisa. `c` é outro objeto que (implicitamente) convertemos para string. Então, temos `a[\"object Object\"] = 456`.",
+      "Então, fazemos o log de `a[b]`, o que na verdade é `a[\"object Object\"]`. Acabmos de definir esse valor, como `456`, e é isso que ele retorna."
+    ],
+    "id": 29,
+    "options": [
+      "`123`",
+      "`456`",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "const a = {};\nconst b = { key: \"b\" };\nconst c = { key: \"c\" };\n\na[b] = 123;\na[c] = 456;\n\nconsole.log(a[b]);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Temos a função `setTimeout` e a invocamos por primeiro. Ainda assim, apareceu no log por último.",
+      "Isso acontece pois nos navegadores, não temos apenas o nosso mecanismo de execução (runtime engine), temos também algo chamado `WebAPI`. A `WebAPI` nos da coisas como a `setTimeout` e o DOM.",
+      "Depois que a função de retorno (callback) é enviada para a `WebAPI`, a função `setTimeout` (mas não seu retorno ou callback) são enviadas para fora do stack.",
+      "<img src=\"https://i.imgur.com/X5wsHOg.png\" width=\"200\">",
+      "Agora, `foo` é chamada, e `\"First\"` é adicionado ao log.",
+      "<img src=\"https://i.imgur.com/Pvc0dGq.png\" width=\"200\">",
+      "`foo` é evniada para fora do stack, e `baz` é chamada. `\"Third\"` é adicionado ao log.",
+      "<img src=\"https://i.imgur.com/WhA2bCP.png\" width=\"200\">",
+      "A `WebAPI` não pode simplesmente adicionar coisas ao stack sempre que ficam prontas. Ao invés, disso, todo retorno que fica pronto é enviado para algo chamado _queue_.",
+      "<img src=\"https://i.imgur.com/NSnDZmU.png\" width=\"200\">",
+      "É aqui que um laço de evento começa a ocorrer. Um **laço de evento** confere o stack e o _queue_. Se o stack está livre, pega a primeira coisa que estiver na queue e coloca no stack.",
+      "<img src=\"https://i.imgur.com/uyiScAI.png\" width=\"200\">",
+      "`bar` é chamada, `\"Second\"` é adicionado ao log, e é enviado para fora do stack."
+    ],
+    "id": 30,
+    "options": [
+      "`First` `Second` `Third`",
+      "`First` `Third` `Second`",
+      "`Second` `First` `Third`",
+      "`Second` `Third` `First`"
+    ],
+    "problem": "const foo = () => console.log(\"First\");\nconst bar = () => setTimeout(() => console.log(\"Second\"));\nconst baz = () => console.log(\"Third\");\n\nbar();\nfoo();\nbaz();\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "O elemento mais interno no aninhamento que causou o evento é o alvo do evento. Você pode parar o _bubbling_ com `event.stopPropagation`."
+    ],
+    "id": 31,
+    "options": [
+      "A `div` mais externa",
+      "A `div` mais interna",
+      "`button`",
+      "Um array dos elementos aninhandos."
+    ],
+    "problem": "<div onclick=\"console.log('first div')\">\n  <div onclick=\"console.log('second div')\">\n    <button onclick=\"console.log('button')\">\n      Click!\n    </button>\n  </div>\n</div>\n",
+    "question": "qual é o event.target quando clicamos no botão?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Se clicarmos em `p`, veremos dois itens adicionaos ao log: `p` e `div`. Durante a propagação de eventos, existem 3 fases: capturar, adquirir o _target_, e o bubbling. Por padrão, manipuladores de eventos são executados junto a fase de bubbling (a não ser que você marque `useCapture` como `true`). Percorre do elemento aninhando mais interno, propagando para fora."
+    ],
+    "id": 32,
+    "options": [
+      "`p` `div`",
+      "`div` `p`",
+      "`p`",
+      "`div`"
+    ],
+    "problem": "<div onclick=\"console.log('div')\">\n  <p onclick=\"console.log('p')\">\n    Click here!\n  </p>\n</div>\n",
+    "question": "Quando você clica no parágrafo, O que é adicionado ao log?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Com ambos, podemos passar o objeto que queremos que o `this` faça referência. Contudo, `.call` é _executado imediatamente_!",
+      "`.bind.` retorna uma _cópia_ da função, mas com seu contexto vinculado à cópia. E não é executado imediatamente."
+    ],
+    "id": 33,
+    "options": [
+      "`undefined is 21` `Lydia is 21`",
+      "`function` `function`",
+      "`Lydia is 21` `Lydia is 21`",
+      "`Lydia is 21` `function`"
+    ],
+    "problem": "const person = { name: \"Lydia\" };\n\nfunction sayHi(age) {\n  console.log(`${this.name} is ${age}`);\n}\n\nsayHi.call(person, 21);\nsayHi.bind(person, 21);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "A função `sayHi` retorna o valor retornado pela arrow function pois ela é uma IIFE (Immediately Invoked Function Expression ou Expressão de Função Invocada Imediatamente). Essa IIFE retornou `0`, que é do tipo `\"number\"`.",
+      "Para saber mais: Só existem 7 tipos já definidos: `null`, `undefined`, `boolean`, `number`, `string`, `object`, e `symbol`. `\"function\"` não é um tipo, uma vez que  funções são objetos, elas são do tipo `\"object\"`."
+    ],
+    "id": 34,
+    "options": [
+      "`\"object\"`",
+      "`\"number\"`",
+      "`\"function\"`",
+      "`\"undefined\"`"
+    ],
+    "problem": "function sayHi() {\n  return (() => 0)();\n}\n\ntypeof sayHi();\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Existem somente seis valores falsy:",
+      "`undefined`",
+      "`null`",
+      "`NaN`",
+      "`0`",
+      "`''` (string vazia)",
+      "`false`",
+      "Funções construtoras, como `new Number` e `new Boolean` são truthy."
+    ],
+    "id": 35,
+    "options": [
+      "`0`, `''`, `undefined`",
+      "`0`, `new Number(0)`, `''`, `new Boolean(false)`, `undefined`",
+      "`0`, `''`, `new Boolean(false)`, `undefined`",
+      "Todos são falsy"
+    ],
+    "problem": "0;\nnew Number(0);\n(\"\");\n(\" \");\nnew Boolean(false);\nundefined;\n",
+    "question": "Qual desses tem valor falsy?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`typeof 1` retorna `\"number\"`.\n`typeof \"number\"` retorna `\"string\"`"
+    ],
+    "id": 36,
+    "options": [
+      "`\"number\"`",
+      "`\"string\"`",
+      "`\"object\"`",
+      "`\"undefined\"`"
+    ],
+    "problem": "console.log(typeof typeof 1);\n",
+    "question": "Qual é a sáida?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Quando você define um valor para um elemento em um array que excede o tamanho do próprio array, o JavaScript cria algo chamado \"empty slots\" (espaços vazios). Na verdade, esses espaços vazios tem o valor de `undefined`, mas você verá algo como:",
+      "`[1, 2, 3, 7 x empty, 11]`",
+      "dependendo de onde você o executa, pois é diferente para cada navegador, node etc."
+    ],
+    "id": 37,
+    "options": [
+      "`[1, 2, 3, 7 x null, 11]`",
+      "`[1, 2, 3, 11]`",
+      "`[1, 2, 3, 7 x empty, 11]`",
+      "`SyntaxError`"
+    ],
+    "problem": "const numbers = [1, 2, 3];\nnumbers[10] = 11;\nconsole.log(numbers);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "O bloco do `catch` recebe o argumento `x`. Esse não é o mesmo `x` da variável de quando estamos passando os argumentos. A variável `x` é de escopo do seu bloco.",
+      "Depois, definimos essa variável, dentro do seu bloco, para valor `1`, e definimos o valor de `y`, que pertence a um bloco maior. Agora, nos adicionamos ao log o valor de `x`, que dentro desse bloco tem valor `1`.",
+      "Fora do bloco do `catch`. `x` ainda é `undefined`, e `y` ainda é `2`. Quando tentamos usar `console.log(x)` fora do bloco do `catch`, isso retorna `undefined`, e `y` retorna `2`."
+    ],
+    "id": 38,
+    "options": [
+      "`1` `undefined` `2`",
+      "`undefined` `undefined` `undefined`",
+      "`1` `1` `2`",
+      "`1` `undefined` `undefined`"
+    ],
+    "problem": "(() => {\n  let x, y;\n  try {\n    throw new Error();\n  } catch (x) {\n    (x = 1), (y = 2);\n    console.log(x);\n  }\n  console.log(x);\n  console.log(y);\n})();\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "JavaScript tem somente tipos primitivos e objetos.",
+      "Tipos primitivos são `boolean`, `null`, `undefined`, `bigint`, `number`, `string`, e `symbol`.",
+      "O que diferencia um primitivo de um objeto é que primitivos não métodos ou propriedades. Contudo, se você está atento vai lembrar que `'foo'.toUpperCase()` retorna `'FOO'` e não resulta em um `TypeError`. Isso acontece pois quando você tenta acessar uma propriedade ou método em um primitivo como, por exemplo, uma string, JavaScript vai transformar esse primitivo em objeto usando um _wrapper_, nesse caso o `String`, e discarta o wrapper imediatamente após executar o método ou propriedade. Todos os primitivos, com exceção de `null` e `undefined` exibem esse comportamento."
+    ],
+    "id": 39,
+    "options": [
+      "primitivo ou um objeto",
+      "função ou um object",
+      "Pegadinha! Somente objetos",
+      "número ou um objeto"
+    ],
+    "problem": "",
+    "question": "Tudo em JavaScript ou é um..."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`[1, 2]` é nosso valor inicial. É o valor que começamos, e portanto o valor do primeiro `acc`. Durante a primeira iteração, `acc` é `[1,2]`, e `cur` é `[0, 1]`. Nós concatemos ambos, o que resulta em `[1, 2, 0, 1]`.",
+      "Então, `[1, 2, 0, 1]` é `acc` e `[2, 3]` é o `cur`. Concatenamos novamente, e chegamos em `[1, 2, 0, 1, 2, 3]`."
+    ],
+    "id": 40,
+    "options": [
+      "`[0, 1, 2, 3, 1, 2]`",
+      "`[6, 1, 2]`",
+      "`[1, 2, 0, 1, 2, 3]`",
+      "`[1, 2, 6]`"
+    ],
+    "problem": "[[0, 1], [2, 3]].reduce(\n  (acc, cur) => {\n    return acc.concat(cur);\n  },\n  [1, 2]\n);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`null` é falsy. `!null` retorna `true`. `!true` retorna `false`.",
+      "`\"\"` é falsy. `!\"\"` retorna `true`. `!true` retorna `false`.",
+      "`1` é truthy. `!1` retorna `false`. `!false` retorna `true`."
+    ],
+    "id": 41,
+    "options": [
+      "`false` `true` `false`",
+      "`false` `false` `true`",
+      "`false` `true` `true`",
+      "`true` `true` `false`"
+    ],
+    "problem": "!!null;\n!!\"\";\n!!1;\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Retorna um id único. Esse id pode ser usado para limpar o intervalo com a função `clearInterval()`."
+    ],
+    "id": 42,
+    "options": [
+      "um id único",
+      "a quantidade de  millisegundos especificada",
+      "a função passada",
+      "`undefined`"
+    ],
+    "problem": "setInterval(() => console.log(\"Hi\"), 1000);\n",
+    "question": "O que o método `setInterval` retorna no navegador?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Strings são iteráveis. O operador do spread `...` mapeia todo caractére de um iterável para um elemento."
+    ],
+    "id": 43,
+    "options": [
+      "`[\"L\", \"y\", \"d\", \"i\", \"a\"]`",
+      "`[\"Lydia\"]`",
+      "`[[], \"Lydia\"]`",
+      "`[[\"L\", \"y\", \"d\", \"i\", \"a\"]]`"
+    ],
+    "problem": "[...\"Lydia\"];\n",
+    "question": "Qual é o retorno?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Funções regulares não podem ser interrompidas durante execução após sua invocação. Entretanto, uma função generator pode ser interrompida, e depois continuar de onde parou. Uma função generator sempre possue a palavra chave `yield`, a função gera o valor específicado logo após. Note que a função generator, neste caso não retorna o valor, ele utiliza _yields_ no valor.",
+      "Primeiro, nós inicializamos a função generator com `i` igual a `10`. Nós chamamos a função generator utilizando o `next()` para próxima função. A primeira vez que executamos a função generator o `i` é igual a `10`. que possue a palavra chave `yield`: que atribue o yields ao valor de `i`. O generator é pausado e `10` é logado.",
+      "Então, chamamos a próxima função novamente com o `next()`. Que continua de onde foi interrompido anteirormente, ainda com `i` igual a `10`. Agora, ele encontra o próximo `yield`, e yields `i * 2`. `i` é igual a `10`, que então retorna `10 * 2`, que é `20`. Seu resultado é `10, 20`."
+    ],
+    "id": 44,
+    "options": [
+      "`[0, 10], [10, 20]`",
+      "`20, 20`",
+      "`10, 20`",
+      "`0, 10 and 10, 20`"
+    ],
+    "problem": "function* generator(i) {\n  yield i;\n  yield i * 2;\n}\n\nconst gen = generator(10);\n\nconsole.log(gen.next().value);\nconsole.log(gen.next().value);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Quando passamos múltiplas \"promises\" para a função `Promise.race`, ele resolve ou rejeita a primeira \"promise\". Para a função de `setTimeout`, nós passamos um tempo de 500ms para a primeira promise (`firstPromise`), e 100ms para a segunda promise (`secondPromise`). Isso significa que o `secondPromise` resolve primeiro com o valor de `'two'`. `res` que agora possui o valor `'two'`, que foi logado."
+    ],
+    "id": 45,
+    "options": [
+      "`\"one\"`",
+      "`\"two\"`",
+      "`\"two\" \"one\"`",
+      "`\"one\" \"two\"`"
+    ],
+    "problem": "const firstPromise = new Promise((res, rej) => {\n  setTimeout(res, 500, \"one\");\n});\n\nconst secondPromise = new Promise((res, rej) => {\n  setTimeout(res, 100, \"two\");\n});\n\nPromise.race([firstPromise, secondPromise]).then(res => console.log(res));\n",
+    "question": "Qual o retorno?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Primeiro, declaramos a variável `person` com o valor de um objeto que possui o propriedade `name`.",
+      "<img src=\"https://i.imgur.com/TML1MbS.png\" width=\"200\">",
+      "Então, declaramos a variável chamada `members`. Setamos o valor do primeiro elemento do array igual ao valor da variável `person`. Objetos interados por _referência_ quando ao defini-los iguais entre si. Quando você atribui uma referência de uma variável para outra, você faz uma _cópia_ de sua referência. (note que eles não possuem a _mesma_ referência!)",
+      "<img src=\"https://i.imgur.com/FSG5K3F.png\" width=\"300\">",
+      "Então, setamos a variável `person` igual a `null`.",
+      "<img src=\"https://i.imgur.com/sYjcsMT.png\" width=\"300\">",
+      "Estamos apenas modificando o valor da variável `person`, e não o primeiro elemento do array, desde que o elemento tem uma diferente referência (copiada) de um objeto. O primeiro elemento de `members` ainda mantém sua referência com o objeto original. Quando logamos o array de `members`, o primeiro elemento ainda mantém o valor do objeto, que é logado."
+    ],
+    "id": 46,
+    "options": [
+      "`null`",
+      "`[null]`",
+      "`[{}]`",
+      "`[{ name\"Lydia\" }]`"
+    ],
+    "problem": "let person = { name: \"Lydia\" };\nconst members = [person];\nperson = null;\n\nconsole.log(members);\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Utilizando o loop `for-in`, podemos interar através das chaves do objeto, neste caso o `name` e `age`. Por baixo dos panos, chaves de objetos são strings (eles não são um símbolo). Em cada loop, setamos ao valor do `item` igual ao da chave atual, que se intera. Primeiro, `item` é igual ao `name`, e é logado. Então, `item` é igual a idade `age`, que é logado."
+    ],
+    "id": 47,
+    "options": [
+      "`{ name\"Lydia\" }, { age21 }`",
+      "`\"name\", \"age\"`",
+      "`\"Lydia\", 21`",
+      "`[\"name\", \"Lydia\"], [\"age\", 21]`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia\",\n  age: 21\n};\n\nfor (const item in person) {\n  console.log(item);\n}\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Associatividade do operador é a ordem na qual o compilador avalia as expressões, ou esquerda-para-direita ou direita-para-esquerda. Isso apenas acontece se todos os operatores possuem a _mesma_ precedência. Apenas temos um tipo de operador: `+`. Para adição, a associatividade é esquerda-para-direita.",
+      "`3 + 4` é avaliado primeiro. Seu resultado é o número `7`.",
+      "`7 + '5'` resulta em `\"75\"` por causa da coerção. JavaScript converte o número `7` em string, veja a questão 15. Podemos concatenar duas strings com o operador de `+`. `\"7\" + \"5\"` resulta em `\"75\"`."
+    ],
+    "id": 48,
+    "options": [
+      "`\"345\"`",
+      "`\"75\"`",
+      "`12`",
+      "`\"12\"`"
+    ],
+    "problem": "console.log(3 + 4 + \"5\");\n",
+    "question": "Qual é a saída?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Apenas os primeiros números da string é retornado. Baseado no _radix_ (o segundo parametro na ordem especifica qual o tipo de número queremos atribuir o parse: base 10, hexadecimal, octal, binary, etc.), o `parseInt` checa se os caracteres na string são válidos. Depois de encontrar um caracter que não é um número válido no radix, ele interrompe o parse e ignora os seguintes caracteres.",
+      "`*` não é um número válido. Ele apenas usa o parse no `\"7\"` em decimal `7`. `num` possui o valor `7`."
+    ],
+    "id": 49,
+    "options": [
+      "`42`",
+      "`\"42\"`",
+      "`7`",
+      "`NaN`"
+    ],
+    "problem": "const num = parseInt(\"7*6\", 10);\n",
+    "question": "Qual o retorno de `num`?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Quando mapeamos um array (map), o valor de `num` é igual ao elemento que está percorrendo. Neste caso, os elementos são números, então a condição do se (if) `typeof num === \"number\"` retorna `true`. A função map cria um novo array e insere os valores retornados da função.",
+      "Entretanto, não se retorna o valor. Quando não se retorna um valor para a função, a função retorna `undefined`. Para cada elemento do array, o bloco de função é chamado, então para cada elemento é retornado `undefined`."
+    ],
+    "id": 50,
+    "options": [
+      "`[]`",
+      "`[null, null, null]`",
+      "`[undefined, undefined, undefined]`",
+      "`[ 3 x empty ]`"
+    ],
+    "problem": "[1, 2, 3].map(num => {\n  if (typeof num === \"number\") return;\n  return num * 2;\n});\n",
+    "question": "Qual é a saída?"
+  }
+]

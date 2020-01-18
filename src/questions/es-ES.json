@@ -1,0 +1,1916 @@
+[
+  {
+    "answer": 3,
+    "explanation": [
+      "Dentro de la función, primero declaramos la variable `name` con la palabra reservada ` var`. Esto significa que la variable se _eleva_ (el espacio de memoria se configura durante la fase de creación. Hace referencia al termino [hoisting](https://developer.mozilla.org/es/docs/Glossary/Hoisting)) con el valor predeterminado de `indefinido`, hasta que realmente llegamos a la línea donde definimos la variable. Aún no hemos definido la variable en la línea donde intentamos registrar la variable `name`, por lo que aún mantiene el valor de` undefined`.",
+      "Las variables con la palabra clave `let` (y` const`) se _elevan_, pero a diferencia de `var`, no se inicializa <i> </i>. No son accesibles antes de la línea que los declaramos (inicializamos). Esto se llama la [\"zona muerta temporal\"](https://wesbos.com/temporal-dead-zone/). Cuando intentamos acceder a las variables antes de que se declaren, JavaScript lanza un `ReferenceError`\n</p>\n</details>"
+    ],
+    "id": 0,
+    "options": [
+      "`Lydia` y `undefined`",
+      "`Lydia` y `ReferenceError`",
+      "`ReferenceError` y `21`",
+      "`undefined` y `ReferenceError`"
+    ],
+    "problem": "function sayHi() {\n  console.log(name);\n  console.log(age);\n  var name = \"Lydia\";\n  let age = 21;\n}\n\nsayHi();\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Debido a la cola de eventos en JavaScript, la función `setTimeout` se llama una vez el ciclo se ha ejecutado. Dado que la variable `i` en el primer bucle se declaró utilizando la palabra reservada ` var`, este valor es global. Durante el bucle, incrementamos el valor de `i` en` 1` cada vez, utilizando el operador unario `++`. Cuando se invocó la función `setTimeout`,` i` era igual a `3` en el primer ejemplo.",
+      "En el segundo bucle, la variable `i` se declaró utilizando la palabra reservada` let`: las variables declaradas con la palabra reservada `let` (y` const`) tienen un ámbito de bloque (un bloque es lo que se encuentra entre `{}`). Durante cada iteración, `i` tendrá un nuevo valor, y cada valor se encuentra dentro del bucle."
+    ],
+    "id": 1,
+    "options": [
+      "`0 1 2` y `0 1 2`",
+      "`0 1 2` y `3 3 3`",
+      "`3 3 3` y `0 1 2`"
+    ],
+    "problem": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}\n\nfor (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Hay que tener en cuenta aqui que el valor de `diámetro` es una función regular o _normal_, mientras que el valor de `perímetro` es una función de flecha.",
+      "Con las funciones de flecha, la palabra clave `this` se refiere a su ámbito actual, a diferencia de las funciones regulares. Esto significa que cuando llamamos \"perímetro\", no se refiere al objeto en sí mismo, sino a su ámbito circundante (ventana por ejemplo).",
+      "No hay valor `radius` en ese objeto, que devuelve` undefined`."
+    ],
+    "id": 2,
+    "options": [
+      "`20` y `62.83185307179586`",
+      "`20` y `NaN`",
+      "`20` y `63`",
+      "`NaN` y `63`"
+    ],
+    "problem": "const shape = {\n  radius: 10,\n  diameter() {\n    return this.radius * 2;\n  },\n  perimeter: () => 2 * Math.PI * this.radius\n};\n\nshape.diameter();\nshape.perimeter();\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "En el primera caso se intenta convertir un operando en un número. `true` es` 1`, y `false` es` 0`.",
+      "En el segundo caso la cadena `'Lydia'` es un valor verdadero. Lo que realmente estamos preguntando es \"¿es este verdadero valor falso?\". Esto devuelve `false`."
+    ],
+    "id": 3,
+    "options": [
+      "`1` y `false`",
+      "`false` y `NaN`",
+      "`false` y `false`"
+    ],
+    "problem": "+true;\n!\"Lydia\";\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "En JavaScript, todas las _keys_ son cadenas (a menos que sea un símbolo). A pesar de que no podríamos escribirlos como cadenas, siempre funcionan como cadenas de manera interna.",
+      "JavaScript interpreta declaraciones. Cuando usamos la notación de corchetes, ve el corchete de apertura `[` y continúa hasta que encuentra el corchete de cierre `]`. Solo de esta manera se evaluará la afirmación.",
+      "`mouse [bird.size]`: Primero evalúa `bird.size`, que es` \"small\" `. `mouse [\"small\"]` devuelve `true`",
+      "Sin embargo, con la notación de puntos, esto no sucede. `mouse` no tiene una clave llamada` bird`, lo que significa que `mouse.bird` es` undefined`. Luego, pedimos el `tamaño` usando la notación de puntos:` mouse.bird.size`. Como `mouse.bird` es` undefined`, en realidad estamos preguntando `undefined.size`. Esto no es válido y generará un error similar `al Cannot read property \"size\" of undefined`"
+    ],
+    "id": 4,
+    "options": [
+      "`mouse.bird.size`",
+      "`mouse[bird.size]`",
+      "`mouse[bird[\"size\"]]`",
+      "Todas son correctas"
+    ],
+    "problem": "const bird = {\n  size: \"small\"\n};\n\nconst mouse = {\n  name: \"Mickey\",\n  small: true\n};\n",
+    "question": "¿Cuál NO es válida?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "En JavaScript, TODOS los objetos interactúan por referencia, de modo que cuando se establecen iguales o pasan a una función, todos apuntan a la misma ubicación. De esta manera cuando cambia un objeto, los cambia a todos.",
+      "Primero, la variable `c` tiene un valor para un objeto. Más tarde, asignamos `d` con la misma referencia que` c` tiene al objeto.",
+      "<img src = \"https://i.imgur.com/ko5k0fs.png\" width = \"200\">",
+      "Cuando cambias un objeto, cambias todos ellos."
+    ],
+    "id": 5,
+    "options": [
+      "`Hello`",
+      "`undefined`",
+      "`ReferenceError`",
+      "`TypeError`"
+    ],
+    "problem": "let c = { greeting: \"Hey!\" };\nlet d;\n\nd = c;\nc.greeting = \"Hello\";\nconsole.log(d.greeting);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`new Number ()` es un constructor de funciones incorporado. Aunque parece un número, no es realmente un número: tiene muchas características adicionales y es un objeto.",
+      "Cuando usamos el operador `==`, solo verifica si tiene el mismo _valor_. Ambos tienen el valor de `3`, por lo que devuelve` true`.",
+      "Sin embargo, cuando usamos el operador `===`, tanto el **valor** como el **tipo** deben ser iguales. Entonces: `new Number ()` no es un número, es un **objeto**. Ambos devuelven \"false\"."
+    ],
+    "id": 6,
+    "options": [
+      "`true` `false` `true`",
+      "`false` `false` `true`",
+      "`true` `false` `false`",
+      "`false` `true` `true`"
+    ],
+    "problem": "let a = 3;\nlet b = new Number(3);\nlet c = 3;\n\nconsole.log(a == b);\nconsole.log(a === b);\nconsole.log(b === c);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "La función `colorChange` es estática. Los métodos estáticos están diseñados para _vivir_ solo en el constructor en el que se crean y no se pueden transmitir a ningún elemento secundario. Como `freddie` es un niño, la función no se transmite y no está disponible en la instancia de `freddie`: por lo tanto se lanza un `TypeError`."
+    ],
+    "id": 7,
+    "options": [
+      "`orange`",
+      "`purple`",
+      "`green`",
+      "`TypeError`"
+    ],
+    "problem": "class Chameleon {\n  static colorChange(newColor) {\n    this.newColor = newColor;\n    return this.newColor;\n  }\n\n  constructor({ newColor = \"green\" } = {}) {\n    this.newColor = newColor;\n  }\n}\n\nconst freddie = new Chameleon({ newColor: \"purple\" });\nfreddie.colorChange(\"orange\");\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Lo que hace JS aquí es registrar el objeto debido a que acabamos de crear un objeto vacío en el objeto global. Cuando escribimos erróneamente `greeting` como `greetign`, el intérprete de JS ve esto como `global.greetign = {}` (o `window.greetign = {}` en un navegador).",
+      "Para evitar esto, podemos usar el [\"uso estricto\"](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Modo_estricto). Esto asegura que se haya declarado una variable antes de establecerla igual a cualquier cosa."
+    ],
+    "id": 8,
+    "options": [
+      "`{}`",
+      "`ReferenceErrorgreetign is not defined`",
+      "`undefined`"
+    ],
+    "problem": "let greeting;\ngreetign = {}; // Typo!\nconsole.log(greetign);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Esto es perfectamente posible en JavaScript, porque las funciones son objetos (Recuerda: **todo** aparte de los tipos primitivos son objetos en JS)",
+      "Una función es un tipo especial de objeto. El código que escribes tú mismo no es la función real. La función es un objeto con propiedades. Esta propiedad es invocable."
+    ],
+    "id": 9,
+    "options": [
+      "No pasa nada, es totalmente correcto.",
+      "`SyntaxError`. No es posible agregar propiedades a una función de esta manera.",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "function bark() {\n  console.log(\"Woof!\");\n}\n\nbark.animal = \"dog\";\n",
+    "question": "¿Qué ocurre cuando hacemos esto?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "En JS no se pueden añadir propiedades a un constructor como se puede hacer con los objetos. Si se desea añadir una característica a todos los objetos a la vez, se debe utilizar el [prototipo](https://www.w3schools.com/js/js_object_prototypes.asp) en su lugar. Así que en este caso,",
+      "habría hecho que `member.getFullName()` funcionara. ¿Por qué es bueno? Imaginemos que añadimos este método al constructor. Quizás no todas las \"personas\" necesitaban este método. Esto desperdiciaría mucho espacio de memoria, ya que todavía tendrían esa propiedad, que ocupa espacio de memoria para cada caso. En cambio, si sólo lo añadimos al prototipo, sólo lo tenemos en un lugar en la memoria, ¡pero todos ellos tienen acceso a él!"
+    ],
+    "id": 10,
+    "options": [
+      "`TypeError`",
+      "`SyntaxError`",
+      "`Lydia Hallie`",
+      "`undefined` `undefined`"
+    ],
+    "problem": "function Person(firstName, lastName) {\n  this.firstName = firstName;\n  this.lastName = lastName;\n}\n\nconst member = new Person(\"Lydia\", \"Hallie\");\nPerson.getFullName = function () {\n  return `${this.firstName} ${this.lastName}`;\n}\n\nconsole.log(member.getFullName());\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Para `sarah`, no usamos la palabra reservada `new`. Cuando se usa `new`, se refiere al nuevo objeto vacío que creamos. Sin embargo, si no se agrega `new', se refiere al **objeto global**!",
+      "En el ejemplo `this.firstName` equivale a `\"Sarah\"` y `this.lastName` equivale a `\"Smith\"`. Lo que realmente hicimos fue definir `global.firstName = `Sarah'` y `global.lastName = `Smith'`. La misma `sarah` se deja `indefinida`."
+    ],
+    "id": 11,
+    "options": [
+      "`Person {firstName\"Lydia\", lastName\"Hallie\"}` and `undefined`",
+      "`Person {firstName\"Lydia\", lastName\"Hallie\"}` and `Person {firstName\"Sarah\", lastName\"Smith\"}`",
+      "`Person {firstName\"Lydia\", lastName\"Hallie\"}` and `{}`",
+      "\"Lydia\", lastName\"Hallie\"}` and `ReferenceError`"
+    ],
+    "problem": "function Person(firstName, lastName) {\n  this.firstName = firstName;\n  this.lastName = lastName;\n}\n\nconst lydia = new Person(\"Lydia\", \"Hallie\");\nconst sarah = Person(\"Sarah\", \"Smith\");\n\nconsole.log(lydia);\nconsole.log(sarah);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Durante la fase de **Capturing**, el evento pasa a través de los elementos ancestrales hasta el elemento objetivo. A continuación, alcanza el elemento **Target** y comienza el **bubbling**. Más información [aquí](https://www.sitepoint.com/event-bubbling-javascript/).",
+      "<img src=\"https://i.imgur.com/N18oRgd.png\" width=\"200\">"
+    ],
+    "id": 12,
+    "options": [
+      "Target > Capturing > Bubbling",
+      "Bubbling > Target > Capturing",
+      "Target > Bubbling > Capturing",
+      "Capturing > Target > Bubbling"
+    ],
+    "problem": "",
+    "question": "¿Cuáles son las tres fases de la propagación de eventos?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Todos los objetos tienen prototipos, excepto el **objeto base** (Más info [aquí](https://stackoverflow.com/questions/56659303/what-is-base-object-in-javascript)). El componente tiene acceso a algunos métodos y propiedades, como `.toString`. Esta es la razón principal por la que se puede utilizar los métodos JavaScript incorporados. Todos estos métodos están disponibles en el prototipo. Aunque JavaScript no puede encontrar de manera directa en su objeto, baja por la cadena de prototipos y lo encuentra allí, lo que lo hace accesible para poder usarse posteriormente."
+    ],
+    "id": 13,
+    "options": [
+      "true",
+      "false"
+    ],
+    "problem": "",
+    "question": "All object have prototypes."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "JavaScript es un **lenguaje dinámicamente tipado** o de tipado débil, esto significa que no es necesario declarar el tipo de variable antes de usarla pues será determinado automáticamente cuando el programa comience a ser procesado. Los valores se pueden convertir automáticamente en otro tipo sin que se sepa, esto se llama denomina _implicit type coercion_ (Más info [aquí](https://medium.com/@ManuCastrillonM/entendiendo-la-coerci%C3%B3n-en-javascript-bc202d22d23f)). **La coerción es la conversión de un tipo a otro.**",
+      "En este ejemplo, JavaScript convierte el número `1` en una cadena, para que la función tenga sentido y devuelva un valor. Durante la suma de un tipo numérico (`1`) y un tipo de cadena (`'2'`), el número se trata como una cadena. Podemos concatenar cadenas como `\"Hello\" + \"World\"``, así que lo que está pasando aquí es `\"1\" + \"2\"` que devuelve `\"12\"`"
+    ],
+    "id": 14,
+    "options": [
+      "`NaN`",
+      "`TypeError`",
+      "`\"12\"`",
+      "`3`"
+    ],
+    "problem": "function sum(a, b) {\n  return a + b;\n}\n\nsum(1, \"2\");\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "El operador **postfix** unario `++`:",
+      "Devuelve el valor (esto devuelve `0`)",
+      "Incrementa el valor (el número es ahora `1`)",
+      "El operador unario **prefix** `++`:",
+      "Incrementa el valor (el número es ahora `2`)",
+      "Devuelve el valor (esto devuelve `2`)",
+      "Por lo tanto, devuelve `0 2 2 2`."
+    ],
+    "id": 15,
+    "options": [
+      "`1` `1` `2`",
+      "`1` `2` `2`",
+      "`0` `2` `2`",
+      "`0` `1` `2`"
+    ],
+    "problem": "let number = 0;\nconsole.log(number++);\nconsole.log(++number);\nconsole.log(number);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "_Tagged templates_ es un caso de uso de [template literals](https://codeburst.io/javascript-template-literals-tag-functions-for-beginners-758a041160e1). Una _plantilla etiquetada_ es una llamada de función que utiliza una plantilla literal de la que obtener sus argumentos. Si se usan literales de plantillas etiquetadas, el valor del primer argumento es siempre una matriz de los valores de las cadenas. El resto de los argumentos obtienen los valores de las expresiones pasadas.\n</p>\n</details>"
+    ],
+    "id": 16,
+    "options": [
+      "`\"Lydia\"` `21` `[\"\", \" is \", \" years old\"]`",
+      "`[\"\", \" is \", \" years old\"]` `\"Lydia\"` `21`",
+      "`\"Lydia\"` `[\"\", \" is \", \" years old\"]` `21`"
+    ],
+    "problem": "function getPersonInfo(one, two, three) {\n  console.log(one);\n  console.log(two);\n  console.log(three);\n}\n\nconst person = \"Lydia\";\nconst age = 21;\n\ngetPersonInfo`${person} is ${age} years old`;\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Al probar la igualdad, las primitivas se comparan por su _valor_, mientras que los objetos se comparan por su _referencia_. JavaScript comprueba si los objetos tienen una referencia a la misma ubicación en la memoria.",
+      "Los dos objetos que estamos comparando no tienen eso: el objeto que pasamos como parámetro se refiere a una ubicación diferente en la memoria que el objeto que usamos para comprobar la igualdad.",
+      "Esta es la razón por la que ambos `{ edad: 18 } === { edad: 18 }` y `{ edad: 18 }} == { edad: 18 }` devuelven `false`"
+    ],
+    "id": 17,
+    "options": [
+      "`You are an adult!`",
+      "`You are still an adult.`",
+      "`Hmm.. You don't have an age I guess`"
+    ],
+    "problem": "function checkAge(data) {\n  if (data === { age: 18 }) {\n    console.log(\"You are an adult!\");\n  } else if (data == { age: 18 }) {\n    console.log(\"You are still an adult.\");\n  } else {\n    console.log(`Hmm.. You don't have an age I guess`);\n  }\n}\n\ncheckAge({ age: 18 });\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "El operador spread (`...args`.) devuelve un array con argumentos. Una matriz es un objeto, así que `typeof args` devuelve `\"object\"`"
+    ],
+    "id": 18,
+    "options": [
+      "`\"number\"`",
+      "`\"array\"`",
+      "`\"object\"`",
+      "`\"NaN\"`"
+    ],
+    "problem": "function getAge(...args) {\n  console.log(typeof args);\n}\n\ngetAge(21);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Con `\"use strict\"`, es posible asegurarse de que no se declara accidentalmente variables globales. Nunca declaramos la variable `age`, y como usamos `\"use strict\"`, nos dará un error de referencia. Si no hubiéramos usado `\"use strict\"`, habría funcionado, ya que la propiedad `age` se habría añadido al objeto global."
+    ],
+    "id": 19,
+    "options": [
+      "`21`",
+      "`undefined`",
+      "`ReferenceError`",
+      "`TypeError`"
+    ],
+    "problem": "function getAge() {\n  \"use strict\";\n  age = 21;\n  console.log(age);\n}\n\ngetAge();\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`eval` evalúa los códigos que se pasan como una cadena. Si es una expresión, como en este caso, evalúa la expresión. La expresión es `10 * 10 + 5`. Esto devuelve el número `105`."
+    ],
+    "id": 20,
+    "options": [
+      "`105`",
+      "`\"105\"`",
+      "`TypeError`",
+      "`\"10*10+5\"`"
+    ],
+    "problem": "const sum = eval(\"10*10+5\");\n",
+    "question": "¿Cuál es el valor de `sum`?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Los datos almacenados en `sessionStorage` se eliminan después de cerrar la pestaña.",
+      "Si se usó `localStorage`, los datos habrían estado allí siempre, a menos que por ejemplo `localStorage.clear()` sea invocado."
+    ],
+    "id": 21,
+    "options": [
+      "Para siempre, los datos no se pierden.",
+      "Cuando el usuario cierra la pestaña.",
+      "Cuando el usuario cierra todo el navegador, no sólo la pestaña.",
+      "Cuando el usuario apaga su ordenador."
+    ],
+    "problem": "sessionStorage.setItem(\"cool_secret\", 123);\n",
+    "question": "¿Cuánto tiempo es accesible cool_secret?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Con la palabra reservada `var`, se pueden declarar múltiples variables con el mismo nombre. La variable tendrá entonces el último valor.",
+      "No es posible hacer esto con `let` o `const` ya que tienen un alcance de bloque."
+    ],
+    "id": 22,
+    "options": [
+      "`8`",
+      "`10`",
+      "`SyntaxError`",
+      "`ReferenceError`"
+    ],
+    "problem": "var num = 8;\nvar num = 10;\n\nconsole.log(num);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Todas las claves de un objeto (excepto los símbolos) actúan como cadenas, incluso si no son escritas como una cadena. Es por eso que `obj.hasOwnProperty('1')` también devuelve verdadero.",
+      "No funciona así para un conjunto. No hay un \"1\" en nuestro set: `set.has('1')` devuelve `falso`. Tiene el tipo numérico `1`, `set.has(1)` devuelve `true`."
+    ],
+    "id": 23,
+    "options": [
+      "`false` `true` `false` `true`",
+      "`false` `true` `true` `true`",
+      "`true` `true` `false` `true`",
+      "`true` `true` `true` `true`"
+    ],
+    "problem": "const obj = { 1: \"a\", 2: \"b\", 3: \"c\" };\nconst set = new Set([1, 2, 3, 4, 5]);\n\nobj.hasOwnProperty(\"1\");\nobj.hasOwnProperty(1);\nset.has(\"1\");\nset.has(1);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Si tiene dos claves con el mismo nombre, la clave será reemplazada. Seguirá estando en su primera posición, pero con el último valor especificado"
+    ],
+    "id": 24,
+    "options": [
+      "`{ a\"one\", b\"two\" }`",
+      "`{ b\"two\", a\"three\" }`",
+      "`{ a\"three\", b\"two\" }`",
+      "`SyntaxError`"
+    ],
+    "problem": "const obj = { a: \"one\", b: \"two\", a: \"three\" };\nconsole.log(obj);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "El contexto de ejecución base es el contexto de ejecución global: es accesible en todo el código."
+    ],
+    "id": 25,
+    "options": [
+      "true",
+      "false",
+      "it depends"
+    ],
+    "problem": "",
+    "question": "El contexto de ejecución de JS crea dos cosas: el objecto global y la palabra reservada \"this\"."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "La sentencia `continue` omite una iteración si una cierta condición, en este caso `(i === 3)`,  devuelve `true`."
+    ],
+    "id": 26,
+    "options": [
+      "`1` `2`",
+      "`1` `2` `3`",
+      "`1` `2` `4`",
+      "`1` `3` `4`"
+    ],
+    "problem": "for (let i = 1; i < 5; i++) {\n  if (i === 3) continue;\n  console.log(i);\n}\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`String` es un constructor incorporado, al que podemos añadir propiedades. En este caso concreto, añadimos un método a su prototipo. Las cadenas primitivas se convierten automáticamente en un objeto de cadena, generado por la función de prototipo de cadena. Por lo tanto, todas las cadenas (objetos de cadena) tienen acceso a ese método."
+    ],
+    "id": 27,
+    "options": [
+      "`\"Just give Lydia pizza already!\"`",
+      "`TypeErrornot a function`",
+      "`SyntaxError`",
+      "`undefined`"
+    ],
+    "problem": "String.prototype.giveLydiaPizza = () => {\n  return \"Just give Lydia pizza already!\";\n};\n\nconst name = \"Lydia\";\n\nname.giveLydiaPizza();\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Las claves se convierten automáticamente en strings. Estamos tratando en este pregunta de establecer un objeto como clave para el objeto `a`, con el valor de `123`.",
+      "Sin embargo, cuando se _stringfy_ (compleja traducción) un objeto, se convierte en `\"[object Object]\"`. Así que lo que estamos diciendo aquí, es que `a[\"object Object\"] = 123`. Entonces, podemos intentar hacer lo mismo de nuevo. `c` es otro objeto que estamos implícitamente encadenando. Entonces, `a[\"object Object\"] = 456`.",
+      "Para finalizar, registramos `a[b]`, que en realidad es `a[\"Object\"]`. Acabamos de ponerlo en `456`, así que devuelve `456`."
+    ],
+    "id": 28,
+    "options": [
+      "`123`",
+      "`456`",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "const a = {};\nconst b = { key: \"b\" };\nconst c = { key: \"c\" };\n\na[b] = 123;\na[c] = 456;\n\nconsole.log(a[b]);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Tenemos una función `setTimeout` y la invocamos primero. Sin embargo, fue el último en ser registrado.",
+      "Esto se debe a que en los navegadores, no sólo tenemos el motor de tiempo de ejecución, también tenemos algo llamado `WebAPI`. El `WebAPI` nos da la función `setTimeout` para empezar, y por ejemplo el DOM.",
+      "Después de que la _callback_ es empujada a la WebAPI, la función `setTimeout` en sí misma (¡pero no la callback!) es removida de la pila.",
+      "<img src=\"https://i.imgur.com/X5wsHOg.png\" width=\"200\">",
+      "Ahora, `foo` es invocado, y ``\"First\"`` está siendo registrado.",
+      "<img src=\"https://i.imgur.com/Pvc0dGq.png\" width=\"200\">",
+      "`Foo` se quita de la pila, y `Baz` es invocado. `Third` se registra.",
+      "<img src=\"https://i.imgur.com/WhA2bCP.png\" width=\"200\">",
+      "La WebAPI no puede simplemente añadir cosas a la pila cuando está lista. En su lugar, empuja la función de devolución de llamada a algo llamado la _queue_ (cola en español).",
+      "<img src=\"https://i.imgur.com/NSnDZmU.png\" width=\"200\">",
+      "Aquí es donde un bucle de eventos comienza a funcionar. Un **lazo de evento** mira la pila y la cola de tareas. Si la pila está vacía, toma lo primero que encuentra en la cola y la empuja sobre la pila.",
+      "<img src=\"https://i.imgur.com/uyiScAI.png\" width=\"200\">",
+      "Se invoca el `bar`, se registra el `\"Second\"` y se quita de la pila."
+    ],
+    "id": 29,
+    "options": [
+      "`First` `Second` `Third`",
+      "`First` `Third` `Second`",
+      "`Second` `First` `Third`",
+      "`Second` `Third` `First`"
+    ],
+    "problem": "const foo = () => console.log(\"First\");\nconst bar = () => setTimeout(() => console.log(\"Second\"));\nconst baz = () => console.log(\"Third\");\n\nbar();\nfoo();\nbaz();\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "El elemento anidado más profundo que causa el evento es el destino de ese evento."
+    ],
+    "id": 30,
+    "options": [
+      "Outer `div`",
+      "Inner `div`",
+      "`button`",
+      "An array of all nested elements."
+    ],
+    "problem": "<div onclick=\"console.log('first div')\">\n  <div onclick=\"console.log('second div')\">\n    <button onclick=\"console.log('button')\">\n      Click!\n    </button>\n  </div>\n</div>\n",
+    "question": "¿Cuál es la referencia al objeto que lanza el evento cuando se hace click en el botón?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Si hacemos clic en `p`, vemos dos _outputs_: `p` y `div`. Durante la propagación del evento, hay 3 [fases](https://www.sitepoint.com/event-bubbling-javascript/): _capturing_, _target_ y _bubbling_. De forma predeterminada, los controladores de eventos se ejecutan en la fase uno (a menos que se establezca `useCapture` en `true`). Va desde el elemento anidado más profundo hacia el exterior."
+    ],
+    "id": 31,
+    "options": [
+      "`p` `div`",
+      "`div` `p`",
+      "`p`",
+      "`div`"
+    ],
+    "problem": "<div onclick=\"console.log('div')\">\n  <p onclick=\"console.log('p')\">\n    Click here!\n  </p>\n</div>\n",
+    "question": "Al hacer click en el párrafo, ¿qué se muestra por pantalla?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "En ambos  podemos pasar el objeto al que queremos que se refiera la palabra reservada `this`. Sin embargo, la diferencia es que `.call` es *ejecutado inmediatamente*!",
+      "`.bind` devuelve una copia de la función, pero con un contexto enlazado. Es decir, no se ejecuta de inmediato."
+    ],
+    "id": 32,
+    "options": [
+      "`undefined is 21` `Lydia is 21`",
+      "`function` `function`",
+      "`Lydia is 21` `Lydia is 21`",
+      "`Lydia is 21` `function`"
+    ],
+    "problem": "const person = { name: \"Lydia\" };\n\nfunction sayHi(age) {\n  console.log(`${this.name} is ${age}`);\n}\n\nsayHi.call(person, 21);\nsayHi.bind(person, 21);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "La función `sayHi` devuelve el valor devuelto de la función invocada inmediatamente ([IIFE](https://developer.mozilla.org/es/docs/Glossary/IIFE)). Esta función devuelve `0`, que es el tipo `\"number\"`.",
+      "En JS solo hay 7 tipos incorporados (En inglés se llaman _built-in types_, y pueden identificarse con el operador `typeof`. Más información [aquí](https://www.oreilly.com/library/view/you-dont-know/9781491905159/ch01.html)): `null`,` undefined`, `boolean`,` number`, `string`,` object` y `symbol`. `\"function\"` no es un tipo, ya que las funciones son objetos, es de tipo `\"object\"`."
+    ],
+    "id": 33,
+    "options": [
+      "`\"object\"`",
+      "`\"number\"`",
+      "`\"function\"`",
+      "`\"undefined\"`"
+    ],
+    "problem": "function sayHi() {\n  return (() => 0)();\n}\n\ntypeof sayHi();\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Solo hay seis valores falsos:",
+      "`undefined`",
+      "`null`",
+      "`NaN`",
+      "`0`",
+      "`''` (cadena vacía)",
+      "`false`",
+      "Los constructores de funciones, como `new Number` y `new Boolean` son correctos."
+    ],
+    "id": 34,
+    "options": [
+      "`0`, `''`, `undefined`",
+      "`0`, `new Number(0)`, `''`, `new Boolean(false)`, `undefined`",
+      "`0`, `''`, `new Boolean(false)`, `undefined`",
+      "All of them are falsy"
+    ],
+    "problem": "0;\nnew Number(0);\n(\"\");\n(\" \");\nnew Boolean(false);\nundefined;\n",
+    "question": "¿Cuáles de estos valores son falsos?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`typeof 1` devuelve `\"number\" `.\n`typeof \"number\"` devuelve `\"string\"`"
+    ],
+    "id": 35,
+    "options": [
+      "`\"number\"`",
+      "`\"string\"`",
+      "`\"object\"`",
+      "`\"undefined\"`"
+    ],
+    "problem": "console.log(typeof typeof 1);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Cuando se establece un valor en un elemento de una matriz que excede la longitud de la matriz, JS crea algo llamado \"ranuras vacías\". Estos realmente tienen el valor de `undefined`, pero se podrá ver algo como:",
+      "`[1, 2, 3, 7 x empty, 11]`",
+      "dependiendo de dónde lo ejecute (es diferente para cada navegador, nodo, etc.)"
+    ],
+    "id": 36,
+    "options": [
+      "`[1, 2, 3, 7 x null, 11]`",
+      "`[1, 2, 3, 11]`",
+      "`[1, 2, 3, 7 x empty, 11]`",
+      "`SyntaxError`"
+    ],
+    "problem": "const numbers = [1, 2, 3];\nnumbers[10] = 11;\nconsole.log(numbers);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "El bloque `catch` recibe el argumento` x`. Este no es el mismo `x` que la variable cuando pasamos los argumentos. Esta variable `x` tiene un ámbito de bloque.",
+      "Más adelante, establecemos esta variable de ámbito de bloque igual a `1`, y establecemos el valor de la variable `y`. Ahora, registramos la variable de ámbito de bloque `x`, que es igual a `1`.",
+      "Fuera del bloque `catch`,` x` sigue siendo `undefined`, e `y` es `2`. Cuando queremos `console.log (x)` fuera del bloque `catch`, devuelve `undefined`, y `y` devuelve` 2`."
+    ],
+    "id": 37,
+    "options": [
+      "`1` `undefined` `2`",
+      "`undefined` `undefined` `undefined`",
+      "`1` `1` `2`",
+      "`1` `undefined` `undefined`"
+    ],
+    "problem": "(() => {\n  let x, y;\n  try {\n    throw new Error();\n  } catch (x) {\n    (x = 1), (y = 2);\n    console.log(x);\n  }\n  console.log(x);\n  console.log(y);\n})();\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "JavaScript solo tiene tipos y objetos primitivos.",
+      "Los tipos primitivos son `boolean`, `null`, `undefined`, `bigint`, `number`, `string` y `symbol`.",
+      "Lo que diferencia a un tipo primitivo de un objeto es que los primeros no tienen propiedades o métodos; sin embargo, se puede ver que `'foo'.toUpperCase ()` se evalúa como `'FOO'` y no da como resultado un `TypeError`. Esto se debe a que cuando se intenta acceder a una propiedad o método en un tipo primitivo, como una cadena, JavaScript envolverá implícitamente el objeto utilizando una de las clases de envoltura, por ejemplo `string`, y luego descartará la envoltura inmediatamente después de evaluar la expresión. Todas los tipos primitivos excepto `null` y `undefined` poseen este comportamiento."
+    ],
+    "id": 38,
+    "options": [
+      "tipo primitivo o un objeto",
+      "función u objeto",
+      "¡pregunta trampa! solo objetos",
+      "número u objeto"
+    ],
+    "problem": "",
+    "question": "Todo en Javascript es o bien un(a).."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`[1, 2]` es nuestro valor inicial. Este es el valor con el que empezamos y el valor del primer `acc`. Durante la primera ronda, `acc` es` [1,2] `, y `cur` es `[0, 1]`. Los concatenamos, lo que resulta en `[1, 2, 0, 1]`.",
+      "Entonces, `[1, 2, 0, 1]` es `acc` y` [2, 3]` es `cur`. Los concatenamos, y obtenemos `[1, 2, 0, 1, 2, 3]`"
+    ],
+    "id": 39,
+    "options": [
+      "`[0, 1, 2, 3, 1, 2]`",
+      "`[6, 1, 2]`",
+      "`[1, 2, 0, 1, 2, 3]`",
+      "`[1, 2, 6]`"
+    ],
+    "problem": "[[0, 1], [2, 3]].reduce(\n  (acc, cur) => {\n    return acc.concat(cur);\n  },\n  [1, 2]\n);\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`null` es falso. `! null` devuelve `true`. `! true` devuelve `false`.",
+      "`\" \"` es falso. `!\" \"` devuelve `true`. `! true` devuelve `false`.",
+      "'1' es verdadero. `! 1` devuelve `false`. `! false` devuelve `true`."
+    ],
+    "id": 40,
+    "options": [
+      "`false` `true` `false`",
+      "`false` `false` `true`",
+      "`false` `true` `true`",
+      "`true` `true` `false`"
+    ],
+    "problem": "!!null;\n!!\"\";\n!!1;\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Devuelve una identificación única, un id único. Este id se puede usar para borrar ese intervalo con la función `clearInterval ()`."
+    ],
+    "id": 41,
+    "options": [
+      "una id único",
+      "la cantidad de milisegundos especificada",
+      "la función pasada",
+      "`undefined`"
+    ],
+    "problem": "setInterval(() => console.log(\"Hi\"), 1000);\n",
+    "question": "¿Qué devuelveel método `setInterval`?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Una cadena es un iterable. El [operador de propagación](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Operadores/Spread_operator) asigna todos los caracteres de un iterable a un elemento."
+    ],
+    "id": 42,
+    "options": [
+      "`[\"L\", \"y\", \"d\", \"i\", \"a\"]`",
+      "`[\"Lydia\"]`",
+      "`[[], \"Lydia\"]`",
+      "`[[\"L\", \"y\", \"d\", \"i\", \"a\"]]`"
+    ],
+    "problem": "[...\"Lydia\"];\n",
+    "question": "¿Qué devuelve la siguiente función?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Las funciones regulares no pueden pararse a mitad de ejecución después de invocarse. Sin embargo, una función generadora sí puede ser parada, y más adelante continuar desde donde fue detenida. Cada vez que una función generadora encuentra un `yield`, la función cede el valor especificado después de él. Observa que la función generadora en este caso no _devuelve_ el valor, _cede_ el valor.",
+      "Primero, iniciamos la función generadora con `i` igual a `10`. Invocamos la función generadora usando el método `next()`. La primera vez que invocamos la función generadora, `i` es igual a `10`. Encuentra el primer `yield`: cede el valor de `i`. El generador está ahora \"pausado\", y `10` es mostrado por consola.",
+      "Después, invocamos la función otra vez con el método `next()`. Continúa donde fue detenida previamente, todavía con `i` igual a `10`. Ahora, encuentra el siguiente `yield`, y cede `i * 2`. `i` es igual a `10`, así que devuelve `10 * 2`, que es `20`. Esto da como resultado `10, 20`."
+    ],
+    "id": 43,
+    "options": [
+      "`[0, 10], [10, 20]`",
+      "`20, 20`",
+      "`10, 20`",
+      "`0, 10 y 10, 20`"
+    ],
+    "problem": "function* generator(i) {\n  yield i;\n  yield i * 2;\n}\n\nconst gen = generator(10);\n\nconsole.log(gen.next().value);\nconsole.log(gen.next().value);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Cuando pasamos múltiples promesas al método `Promise.race`, resuelve/rechaza la _primera_ promesa que sea resuelta/rechazada. Para el método `setTimeout`, pasamos un cronómetro: 500ms para la primera promesa (`firstPromise`), y 100ms para la segunda promesa (`secondPromise`). Esto significa que `secondPromise` se resuelve primero con el valor de `'two'`. `res` ahora guarda el valor `'two'`, el cual se muestra por consola."
+    ],
+    "id": 44,
+    "options": [
+      "`\"one\"`",
+      "`\"two\"`",
+      "`\"two\" \"one\"`",
+      "`\"one\" \"two\"`"
+    ],
+    "problem": "const firstPromise = new Promise((res, rej) => {\n  setTimeout(res, 500, \"one\");\n});\n\nconst secondPromise = new Promise((res, rej) => {\n  setTimeout(res, 100, \"two\");\n});\n\nPromise.race([firstPromise, secondPromise]).then(res => console.log(res));\n",
+    "question": "¿Qué devuelve esto?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Primero, declaramos la variable `person` con el valor de un objeto que tiene una propiedad `name`.",
+      "<img src=\"https://i.imgur.com/TML1MbS.png\" width=\"200\">",
+      "Después, declaramos una variable llamada `members`. Asignamos el primer elemento de ese array igual al valor de la variable `person`. Un objeto interactúa por _referencia_ cuando es asignado igual a otro objeto. Cuando asignas una referencia de una variable a otra, haces una _copia_ de esa referencia. (¡observa que no tienen la _misma_ referencia!)",
+      "<img src=\"https://i.imgur.com/FSG5K3F.png\" width=\"300\">",
+      "Después, asignamos que la variable `person` es igual a `null`.",
+      "<img src=\"https://i.imgur.com/sYjcsMT.png\" width=\"300\">",
+      "Solo estamos modificando el valor de la variable `person`, y no el primer elemento del array, ya que este elemento tiene una referencia diferente (copiada) al objeto. El primer elemento en `members` todavía mantiene su referencia hacia el objeto original. Cuando mostramos por consola el array `members`, el primer elemento todavía mantiene el valor del objeto, el cual se muestra por consola."
+    ],
+    "id": 45,
+    "options": [
+      "`null`",
+      "`[null]`",
+      "`[{}]`",
+      "`[{ name\"Lydia\" }]`"
+    ],
+    "problem": "let person = { name: \"Lydia\" };\nconst members = [person];\nperson = null;\n\nconsole.log(members);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Con un bucle `for-in`, podemos iterar sobre claves de objetos, en este caso `name` y `age`. Internamente, las claves de objetos son strings (si no son Symbol). En cada bucle, asignamos `item` igual a la clave actual que se está iterando. Primero, `item` es igual a `name`, y se muestra por consola. Después, `item` es igual a `age`, que se muestra por consola."
+    ],
+    "id": 46,
+    "options": [
+      "`{ name\"Lydia\" }, { age21 }`",
+      "`\"name\", \"age\"`",
+      "`\"Lydia\", 21`",
+      "`[\"name\", \"Lydia\"], [\"age\", 21]`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia\",\n  age: 21\n};\n\nfor (const item in person) {\n  console.log(item);\n}\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "La asociatividad de operadores es el orden en el que el compilador evalúa las expresiones, ya sea de izquierda a derecha o de derecha a izquierda. Esto solo pasa si todos los operadores tienen la _misma_ precedencia. Solo tenemos un tipo de operador: `+`. Para la suma, la asociatividad es de izquierda a derecha.",
+      "`3 + 4` se evalúa primero. Esto da como resultado el número `7`.",
+      "`7 + '5'` da `\"75\"` por la coerción. JavaScript convierte el número `7` a string, mira la pregunta 15. Podemos concatenar dos strings usando el operador `+`. `7 + '5'` da como resultado `\"75\"`."
+    ],
+    "id": 47,
+    "options": [
+      "`\"345\"`",
+      "`\"75\"`",
+      "`12`",
+      "`\"12\"`"
+    ],
+    "problem": "console.log(3 + 4 + \"5\");\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Solo el primer número en el string es devuelto. Según en la _base_ seleccionada (el segundo argumento para especificar a qué tipo de número queremos transformarlo: base 10, hexadecimal, octal, binario, etc.), el `parseInt` comprueba si los caracteres del string son válidos. Una vez encuentra un caracter que no es un número válido en la base seleccionada, deja de recorrer el string e ignora los siguientes caracteres.",
+      "`*` no es un número válido. Solo convierte `\"7\"` al decimal `7`. `num` tiene el valor `7`."
+    ],
+    "id": 48,
+    "options": [
+      "`42`",
+      "`\"42\"`",
+      "`7`",
+      "`NaN`"
+    ],
+    "problem": "const num = parseInt(\"7*6\", 10);\n",
+    "question": "¿Cuál es el valor de `num`?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Cuando se mapea sobre un array, el valor de `num` es igual al elemento que se está iterando. En este caso, los elementos son números, por lo que la condición del if `typeof num === \"number\"` devuelve `true`. La función de mapeo crea un nuevo array e inserta los valores devueltos por la función.",
+      "Sin embargo, no devolvemos un valor. Cuando no devolvemos un valor desde la función, la función devuelve `undefined`. Para cada elemento en el array, la función de bloque es llamada, así que por cada elemento devolvemos `undefined`."
+    ],
+    "id": 49,
+    "options": [
+      "`[]`",
+      "`[null, null, null]`",
+      "`[undefined, undefined, undefined]`",
+      "`[ 3 huecos vacíos ]`"
+    ],
+    "problem": "[1, 2, 3].map(num => {\n  if (typeof num === \"number\") return;\n  return num * 2;\n});\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Los argumentos son pasados por _valor_, a no ser que su valor sea un objeto, en cuyo caso con pasados por _referencia_. `birthYear` es pasado por valor, ya que es un string, no un objeto. Cuando pasamos argumentos por valor, una _copia_ de ese valor es creada (ver pregunta 46).",
+      "La variable `birthYear` tiene una referencia al valor `\"1997\"`. El argumento `year` también tiene una referencia al valor `\"1997\"`, pero no es el mismo valor al que `birthYear` referencia. Cuando actualizamos el valor de `year` igualándolo a `\"1998\"`, solo estamos actualizando el valor de `year`. `birthYear` todavía es igual a `\"1997\"`.",
+      "El valor de `person` es un objeto. El argumento `member` tiene una referencia (copiada) al _mismo_ objeto. Cuando modificamos la propiedad a la que el objeto `member` referencia, el valor de `person` también será modificado, ya que ambos tienen una referencia al mismo objeto. La propiedad `name` de `person` es ahora igual al valor `\"Lydia\"`."
+    ],
+    "id": 50,
+    "options": [
+      "`{ name\"Lydia\" }, \"1997\"`",
+      "`{ name\"Sarah\" }, \"1998\"`",
+      "`{ name\"Lydia\" }, \"1998\"`",
+      "`{ name\"Sarah\" }, \"1997\"`"
+    ],
+    "problem": "function getInfo(member, year) {\n  member.name = \"Lydia\";\n  year = \"1998\";\n}\n\nconst person = { name: \"Sarah\" };\nconst birthYear = \"1997\";\n\ngetInfo(person, birthYear);\n\nconsole.log(person, birthYear);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Con la sentencia `throw`, podemos crear errores personalizados. Con esta sentencia, puedes lanzar excepciones. Una excepción puede ser un <b>string</b>, un <b>número</b>, un <b>boolean</b> o un <b>objeto</b>. En este caso, nuestra excepción es el string `'Hello world'`.",
+      "Con la sentencia `catch`, podemos especificar qué queremos hacer si una excepción es lanzada en el bloque `try`. Se lanza una excepción: el string `'Hello world'`. `e` es ahora igual a ese string, el cual se muestra por consola. Esto da como resultado `'Oh an error: Hello world'`."
+    ],
+    "id": 51,
+    "options": [
+      "`\"It worked! Hello world!\"`",
+      "`\"Oh no an error! undefined`",
+      "`SyntaxErrorcan only throw Error objects`",
+      "`\"Oh no an error! Hello world!`"
+    ],
+    "problem": "function greeting() {\n  throw \"Hello world!\";\n}\n\nfunction sayHi() {\n  try {\n    const data = greeting();\n    console.log(\"It worked!\", data);\n  } catch (e) {\n    console.log(\"Oh no an error!\", e);\n  }\n}\n\nsayHi();\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Cuando devuelves una propiedad, el valor de la propiedad es igual al valor _retornado_, no el valor indicado en el constructor de la función. Devolvemos el string `\"Maserati\"`, por lo que `myCar.make` es igual a `\"Maserati\"`."
+    ],
+    "id": 52,
+    "options": [
+      "`\"Lamborghini\"`",
+      "`\"Maserati\"`",
+      "`ReferenceError`",
+      "`TypeError`"
+    ],
+    "problem": "function Car() {\n  this.make = \"Lamborghini\";\n  return { make: \"Maserati\" };\n}\n\nconst myCar = new Car();\nconsole.log(myCar.make);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`let x = y = 10;` es en realidad una forma más corta de escribir:",
+      "Cuando asignamos `y` igual a `10`, en realidad añadimos una propiedad `y` al objeto global (`window` en navegador, `global` en Node). En un navegador, `window.y` es ahora igual a `10`.",
+      "Después, declaramos una variable `x` con el valor de `y`, el cual es `10`. Las variables declaradas con `let` tienen _alcance de bloque_, solo son definidas dentro del bloque en el que son declaradas; las expresiones de función ejecutadas inmediatamente (IIFE por sus siglas en inglés) en este caso. Cuando usamos el operador `typeof`, el operando `x` no está definido: estamos intentando acceder a `x` fuera del bloque en el que es declarado. Esto significa que `x` no está definido. Los valores a los que no se les ha asignado un valor o que no han sido declarados son de tipo `\"undefined\"`. `console.log(typeof x)` devuelve `\"undefined\"`.",
+      "Sin embargo, hemos creado una variable global `y` cuando la hemos igualado a `10`. Este valor es accesible desde cualquier parte en nuestro código. `y` es definida, y tiene un valor de tipo `\"number\"`. `console.log(typeof y)` devuelve `\"number\"`."
+    ],
+    "id": 53,
+    "options": [
+      "`\"undefined\", \"number\"`",
+      "`\"number\", \"number\"`",
+      "`\"object\", \"number\"`",
+      "`\"number\", \"undefined\"`"
+    ],
+    "problem": "(() => {\n  let x = (y = 10);\n})();\n\nconsole.log(typeof x);\nconsole.log(typeof y);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Podemos borrar propiedades de objetos usando `delete`, también en el prototipo (prototype). Borrando una propiedad en el prototipo, hace que no vuelva a estar disponible en la cadena de prototipo. En este caso, la función `bark` deja de estar disponible en el prototipo después de `delete Dog.prototype.bark`, pero aún intentamos acceder a ella.",
+      "Cuando intentamos invocar algo que no es una función, un `TypeError` es lanzado. En este caso `TypeError: pet.bark is not a function`, ya que `pet.bark` es `undefined`."
+    ],
+    "id": 54,
+    "options": [
+      "`\"Woof I am Mara\"`, `TypeError`",
+      "`\"Woof I am Mara\"`, `\"Woof I am Mara\"`",
+      "`\"Woof I am Mara\"`, `undefined`",
+      "`TypeError`, `TypeError`"
+    ],
+    "problem": "class Dog {\n  constructor(name) {\n    this.name = name;\n  }\n}\n\nDog.prototype.bark = function() {\n  console.log(`Woof I am ${this.name}`);\n};\n\nconst pet = new Dog(\"Mara\");\n\npet.bark();\n\ndelete Dog.prototype.bark;\n\npet.bark();\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "El objeto `Set` es una colección de valores _únicos_: un valor solo puede aparecer una vez en un set.",
+      "Pasamos el iterable `[1, 1, 2, 3, 4]` con el valor `1` duplicado. Como no podemos tener dos valores iguales en el set, uno de ellos es eliminado. Esto da como resultado `{1, 2, 3, 4}`."
+    ],
+    "id": 55,
+    "options": [
+      "`[1, 1, 2, 3, 4]`",
+      "`[1, 2, 3, 4]`",
+      "`{1, 1, 2, 3, 4}`",
+      "`{1, 2, 3, 4}`"
+    ],
+    "problem": "const set = new Set([1, 1, 2, 3, 4]);\n\nconsole.log(set);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Un módulo importado es de _solo lectura_: no puedes modificar el módulo importado. Solo el módulo que los exporta puede cambiar su valor.",
+      "Cuando intentamos incrementar el valor de `myCounter`, lanza un error: `myCounter` es de solo lectura y no puede ser modificado."
+    ],
+    "id": 56,
+    "options": [
+      "`10`",
+      "`11`",
+      "`Error`",
+      "`NaN`"
+    ],
+    "problem": "// counter.js\nlet counter = 10;\nexport default counter;\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "El operador `delete` devuelve un valor booleano: `true` en una eliminación exitosa, sino devolverá `false`. Sin embargo, las variables declaradas con `var`, `const` o `let` no pueden ser borradas usando el operador `delete`.",
+      "La variable `name` se declara con `const`, por lo que su eliminación no es exitosa: se devuelve `false`. Cuando asignamos `age` igual a `21`, en realidad hemos añadido una propiedad llamada `age` al objeto global. Puedes borrar exitosamente propiedades de objetos de esta forma, también del objeto global, así que `delete age` devuelve `true`."
+    ],
+    "id": 57,
+    "options": [
+      "`false`, `true`",
+      "`\"Lydia\"`, `21`",
+      "`true`, `true`",
+      "`undefined`, `undefined`"
+    ],
+    "problem": "const name = \"Lydia\";\nage = 21;\n\nconsole.log(delete name);\nconsole.log(delete age);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Podemos desempaquetar valores de arrays o propiedades de objetos con desestructuración. Por ejemplo:",
+      "<img src=\"https://i.imgur.com/ADFpVop.png\" width=\"200\">",
+      "El valor de `a` es ahora `1`, y el valor de `b` es ahora `2`. Lo que realmente se hizo en la pregunta es:",
+      "<img src=\"https://i.imgur.com/NzGkMNk.png\" width=\"200\">",
+      "Esto significa que el valor de `y` es igual al primer valor del array, el cual es el número `1`. Cuando mostramos por consola `y`, `1` es devuelto."
+    ],
+    "id": 58,
+    "options": [
+      "`[[1, 2, 3, 4, 5]]`",
+      "`[1, 2, 3, 4, 5]`",
+      "`1`",
+      "`[1]`"
+    ],
+    "problem": "const numbers = [1, 2, 3, 4, 5];\nconst [y] = numbers;\n\nconsole.log(y);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Se pueden combinar objetos usando el operador de propagación `...`. Te permite crear copias de los pares clave/valor de un objeto, y añadirlos a otro objeto. En este caso, creamos copias del objeto `user`, y las añadimos al objeto `admin`. El objeto `admin` ahora contiene los pares clave/valor copiados, lo cual da como resultado `{ admin: true, name: \"Lydia\", age: 21 }`."
+    ],
+    "id": 59,
+    "options": [
+      "`{ admintrue, user{ name\"Lydia\", age21 } }`",
+      "`{ admintrue, name\"Lydia\", age21 }`",
+      "`{ admintrue, user[\"Lydia\", 21] }`",
+      "`{ admintrue }`"
+    ],
+    "problem": "const user = { name: \"Lydia\", age: 21 };\nconst admin = { admin: true, ...user };\n\nconsole.log(admin);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Con el método `defineProperty`, podemos añadir nuevas propiedades a un objeto, o modificar las existentes. Cuando añadimos una propiedad a un objeto usando el método `defineProperty`, es por defecto _no enumerable_. El método `Object.keys` devuelve todos los nombres de propiedades _enumerables_ de un objeto, en este caso solo `\"name\"`.",
+      "Las propiedades añadidas usando el método `defineProperty` son inmutables por defecto. Puedes sobrescribir este comportamiento usando las propiedades `writable`, `configurable` y `enumerable`. De esta forma, el método `defineProperty` te da mucho más control sobre las propiedades que estás añadiendo a un objeto."
+    ],
+    "id": 60,
+    "options": [
+      "`{ name\"Lydia\", age21 }`, `[\"name\", \"age\"]`",
+      "`{ name\"Lydia\", age21 }`, `[\"name\"]`",
+      "`{ name\"Lydia\"}`, `[\"name\", \"age\"]`",
+      "`{ name\"Lydia\"}`, `[\"age\"]`"
+    ],
+    "problem": "const person = { name: \"Lydia\" };\n\nObject.defineProperty(person, \"age\", { value: 21 });\n\nconsole.log(person);\nconsole.log(Object.keys(person));\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "El segundo argumento de `JSON.stringify` es el _replacer_ (reemplazador). El reemplazador puede ser una función o un array, y te permite controlar qué y cómo deberían convertirse los valores a string.",
+      "Si el reemplazador es un _array_, solo los nombres de las propiedades incluidos en el array serán agregados al string JSON. En este caso, solo las propiedades con nombres `\"level\"` y `\"health\"` son incluidas, `\"username\"` es excluido. `data` es ahora igual a `\"{\"level\":19, \"health\":90}\"`.",
+      "Si el reemplazador es una _función_, esta función es llamada en cada propiedad en el objeto que estás convirtiendo a string. El valor retornado por esta función será el valor de la propiedad cuando es añadida al string JSON. Si el valor es `undefined`, esta propiedad es excluida del string JSON."
+    ],
+    "id": 61,
+    "options": [
+      "`\"{\"level\":19, \"health\":90}\"`",
+      "`\"{\"username\"\"lydiahallie\"}\"`",
+      "`\"[\"level\", \"health\"]\"`",
+      "`\"{\"username\"\"lydiahallie\", \"level\":19, \"health\":90}\"`"
+    ],
+    "problem": "const settings = {\n  username: \"lydiahallie\",\n  level: 19,\n  health: 90\n};\n\nconst data = JSON.stringify(settings, [\"level\", \"health\"]);\nconsole.log(data);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "El operador unario `++` _devuelve primero_ el valor del operando, _y después incrementa_ el valor del operando. El valor de `num1` es `10`, ya que la función `increaseNumber` primero devuelve el valor de `num`, que es `10`, y solo incrementa el valor de `num` después.",
+      "`num2` es `10`, ya que pasamos `num1` a `increasePassedNumber`. `number` es igual a `10` (el valor de `num1`. Una vez más, el operador unario `++` _primero devuelve_ el valor del operando, _y después incrementa_ el valor del operando. El valor de `number` es `10`, así que `num2` es igual a `10`."
+    ],
+    "id": 62,
+    "options": [
+      "`10`, `10`",
+      "`10`, `11`",
+      "`11`, `11`",
+      "`11`, `12`"
+    ],
+    "problem": "let num = 10;\n\nconst increaseNumber = () => num++;\nconst increasePassedNumber = number => number++;\n\nconst num1 = increaseNumber();\nconst num2 = increasePassedNumber(num1);\n\nconsole.log(num1);\nconsole.log(num2);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "En ES6, podemos inicializar parámetros con un valor por defecto. El valor del parámetro será el valor por defecto si no se pasa otro valor a la función, o si el valor del parámetro es `\"undefined\"`. En este caso, propagamos las propiedades del objeto `value` en un nuevo objeto, por lo que `x` tiene el valor por defecto de `{ number: 10 }`.",
+      "¡El argumento por defecto es evaluado _cuando es llamado_! Cada vez que llamamos a la función, un _nuevo_ objeto es creado. Invocamos la función `multiply` las dos primeras veces sin pasar un valor: `x` tiene el valor por defecto de `{ number: 10 }`. Después mostramos por consola el valor multiplicado de ese número, que es `20`.",
+      "La tercera vez que invocamos `multiply`, pasamos un argumento: el objeto llamado `value`. El operador `*=` es en realidad una forma corta de escribir `x.number = x.number * 2`: modificamos el valor de `x.number` y mostramos por consola el valor multiplicado de `20`.",
+      "La cuarta vez, pasamos el objeto `value` otra vez. `x.number` fue previamente modificado a `20`, por lo que `x.number *= 2` devuelve `40`."
+    ],
+    "id": 63,
+    "options": [
+      "`20`, `40`, `80`, `160`",
+      "`20`, `40`, `20`, `40`",
+      "`20`, `20`, `20`, `40`",
+      "`NaN`, `NaN`, `20`, `40`"
+    ],
+    "problem": "const value = { number: 10 };\n\nconst multiply = (x = { ...value }) => {\n  console.log((x.number *= 2));\n};\n\nmultiply();\nmultiply();\nmultiply(value);\nmultiply(value);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "El primer argumento que el método `reduce` recibe es el _acumulador_, `x` en este caso. El segundo argumento es el _valor actual_, `y`. Con el método `reduce`, podemos ejecutar una función de callback en cada elemento en el array, lo cual puede resultar en un único valor al final.",
+      "En este ejemplo, no estamos devolviendo ningún valor, simplemente estamos mostrando por consola los valores del acumulador y del valor actual.",
+      "El valor del acumulador es igual al valor previamente devuelto por la función de callback. Si no pasas el argumento opcional `initialValue` al método `reduce`, el acumulador es igual al primer elemento de la primera llamada.",
+      "En la primera llamada, el acumulador (`x`) es `1`, y el valor actual (`y`) es `2`. No devolvemos desde la función de callback, mostramos por consola el acumulador y el valor actual: se muestra `1` y `2`.",
+      "Si no devuelves un valor de una función, se devuelve `undefined`. En la siguiente llamada, el acumulador es `undefined`, y el valor actual es `3`. Se muestra por consola `undefined` y `3`.",
+      "En la cuarta llamada, otra vez no devolvemos desde la función de callback. El acumulador es una vez más `undefined`, y el valor actual es `4`. Se muestra por consola `undefined` y `4`."
+    ],
+    "id": 64,
+    "options": [
+      "`1` `2` y `3` `3` y `6` `4`",
+      "`1` `2` y `2` `3` y `3` `4`",
+      "`1` `undefined` y `2` `undefined` y `3` `undefined` y `4` `undefined`",
+      "`1` `2` y `undefined` `3` y `undefined` `4`"
+    ],
+    "problem": "[1, 2, 3, 4].reduce((x, y) => console.log(x, y));\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "En una clase derivada, no puedes acceder a `this` antes de llamar a `super`. Si intentas hacerlo, se lanzará un `ReferenceError`: 1 y 4 lanzarían este error.",
+      "Con `super`, llamamos al constructor del padre con unos argumentos. El constructor del padre recibe el argumento `name`, por lo que necesitamos pasar `name` a `super`.",
+      "La clase `Labrador` recibe dos argumentos, `name` porque extiende de `Dog`, y `size` como una propiedad adicional en la clase `Labrador`. Ambos necesitan ser pasados al constructor de `Labrador`, lo cual se realiza correctamente usando el constructor 2."
+    ],
+    "id": 65,
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "problem": "class Dog {\n  constructor(name) {\n    this.name = name;\n  }\n};\n\nclass Labrador extends Dog {\n  // 1 \n  constructor(name, size) {\n    this.size = size;\n  }\n  // 2\n  constructor(name, size) {\n    super(name);\n    this.size = size;\n  }\n  // 3\n  constructor(size) {\n    super(name);\n    this.size = size;\n  }\n  // 4 \n  constructor(name, size) {\n    this.name = name;\n    this.size = size;\n  }\n\n};\n",
+    "question": "¿Con qué constructor podemos extender correctamente la clase `Dog`?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Con `import`, todos los módulos importados son _pre-convertidos_. Esto significa que los módulos importados son ejecutados _primero_, y el código en el fichero que importa el módulo se ejecuta _después_.",
+      "¡Esto es una diferencia existente entre `require()` en CommonJS e `import`! Con `require()`, puedes cargar dependencias bajo demanda mientras el código está siendo ejecutado. Si hubiéramos usado `require` en lugar de `import`, se habría mostrado por consola `running index.js`, `running sum.js`, `3`."
+    ],
+    "id": 66,
+    "options": [
+      "`running index.js`, `running sum.js`, `3`",
+      "`running sum.js`, `running index.js`, `3`",
+      "`running sum.js`, `3`, `running index.js`",
+      "`running index.js`, `undefined`, `running sum.js`"
+    ],
+    "problem": "// index.js\nconsole.log('running index.js');\nimport { sum } from './sum.js';\nconsole.log(sum(1, 2));\n\n// sum.js\nconsole.log('running sum.js');\nexport const sum = (a, b) => a + b;\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Cada Symbol es completamente único. El propósito del argumento pasado a Symbol es para darle una descripción. El valor de Symbol no depende del argumento pasado. Como se comprueba igualdad, estamos creando dos Symbol completamente nuevos: el primer `Symbol('foo')`, y el segundo `Symbol('foo')`. Estos dos valores son únicos y no iguales, `Symbol('foo') === Symbol('foo')` devuelve `false`."
+    ],
+    "id": 67,
+    "options": [
+      "`true`, `true`, `false`",
+      "`false`, `true`, `false`",
+      "`true`, `false`, `true`",
+      "`true`, `true`, `true`"
+    ],
+    "problem": "console.log(Number(2) === Number(2))\nconsole.log(Boolean(false) === Boolean(false))\nconsole.log(Symbol('foo') === Symbol('foo'))\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Con el método `padStart`, podemos añadir relleno al principio de un string. El valor pasado a este método es la longitud _total_ del string incluyendo el relleno. El string `\"Lydia Hallie\"` tiene una longitud de `12`. `name.padStart(13)` inserta 1 espacio al principio del string, porque 12 + 1 es 13.",
+      "Si el argumento pasado al método `padStart` es más pequeño que la longitud del string, no se añade relleno."
+    ],
+    "id": 68,
+    "options": [
+      "`\"Lydia Hallie\"`, `\"Lydia Hallie\"`",
+      "`\"           Lydia Hallie\"`, `\"  Lydia Hallie\"` (`\"[13 espacios en blanco]Lydia Hallie\"`, `\"[2 espacios en blanco]Lydia Hallie\"`)",
+      "`\" Lydia Hallie\"`, `\"Lydia Hallie\"` (`\"[1 espacio en blanco]Lydia Hallie\"`, `\"Lydia Hallie\"`)",
+      "`\"Lydia Hallie\"`, `\"Lyd\"`,"
+    ],
+    "problem": "const name = \"Lydia Hallie\"\nconsole.log(name.padStart(13))\nconsole.log(name.padStart(2))\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Con el operador `+` puedes concatenar strings. En este caso, estamos concatenando el string `\"🥑\"` con el string `\"💻\"`, lo que da como resultado `\"🥑💻\"`."
+    ],
+    "id": 69,
+    "options": [
+      "`\"🥑💻\"`",
+      "`257548`",
+      "Un string con una secuencia de puntos de código",
+      "Error"
+    ],
+    "problem": "console.log(\"🥑\" + \"💻\");\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Una función generadora \"pausa\" su ejecución cuando ve un `yield`. Primero, tenemos que dejar a la función ceder el string \"Do you love JavaScript?\", lo cual se puede hacer llamando a `game.next().value`.",
+      "Todas las líneas son ejecutadas, hasta que encuentra el primer `yield`. Hay un `yield` en la primera línea dentro de la función: ¡la ejecución se para en el primer yield! _¡Esto significa que la variable `answer` todavía no está definida!_",
+      "Cuando llamamos a `game.next(\"Yes\").value`, el `yield` anterior se reemplaza con el valor de los parámetros pasados en la función `next()`, `\"Yes\"` en este caso. El valor de la variable `answer` es ahora igual a `\"Yes\"`. La condición del if devuelve `false`, y `JavaScript loves you back ❤️` se muestra por consola."
+    ],
+    "id": 70,
+    "options": [
+      "`game.next(\"Yes\").value` y `game.next().value`",
+      "`game.next.value(\"Yes\")` y `game.next.value()`",
+      "`game.next().value` y `game.next(\"Yes\").value`",
+      "`game.next.value()` y `game.next.value(\"Yes\")`"
+    ],
+    "problem": "function* startGame() {\n  const answer = yield \"Do you love JavaScript?\";\n  if (answer !== \"Yes\") {\n    return \"Oh wow... Guess we're gone here\";\n  }\n  return \"JavaScript loves you back ❤️\";\n}\n\nconst game = startGame();\nconsole.log(/* 1 */); // Do you love JavaScript?\nconsole.log(/* 2 */); // JavaScript loves you back ❤️\n",
+    "question": "¿Cómo puedes mostrar por consola los valores comentados junto a las sentencias console.log?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`String.raw` devuelve un string donde las secuencias de escape (`\\n`, `\\v`, `\\t` etc.) son ignoradas. Las contrabarras pueden ser un problema ya que puedes acabar con algo como:",
+      "`` const path = `C:\\Documents\\Projects\\table.html` ``",
+      "Que resultaría en:",
+      "`\"C:DocumentsProjects able.html\"`",
+      "Con `String.raw`, simplemente ignoraría las secuencias de escape e imprimiría:",
+      "`C:\\Documents\\Projects\\table.html`",
+      "En este caso, el string es `Hello\\nworld`, que es lo que se muestra por consola."
+    ],
+    "id": 71,
+    "options": [
+      "`Hello world!`",
+      "`Hello` <br />&nbsp; &nbsp; &nbsp;`world`",
+      "`Hello\\nworld`",
+      "`Hello\\n` <br /> &nbsp; &nbsp; &nbsp;`world`"
+    ],
+    "problem": "console.log(String.raw`Hello\\nworld`);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Una función asíncrona siempre devuelve una promesa. El `await` todavía tiene que esperar a que la promesa se resuelva: cuando llamamos a `getData()` para asignarle que es igual a `data`, se devuelve una promesa pendiente.",
+      "Si quisiéramos tener acceso al valor resuelto `\"I made it\"`, tendríamos que haber usado el método `.then()` en `data`:",
+      "`data.then(res => console.log(res))`",
+      "Esto habría mostrado por consola `\"I made it!\"`"
+    ],
+    "id": 72,
+    "options": [
+      "`\"I made it!\"`",
+      "`Promise {<resolved>\"I made it!\"}`",
+      "`Promise {<pending>}`",
+      "`undefined`"
+    ],
+    "problem": "async function getData() {\n  return await Promise.resolve(\"I made it!\");\n}\n\nconst data = getData();\nconsole.log(data);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "¡El método `.push()` devuelve la _longitud_ del nuevo array! Al principio, el array contenía un elemento (el string `\"banana\"`) y tenía una longitud de `1`. Después de añadir el string `\"apple\"` al array, el array contiene dos elementos, y tiene una longitud de `2`. Esto es lo que devuelve la función `addToList`.",
+      "El método `push` modifica el array original. Si quisieras devolver el _array_ de la función en lugar de la _longitud del array_ deberías haber devuelto `list` después de introducir `item` en él."
+    ],
+    "id": 73,
+    "options": [
+      "`['apple', 'banana']`",
+      "`2`",
+      "`true`",
+      "`undefined`"
+    ],
+    "problem": "function addToList(item, list) {\n  return list.push(item);\n}\n\nconst result = addToList(\"apple\", [\"banana\"]);\nconsole.log(result);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`Object.freeze` congela e imposibilita la adición, eliminación o modificación de las propiedades de un objeto (a no ser que el valor de la propiedad sea otro objeto).",
+      "Cuando creamos la variable `shape` y la igualamos al objeto congelado `box`, `shape` también referencia al objeto congelado. Puedes comprobar si un objeto está congelado usando `Object.isFrozen`. En este caso, `Object.isFrozen(shape)` devuelve `true`, ya que la variable `shape` tiene una referencia a un objeto congelado.",
+      "Como `shape` está congelado, y como el valor de `x` no es un objeto, no podemos modificar la propiedad `x`. `x` es todavía igual a `10`, y `{ x: 10, y: 20 }` se muestra por consola."
+    ],
+    "id": 74,
+    "options": [
+      "`{ x100, y20 }`",
+      "`{ x10, y20 }`",
+      "`{ x100 }`",
+      "`ReferenceError`"
+    ],
+    "problem": "const box = { x: 10, y: 20 };\n\nObject.freeze(box);\n\nconst shape = box;\nshape.x = 100;\n\nconsole.log(shape);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Cuando desempaquetamos la propiedad `name` del objeto de la parte derecha, asignamos su valor `\"Lydia\"` a una variable con el nombre `myName`.",
+      "Con `{ name: myName }`, le decimos a JavaScript que queremos crear una nueva variable llamada `myName` con el valor de la propiedad `name` de la parte derecha.",
+      "Como intentamos mostrar por consola `name`, una variable que no está definida, se lanza un `ReferenceError`."
+    ],
+    "id": 75,
+    "options": [
+      "`\"Lydia\"`",
+      "`\"myName\"`",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "const { name: myName } = { name: \"Lydia\" };\n\nconsole.log(name);\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Una función pura es una función que _siempre_ devuelve el mismo resultado, si se le pasan los mismos argumentos.",
+      "La función `sum` siempre devuelve el mismo resultado. Si pasamos `1` y `2`, _siempre_ devuelve `3` sin efectos secundarios. Si pasamos `5` y `10`, _siempre_ devuelve `15`, etcétera. Esta es la definición de una función pura."
+    ],
+    "id": 76,
+    "options": [
+      "Sí",
+      "No"
+    ],
+    "problem": "function sum(a, b) {\n  return a + b;\n}\n",
+    "question": "¿Esta es una función pura?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "La función `add` es una función _memoizada_. Con la memoización, podemos guardar en caché los resultados de una función para acelerar su ejecución. En este caso, creamos el objeto `cache` que guarda los valores previamente retornados.",
+      "Si llamamos a la función `addFunction` otra vez con el mismo argumento, primero comprueba si ya tiene ese valor en su caché. Si es el caso, se devuelve el valor de la caché. Si no está en la caché, calculará el valor y lo almacenará justo después.",
+      "Llamamos a la función `addFunction` tres veces con el mismo valor: en la primera invocación, el valor de la función cuando `num` es igual a `10` no está en caché todavía. La condición del if `num in cache` devuelve `false`, y se ejecuta el bloque `else`: `Calculated! 20` se muestra por consola, y el valor del resultado se añade al objeto `cache`. `cache` ahora contiene `{ 10: 20 }`.",
+      "La segunda vez, el objeto `cache` contiene el valor que se devuelve para `10`. La condición del if `num in cache` devuelve `true`, y se muestra por consola `'From cache! 20'`.",
+      "La tercera vez, pasamos `5 * 2` a la función, que se evalúa como `10`. El objeto `cache` contiene el valor que se devuelve para `10`. La condición del if `num in cache` devuelve `true`, y se muestra por consola `'From cache! 20'`."
+    ],
+    "id": 77,
+    "options": [
+      "`Calculated! 20` `Calculated! 20` `Calculated! 20`",
+      "`Calculated! 20` `From cache! 20` `Calculated! 20`",
+      "`Calculated! 20` `From cache! 20` `From cache! 20`",
+      "`Calculated! 20` `From cache! 20` `Error`"
+    ],
+    "problem": "const add = () => {\n  const cache = {};\n  return num => {\n    if (num in cache) {\n      return `From cache! ${cache[num]}`;\n    } else {\n      const result = num + 10;\n      cache[num] = result;\n      return `Calculated! ${result}`;\n    }\n  };\n};\n\nconst addFunction = add();\nconsole.log(addFunction(10));\nconsole.log(addFunction(10));\nconsole.log(addFunction(5 * 2));\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Con el bucle _for-in_, podemos iterar sobre propiedades **enumerables**. En un array, las propiedades enumerables son las \"claves\" de los elementos del array, las cuales son sus índices. Puedes ver el array como:",
+      "`{0: \"☕\", 1: \"💻\", 2: \"🍷\", 3: \"🍫\"}`",
+      "Donde las claves son las propiedades enumerables. `0` `1` `2` `3` se muestran por consola.",
+      "Con un bucle _for-of_, podemos iterar sobre **iterables**. Un array es un iterable. Cuando iteramos sobre un array, la variable \"item\" es igual al elemento sobre el que se está iterando en ese momento, `\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"` se muestra por consola."
+    ],
+    "id": 78,
+    "options": [
+      "`0` `1` `2` `3` y `\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"`",
+      "`\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"` y `\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"`",
+      "`\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"` y `0` `1` `2` `3`",
+      " `0` `1` `2` `3` y `{0\"☕\", 1\"💻\", 2\"🍷\", 3\"🍫\"}`"
+    ],
+    "problem": "const myLifeSummedUp = [\"☕\", \"💻\", \"🍷\", \"🍫\"]\n\nfor (let item in myLifeSummedUp) {\n  console.log(item)\n}\n\nfor (let item of myLifeSummedUp) {\n  console.log(item)\n}\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Los elementos de un array pueden contener cualquier valor. Números, strings,objetos, otros arrays, null, valores booleanos, undefined, y otras expresiones como fechas, funciones o cálculos.",
+      "El elemento será igual al valor retornado. `1 + 2` devuelve `3`, `1 * 2` devuelve `2`, y `1 / 2` devuelve `0.5`."
+    ],
+    "id": 79,
+    "options": [
+      "`[\"1 + 2\", \"1 * 2\", \"1 / 2\"]`",
+      "`[\"12\", 2, 0.5]`",
+      "`[3, 2, 0.5]`",
+      " `[1, 1, 1]`"
+    ],
+    "problem": "const list = [1 + 2, 1 * 2, 1 / 2]\nconsole.log(list)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Por defecto, los argumentos tienen el valor `undefined`, a no ser que un valor haya sido pasado a la función. En este caso, no pasamos ningún valor para el argumento `name`. `name` es igual a `undefined`, que es mostrado por consola.",
+      "En ES6, podemos sobrescribir este valor `undefined` por defecto con parámetros por defecto. Por ejemplo:",
+      "`function sayHi(name = \"Lydia\") { ... }`",
+      "En ese caso, si no pasáramos un valor o si pasáramos `undefined`, `name` siempre sería igual al string `Lydia`."
+    ],
+    "id": 80,
+    "options": [
+      "`Hi there, `",
+      "`Hi there, undefined`",
+      "`Hi there, null`",
+      " `ReferenceError`"
+    ],
+    "problem": "function sayHi(name) {\n  return `Hi there, ${name}`\n}\n\nconsole.log(sayHi())\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "El valor de `this` depende de dónde lo uses. En un método, como el método `getStatus`, `this` referencia al _objeto al que el método pertenece_. El método pertenece al objeto `data`, por lo que `this` referencia al objeto `data`. Cuando mostramos por consola `this.status`, la propiedad `status` en el objeto `data` es mostrada por consola, la cual es `\"🥑\"`.",
+      "Con el método `call`, podemos cambiar el objeto al cual `this` referencia. En **funciones**, el `this` referencia al _objeto al que la función pertenece_, por lo que dentro de la función `setTimeout`, el `this` referencia al _objeto global_. En el objeto global, hay una variable llamada _status_ con el valor `\"😎\"`. Cuando se muestra `this.status` por consola, `\"😎\"` aparece por pantalla."
+    ],
+    "id": 81,
+    "options": [
+      "`\"🥑\"` y `\"😍\"`",
+      "`\"🥑\"` y `\"😎\"`",
+      "`\"😍\"` y `\"😎\"`",
+      "`\"😎\"` y `\"😎\"`"
+    ],
+    "problem": "var status = \"😎\"\n\nsetTimeout(() => {\n  const status = \"😍\"\n\n  const data = {\n    status: \"🥑\",\n    getStatus() {\n      return this.status\n    }\n  }\n\n  console.log(data.getStatus())\n  console.log(data.getStatus.call(this))\n}, 0)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Asignamos a la variable `city` el valor de la propiedad `city` del objeto `person`. No existe ninguna propiedad en este objeto llamada `city`, por lo que la variable `city` tiene el valor `undefined`.",
+      "¡Observa que _no_ estamos referenciando al objeto `person` en sí mismo! Solo asignamos a la variable `city` el valor actual de la propiedad `city` del objeto `person`.",
+      "Después, asignamos a la variable `city` el string `\"Amsterdam\"`. Esto no cambia el objeto `person`: no hay ninguna referencia a ese objeto.",
+      "Cuando se muestra por consola el objeto `person`, se devuelve el objeto sin modificar."
+    ],
+    "id": 82,
+    "options": [
+      "`{ name\"Lydia\", age21 }`",
+      "`{ name\"Lydia\", age21, city\"Amsterdam\" }`",
+      "`{ name\"Lydia\", age21, cityundefined }`",
+      "`\"Amsterdam\"`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia\",\n  age: 21\n}\n\nlet city = person.city\ncity = \"Amsterdam\"\n\nconsole.log(person)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Las variables con `const` y `let` tienen _alcance de bloque_. Un bloque es cualquier cosa entre llaves (`{ }`). En este caso, las llaves del if/else. No puedes referenciar a una variable fuera del bloque en el que es declarada, se lanza un `ReferenceError`."
+    ],
+    "id": 83,
+    "options": [
+      "`\"Sorry, you're too young.\"`",
+      "`\"Yay! You're old enough!\"`",
+      "`ReferenceError`",
+      "`undefined`"
+    ],
+    "problem": "function checkAge(age) {\n  if (age < 18) {\n    const message = \"Sorry, you're too young.\"\n  } else {\n    const message = \"Yay! You're old enough!\"\n  }\n\n  return message\n}\n\nconsole.log(checkAge(21))\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "El valor de `res` en el segundo `.then` es igual al valor retornado por el `.then` anterior. Puedes seguir encadenando `.then` como este, pasando el valor al siguiente manejador."
+    ],
+    "id": 84,
+    "options": [
+      "El resultado del método `fetch`.",
+      "El resultado de la segunda invocación del método `fetch`.",
+      "El resultado de callback en el `.then()` anterior.",
+      "Sería siempre `undefined`."
+    ],
+    "problem": "fetch('https://www.website.com/api/user/1')\n  .then(res => res.json())\n  .then(res => console.log(res))\n",
+    "question": "¿Qué tipo de información se mostrará por consola?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Con `!!name`, determinamos si el valor de `name` es convertible a verdadero o convertible a falso. Si `name` es convertible a verdadero, `!name` devuelve `false`. `!false` (el cual es prácticamente lo mismo que `!!name`) devuelve `true`.",
+      "Asignándole a `hasName` el valor de `name`, asignas a `hasName` cualquier valor que se haya pasado a la función `getName`, no el valor booleano `true`.",
+      "`new Boolean(true)` devuelve un envoltorio (wrapper), no el valor booleano en sí.",
+      "`name.length` devuelve la longitud del argumento pasado, no si es `true`."
+    ],
+    "id": 85,
+    "options": [
+      "`!!name`",
+      "`name`",
+      "`new Boolean(name)`",
+      "`name.length`"
+    ],
+    "problem": "function getName(name) {\n  const hasName = //\n}\n",
+    "question": "¿Qué opción es una forma de igualar `hasName` a `true`, teniendo en cuenta que no se puede pasar `true` como argumento?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Para obtener un caracter en un índice específico en un string, puedes usar corchetes. El primer caracter en el string tiene índice 0, y así sucesivamente. En este caso queremos obtener el elemento cuyo índice es 0, el caracter `\"I\"`, el cual se muestra por consola.",
+      "Observa que este método no está soportado en IE7 y versiones anteriores. En ese caso, usamos `.charAt()`."
+    ],
+    "id": 86,
+    "options": [
+      "`\"\"\"`",
+      "`\"I\"`",
+      "`SyntaxError`",
+      "`undefined`"
+    ],
+    "problem": "console.log(\"I want pizza\"[0])\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Puedes asignar un valor por defecto para un parámetro que sea igual a otro parámetro de la función, siempre y cuando haya sido definido _antes_ del parámetro por defecto. Pasamos el valor `10` a la función `sum`. Si la función `sum` solamente recibe 1 argumento, significa que el valor para `num2` no ha sido pasado, y el valor de `num1` es igual al valor `10` que hemos pasado en este caso. El valor por defecto de `num2` es el valor de `num1`, el cual es `10`. `num1 + num2` devuelve `20`.",
+      "Si estuvieras intentando asignar un valor por defecto a un parámetro igual a otro parámetro que es definido _después_ (a la derecha), el valor del parámetro no habría sido inicializado todavía, lo cual lanzaría un error."
+    ],
+    "id": 87,
+    "options": [
+      "`NaN`",
+      "`20`",
+      "`ReferenceError`",
+      "`undefined`"
+    ],
+    "problem": "function sum(num1, num2 = num1) {\n  console.log(num1 + num2)\n}\n\nsum(10)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Con la sintaxis `import * as name`, importamos _todas las exportaciones_ del fichero `module.js` al fichero `index.js` creando un nuevo objeto llamado `data`. En el fichero `module.js` hay dos exportaciones: la exportación por defecto y una exportación con nombre. La exportación por defecto es una función que devuelve el string `\"Hello World\"`, y la exportación con nombre es una variable llamada `name` que tiene el valor del string `\"Lydia\"`.",
+      "El objeto `data` tiene una propiedad `default` para la exportación por defecto, el resto de propiedades tienen los nombres de las exportaciones con nombre y sus respectivos valores."
+    ],
+    "id": 88,
+    "options": [
+      "`{ defaultfunction default(), name\"Lydia\" }`",
+      "`{ defaultfunction default() }`",
+      "`{ default\"Hello world\", name\"Lydia\" }`",
+      "Objeto global de `module.js`"
+    ],
+    "problem": "// module.js \nexport default () => \"Hello world\"\nexport const name = \"Lydia\"\n\n// index.js \nimport * as data from \"./module\"\n\nconsole.log(data)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Las clases son azúcar sintáctico para los constructores de funciones. El equivalente a la clase `Person` como constructor de función sería:",
+      "Llamar a un constructor de funciones con `new` crea una instancia de `Person`, `typeof` devuelve `\"object\"` con una instancia. `typeof member` devuelve `\"object\"`."
+    ],
+    "id": 89,
+    "options": [
+      "`\"class\"`",
+      "`\"function\"`",
+      "`\"object\"`",
+      "`\"string\"`"
+    ],
+    "problem": "class Person {\n  constructor(name) {\n    this.name = name\n  }\n}\n\nconst member = new Person(\"John\")\nconsole.log(typeof member)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "El método `.push` devuelve la _nueva longitud_ del array, ¡no el array en sí mismo! Asignando `newList` igual a `[1, 2, 3].push(4)`, estamos asignando `newList` igual a la nueva longitud del array: `4`.",
+      "Después, intentamos usar el método `.push` en `newList`. Como `newList` es el valor numérico `4`, no podemos usar el método `.push`: se lanza un `TypeError`."
+    ],
+    "id": 90,
+    "options": [
+      "`[1, 2, 3, 4, 5]`",
+      "`[1, 2, 3, 5]`",
+      "`[1, 2, 3, 4]`",
+      "`Error`"
+    ],
+    "problem": "let newList = [1, 2, 3].push(4)\n\nconsole.log(newList.push(5))\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Las funciones regulares, como la función `giveLydiaPizza`, tienen la propiedad `prototype`, la cual es un objeto (objeto de prototipo) con una propiedad `constructor`. Sin embargo las funciones flecha, como la función `giveLydiaChocolate`, no tienen esta propiedad `prototype`. Se devuelve `undefined` cuando se intenta acceder a la propiedad `prototype` usando `giveLydiaChocolate.prototype`."
+    ],
+    "id": 91,
+    "options": [
+      "`{ constructor...}` `{ constructor...}`",
+      "`{}` `{ constructor...}`",
+      "`{ constructor...}` `{}`",
+      "`{ constructor...}` `undefined`"
+    ],
+    "problem": "function giveLydiaPizza() {\n  return \"Here is pizza!\"\n}\n\nconst giveLydiaChocolate = () => \"Here's chocolate... now go hit the gym already.\"\n\nconsole.log(giveLydiaPizza.prototype)\nconsole.log(giveLydiaChocolate.prototype)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`Object.entries(person)` devuelve un array de arrays anidados, conteniendo claves y objetos:",
+      "`[ [ 'name', 'Lydia' ], [ 'age', 21 ] ]`",
+      "Usando el bucle `for-of`, podemos iterar sobre cada elemento en el array, los subarrays en este caso. Podemos desestructurar los subarrays instantáneamente en el bucle for-of, usando `const [x, y]`. `x` es igual al primer elemento del subarray, `y` es igual al segundo elemento en el subarray.",
+      "El primer subarray es `[ \"name\", \"Lydia\" ]`, con `x` igual a `\"name\"` e `y` igual a `\"Lydia\"`, lo cual es mostrado por consola.",
+      "El segundo subarray es `[ \"age\", 21 ]`, con `x` igual a `\"age\"` e `y` igual a `21`, lo cual es mostrado por consola."
+    ],
+    "id": 92,
+    "options": [
+      "`name` `Lydia` y `age` `21`",
+      "`[\"name\", \"Lydia\"]` y `[\"age\", 21]`",
+      "`[\"name\", \"age\"]` y `undefined`",
+      "`Error`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia\",\n  age: 21\n}\n\nfor (const [x, y] of Object.entries(person)) {\n  console.log(x, y)\n}\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "`...args` es un parámetro rest. El valor del parámetro rest es un array que contiene el resto de argumentos, ¡**y solo puede ser el último parámetro**! En este ejemplo, el parámetro rest es el segundo parámetro. Esto no es correcto y lanzará un error de sintaxis.",
+      "El ejemplo de arriba sí que funciona. Devuelve el array `[ 'banana', 'apple', 'orange', 'pear' ]`\n</p>\n</details>"
+    ],
+    "id": 93,
+    "options": [
+      "`[\"banana\", \"apple\", \"pear\", \"orange\"]`",
+      "`[[\"banana\", \"apple\"], \"pear\", \"orange\"]`",
+      "`[\"banana\", \"apple\", [\"pear\"], \"orange\"]`",
+      "`SyntaxError`"
+    ],
+    "problem": "function getItems(fruitList, ...args, favoriteFruit) {\n  return [...fruitList, ...args, favoriteFruit]\n}\n\ngetItems([\"banana\", \"apple\"], \"pear\", \"orange\")\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "En JavaScript, no _tenemos_ que escribir el punto y coma (`;`) de forma explicita, sin embargo el motor de JavaScript todavía las añade al final de cada sentencia. Esto se denomina **Insercción automática de punto y coma**. Una sentencia puede ser, por ejemplo, variables, o palabras clave como `throw`, `return`, `break`, etc.",
+      "Aqui, escribimos una sentencia `return`, y otra sentencia de valor `a + b` en una _nueva línea_. Sin embargo, como es una línea nueva, el motor no sabe que en realidad es el valor que queríamos devolver. En cambio, añadió automáticamente un punto y coma después de `return`. Puedes ver esto como:",
+      "Esto significa que nunca se alcanza `a + b`, ya que una función deja de ejecutarse después de la palabra clave` return`. Si no se devuelve ningún valor, como aquí, la función devuelve `undefined`. ¡Ten en cuenta que no hay inserción automática después de las sentencias `if/else`!"
+    ],
+    "id": 94,
+    "options": [
+      "`a is bigger`, `6` y `b is bigger`, `3`",
+      "`a is bigger`, `undefined` y `b is bigger`, `undefined`",
+      "`undefined` y `undefined`",
+      "`SyntaxError`"
+    ],
+    "problem": "function nums(a, b) {\n  if\n  (a > b)\n  console.log('a is bigger')\n  else \n  console.log('b is bigger')\n  return \n  a + b\n}\n\nconsole.log(nums(4, 2))\nconsole.log(nums(1, 2))\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Podemos establecer clases iguales a otros constructures de clases/funciones. En este caso, establecemos `Person` igual a `AnotherPerson`. El nombre en este constructor es `Sarah`, por lo que la propiedad nombre en la nueva instancia de `Person` de `member` es `\"Sarah\"`."
+    ],
+    "id": 95,
+    "options": [
+      "`\"Lydia\"`",
+      "`\"Sarah\"`",
+      "`Errorcannot redeclare Person`",
+      "`SyntaxError`"
+    ],
+    "problem": "class Person {\n  constructor() {\n    this.name = \"Lydia\"\n  }\n}\n\nPerson = class AnotherPerson {\n  constructor() {\n    this.name = \"Sarah\"\n  }\n}\n\nconst member = new Person()\nconsole.log(member.name)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Un símbolo no es _enumerable_. El método Object.keys devuelve todas las propiedades _enumerables_ de un objeto. El símbolo no será visible, y un array vacío será devuelto. Cuando se imprime el objeto completo, se mostrarán todas las propiedades, incluidas las no-enumerables.",
+      "Esta es una de las muchas cualidades de un símbolo: además de representar un valor completamente único (que evita la colisión accidental de nombres en los objetos, por ejemplo, cuando se utilizan 2 bibliotecas que desean agregar propiedades al mismo objeto), también puedes \"ocultar\" propiedades en los objetos de esta manera (aunque no del todo. Todavía puedes acceder a los símbolos utilizando el método `Object.getOwnPropertySymbols()`)."
+    ],
+    "id": 96,
+    "options": [
+      "`{Symbol('a')'b'}` y `[\"{Symbol('a')\"]`",
+      "`{}` y `[]`",
+      "`{ a\"b\" }` y `[\"a\"]`",
+      "`{Symbol('a')'b'}` y `[]`"
+    ],
+    "problem": "const info = {\n  [Symbol('a')]: 'b'\n}\n\nconsole.log(info)\nconsole.log(Object.keys(info))\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "La función `getList` recibe un array argumento. Entre los paréntesis de la función `getList`, desestructuramos este array de inmediato. Podrías ver esto como:",
+      "`[x, ...y] = [1, 2, 3, 4]`",
+      "Con el parámetro rest `...y`, ponemos todos los argumentos \"restantes\" en un array. Los argumentos restantes son `2`, `3` and `4` en este caso. El valor de `y` es un array, conteniendo todos los parámetros restantes. El valor de `x` es igual a `1` en este caso, por la tanto cuando registramos `[x, y]`, se imprime `[1, [2, 3, 4]]`.",
+      "La función `getUser` recibe un objeto. Con las funciones flecha, no _tenemos_ que escribir llaves cuando simplemente devolvemos un valor. Sin embargo, si quieres devolver un _objeto_ desde una función llave, tienes que escribir el objeto entre paréntesis, ¡de otra manera no se devuelve ningún valor! La siguiente función habría devuelto un objeto:",
+      "```const getUser = user => ({ name: user.name, age: user.age })```",
+      "Como no se devuelve ningún valor en este caso, la función devuelve `undefined`."
+    ],
+    "id": 97,
+    "options": [
+      "`[1, [2, 3, 4]]` y `undefined`",
+      "`[1, [2, 3, 4]]` y `{ name\"Lydia\", age21 }`",
+      "`[1, 2, 3, 4]` y `{ name\"Lydia\", age21 }`",
+      "`Error` y `{ name\"Lydia\", age21 }`"
+    ],
+    "problem": "const getList = ([x, ...y]) => [x, y]\nconst getUser = user => { name: user.name, age: user.age }\n\nconst list = [1, 2, 3, 4]\nconst user = { name: \"Lydia\", age: 21 }\n\nconsole.log(getList(list))\nconsole.log(getUser(user))\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "La variable `name` contiene el valor de una cadena, que no es una función, por lo tanto no puede invocar.",
+      "Se genera una excepción de tipo TypeError cuando un valor no es del tipo esperado. JavaScript esperaba que `name` fuera una función ya que estamos intentando invocarla. Era una cadena sin embargo, por lo tanto se lanza una excepción del tipo TypeError: name is not a function!",
+      "Se lanzan errores del tipo SyntaxError cuando has escrito algo que no es válido JavaScript, pro ejemplo cuando has escrito `return` como `retrun`. \nSe lanzan errores del tipo ReferenceError cuando JavaScript no puede encontrar una referencia a un valor al que estás intentando acceder."
+    ],
+    "id": 98,
+    "options": [
+      "`SyntaxError`",
+      "`ReferenceError`",
+      "`TypeError`",
+      "`undefined`"
+    ],
+    "problem": "const name = \"Lydia\"\n\nconsole.log(name())\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`[]` es un valor verdadero (se convierte a un valor verdadero en un contexto booleano). Con el operador `&&`, se devolverá el valor de la derecha si el valor de la izquierda es un valor verdadero. En este caso, el valor de la izquierda `[]` es un valor verdadero, por lo tanto se devuelve `\"Im'`.",
+      "`\"\"` es un valor falso (se convierte a un valor falso en un contexto booleano). Si el valor de la izquierda es falso, no se devuelve nada. `n't` no se devuelve."
+    ],
+    "id": 99,
+    "options": [
+      "`possible! You should see a therapist after so much JavaScript lol`",
+      "`Impossible! You should see a therapist after so much JavaScript lol`",
+      "`possible! You shouldn't see a therapist after so much JavaScript lol`",
+      "`Impossible! You shouldn't see a therapist after so much JavaScript lol`"
+    ],
+    "problem": "// 🎉✨ This is my 100th question! ✨🎉\n\nconst output = `${[] && 'Im'}possible!\nYou should${'' && `n't`} see a therapist after so much JavaScript lol`\n",
+    "question": "¿Cuál es el valor de la salida?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Con el operador `||`, podemos devolver el primer operando verdadero. Si todos los valores son falsos, se devuelve el último operando.",
+      "`(false || {} || null)`: el objecto vacío `{}` es un valor verdadero. Este es el primero (y único) valor verdadero, que se devuelve. `one` es igual a `{}`.",
+      "`(null || false || \"\")`: todos los operandos son valores falsos. Esto significa que el último operando, `\"\"` es devuelto. `two` es igual a `\"\"`.",
+      "`([] || 0 || \"\")`: el array vacío `[]` es un valor verdadero. Este es el primer valor verdadero, que se devuelve. `three` es igual a `[]`."
+    ],
+    "id": 100,
+    "options": [
+      "`false` `null` `[]`",
+      "`null` `\"\"` `true`",
+      "`{}` `\"\"` `[]`",
+      "`null` `null` `true`"
+    ],
+    "problem": "const one = (false || {} || null)\nconst two = (null || false || \"\")\nconst three = ([] || 0 || true)\n\nconsole.log(one, two, three)\n",
+    "question": "¿Cuál es el valor de la salida?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Con una promesa, básicamente decimos _Quiero ejecutar esta función, pero la dejaré a un lado por ahora mientras se está ejecutando, ya que esto puede llevar un tiempo. Solo cuando se resuelve (o se rechaza) un cierto valor, y cuando la pila de llamadas está vacía, quiero usar este valor._",
+      "Podemos obtener este valor con las palabras clave `.then` y `await` en una función `async`. Aunque podemos obtener el valor de una promesa tanto con `.then` como con` wait ', funcionan de manera un poco diferente.",
+      "En la función `firstFunction`, dejamos (de algún modo) a un lado la función myPromise mientras se estaba ejecutando, y seguimos ejecutando el otro código, que es `console.log('second')` en este caso. Luego, la función se resolvió con la cadena `I have resolved`, que luego se imprimió una vez que pila de llamadas quedó vacía.",
+      "Con la palabra clave await en `secondFunction`, literalmente hacemos una pausa en la ejecución de una función asíncrona hasta que el valor se haya resuelto antes de pasar a la siguiente línea de código.",
+      "Esto significa que se esperó a que `myPromise` resolviera con el valor `I have resolved`, y solo una vez que eso sucedió, pasamos a la siguiente línea: `second` que se imprime."
+    ],
+    "id": 101,
+    "options": [
+      "`I have resolved!`, `second` y `I have resolved!`, `second`",
+      "`second`, `I have resolved!` y `second`, `I have resolved!`",
+      "`I have resolved!`, `second` y `second`, `I have resolved!`",
+      "`second`, `I have resolved!` y `I have resolved!`, `second`"
+    ],
+    "problem": "const myPromise = () => Promise.resolve('I have resolved!')\n\nfunction firstFunction() {\n  myPromise().then(res => console.log(res))\n  console.log('second')\n}\n\nasync function secondFunction() {\n  console.log(await myPromise())\n  console.log('second')\n}\n\nfirstFunction()\nsecondFunction()\n",
+    "question": "¿Cuál es el valor de la salida?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "El operador `+` no solo se usa para sumar valores numéricos, sino que también podemos usarlo para concatenar cadenas. Cada vez que el motor de JavaScript ve que uno o más valores no son un número, coerce el número en una cadena.",
+      "El primero es `1`, que es un valor numérico. `1 + 2` devuelve el número 3.",
+      "Sin embargo, el segundo es la cadena `\"Lydia\"`. `\"Lydia\"` es una cadena y `2` es un número: `2` coerce a una cadena. `\"Lydia\"` y `\"2\"` son concatenados, cuyo resultado es la cadena `\"Lydia2\"`.",
+      "`{ name: \"Lydia\" }` es un objeto. Ni un número ni un objeto son una cadena, así que se convierten a cadena ambos. Cada vez que convertimos un objeto estandar, se convierte en `\"[Object object]\"`. `\"[Object object]\"` concatenado con `\"2\"` resulta en `\"[Object object]2\"`."
+    ],
+    "id": 102,
+    "options": [
+      "`3`, `NaN`, `NaN`",
+      "`3`, `7`, `NaN`",
+      "`3`, `Lydia2`, `[Object object]2`",
+      "`\"12\"`, `Lydia2`, `[Object object]2`"
+    ],
+    "problem": "const set = new Set()\n\nset.add(1)\nset.add(\"Lydia\")\nset.add({ name: \"Lydia\" })\n\nfor (let item of set) {\n  console.log(item + 2)\n}\n",
+    "question": "¿Cuál es el valor de la salida?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Podemos pasar cualquier tipo de valor que queramos a `Promise.resolve`, ya sea una promesa o no promesa. El método en sí mismo devuelve una promesa con el valor resuelto. Si pasas una función estandar, será una promesa resuelta con un valor normal. Si pasas una promesa, será una promesa resuelta con el valor resuelto de esa promesa pasada.",
+      "En este caso, acabamos de pasar el valor numérico `5`. Devuelve una promesa resuelta con el valor `5`."
+    ],
+    "id": 103,
+    "options": [
+      "`5`",
+      "`Promise {<pending>5}`",
+      "`Promise {<resolved>5}`",
+      "`Error`"
+    ],
+    "problem": "Promise.resolve(5)\n",
+    "question": "¿Cuál es el valor?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Los objetos se pasan por referencia. Cuando verificamos la igualdad estricta de los objetos (`===`), estamos comparando sus referencias.",
+      "Establecemos el valor por defecto para `person2` igual al objeto `person`, y pasamos el objeto `person` como el valor de `person1`.",
+      "Esto significa que ambos valores tienen una referencia al mismo punto en la memoria, por lo tanto, son iguales.",
+      "El bloque de código en la instrucción `else` se ejecuta, y se imprime `They are the same!`."
+    ],
+    "id": 104,
+    "options": [
+      "`Not the same!`",
+      "`They are the same!`",
+      "`ReferenceError`",
+      "`SyntaxError`"
+    ],
+    "problem": "function compareMembers(person1, person2 = person) {\n  if (person1 !== person2) {\n    console.log(\"Not the same!\")\n  } else {\n    console.log(\"They are the same!\")\n  }\n}\n\nconst person = { name: \"Lydia\" }\n\ncompareMembers(person)\n",
+    "question": "¿Cuál es el valor?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "En JavaScript, tenemos dos formas de acceder a las propiedades de un objeto: notación por corchetes o notación por punto. En este ejemplo, usamos la notación por punto (`colorConfig.colors`) en lugar de la notación por corchetes (`colorConfig[\"colors\"]`).",
+      "Con la notación por punto, JavaScript intenta encontrar la propiedad en el objeto con ese nombre exacto. En este ejemplo, JavaScript intenta encontrar una propiedad llamada `colors` en el objeto `colorConfig`. No hay propiedad llamada `colors`, por lo que devuelve `undefined`. Luego, intentamos acceder al valor del primer elemento usando `[1]`. No podemos hacer esto en un valor que sea `undefined`, por lo que lanza una expeción `TypeError`: `Cannot read property '1' of undefined`.",
+      "JavaScript interpreta (o descompone) las sentencias. Cuando usamos la notación por corchetes, ve el primer corchete de apertura `[` y continúa hasta que encuentra el corchete de cierre `]`. Solo entonces, evaluará la declaración. Si hubiéramos utilizado `colorConfig[colors[1]]`, habría devuelto el valor de la propiedad `red` del objeto `colorConfig`."
+    ],
+    "id": 105,
+    "options": [
+      "`true`",
+      "`false`",
+      "`undefined`",
+      "`TypeError`"
+    ],
+    "problem": "const colorConfig = {\n  red: true,\n  blue: false,\n  green: true,\n  black: true,\n  yellow: false,\n}\n\nconst colors = [\"pink\", \"red\", \"blue\"]\n\nconsole.log(colorConfig.colors[1])\n",
+    "question": "¿Cuál es el valor?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Bajo el capó, los emojis son caracteres unicode. Los valores unicode para el emoji del corazón son `\"U+2764 U+FE0F\"`. Estos son siempre los mismos para los mismos emojis, por lo que estamos comparando dos cadenas iguales entre sí, lo que devuelve verdadero."
+    ],
+    "id": 106,
+    "options": [
+      "`true`",
+      "`false`"
+    ],
+    "problem": "console.log('❤️' === '❤️')\n",
+    "question": "¿Cuál es el valor?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Con el método `splice`, modificamos el array original eliminando, reemplazando o agregando elementos. En este caso, eliminamos 2 elementos desde el índice 1 (eliminamos `'🥑'` y `'😍'`) y agregamos el emoji ✨ en su lugar.",
+      "`map`, `filter` y `slice` devuelven un nuevo array, `find` devuelve un elemento, y `reduce` devuelve un valor reducido."
+    ],
+    "id": 107,
+    "options": [
+      "`All of them`",
+      "`map` `reduce` `slice` `splice`",
+      "`map` `slice` `splice`",
+      "`splice`"
+    ],
+    "problem": "const emojis = ['✨', '🥑', '😍']\n\nemojis.map(x => x + '✨')\nemojis.filter(x => x !== '🥑')\nemojis.find(x => x !== '🥑')\nemojis.reduce((acc, cur) => acc + '✨')\nemojis.slice(1, 2, '✨') \nemojis.splice(1, 2, '✨')\n",
+    "question": "¿Cuál de estos métodos modifica el array original?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Establecemos el valor de la propiedad `favoriteFood` en el objeto` info` igual a la cadena con el emoji de la pizza, `'🍕'`. Una cadena es un tipo de dato primitivo. En JavaScript, los tipos de datos primitivos actúan por referencia",
+      "En JavaScript, los tipos de datos primitivos (todo aquello que no es un objeto) interactúan por _valor_. En este caso, establecemos el valor de la propiedad `favoriteFood` en el objeto` info` igual al valor del primer elemento en el array `food`, la cadena del emoji de la pizza en este caso (`'🍕'`). Una cadena es un tipo de datos primitivo e interactúa por valor (consulte mi [artículo](https://www.theavocoder.com/complete-javascript/2018/12/21/by-value-vs-by-reference) si estás interesado en aprender más)",
+      "Luego, cambiamos el valor de la propiedad `favoriteFood` en el objeto` info`. El array `food` no cambia, ya que el valor de `favoriteFood` era simplemente una _copia_ del valor del primer elemento del array, y no tiene una referencia al mismo punto en la memoria que el elemento en `food[0]`. Cuando imprimimos food, éste sigue siendo el array original, `['🍕', '🍫', '🥑', '🍔']`."
+    ],
+    "id": 108,
+    "options": [
+      "`['🍕', '🍫', '🥑', '🍔']`",
+      "`['🍝', '🍫', '🥑', '🍔']`",
+      "`['🍝', '🍕', '🍫', '🥑', '🍔']`",
+      "`ReferenceError`"
+    ],
+    "problem": "const food = ['🍕', '🍫', '🥑', '🍔']\nconst info = { favoriteFood: food[0] }\n\ninfo.favoriteFood = '🍝'\n\nconsole.log(food)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Con el método `JSON.parse()`, podemos convertir la cadena de texto en formato JSON a un valor en JavaScript."
+    ],
+    "id": 109,
+    "options": [
+      "Parses JSON to a JavaScript value",
+      "Parses a JavaScript object to JSON",
+      "Parses any JavaScript value to JSON",
+      "Parses JSON to a JavaScript object only"
+    ],
+    "problem": "JSON.parse()\n",
+    "question": "¿Qué hace este método?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Cada función tiene su propio _contexto de ejecución_ (o _ámbito_). La función `getName` primero mira dentro de su propio contexto (ámbito) para ver si contiene la variable `name` a la que estamos intentando acceder. En este caso, la función `getName` contiene su propia variable `name`: declaramos la variable `name` con la palabra clave` let`, y con el valor de `'Sarah'`.",
+      "Las variables con la palabra clave `let` (y `const`) se mueven al comienzo (hoisting), pero a diferencia de `var`, no se <i>inicializan</i>. No son accesibles antes de la línea en la que las declaramos (inicializamos). Esto se llama la \"zona muerta temporal\". Cuando intentamos acceder a las variables antes de que se declaren, JavaScript genera una excepción del tipo `ReferenceError`.",
+      "Si no hubiéramos declarado la variable `name` dentro de la función `getName`, el motor de JavaScript habría mirado hacia abajo _ámbito encadenado_. El alcance externo tiene una variable llamada `name` con el valor de `Lydia`. En ese caso, habría imprimido `Lydia`."
+    ],
+    "id": 110,
+    "options": [
+      "Lydia",
+      "Sarah",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "let name = 'Lydia'\n\nfunction getName() {\n  console.log(name)\n  let name = 'Sarah'\n}\n\ngetName()\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Con la palabra clave `yield`, cedemos valores en una función generadora. Con la palabra clave `yield*`, podemos obtener valores de otra función generadora u objeto iterable (por ejemplo, un array).",
+      "En la función `generatorOne`, cedemos todo el array `['a', 'b', 'c']` usando la palabra clave `yield`. El valor de la propiedad `value` en el objeto devuelto por el método `next` en `one` (`one.next().value`) es igual a todo el array `['a', 'b', 'c']`.",
+      "En la función `generatorTwo`, usamos la palabra clave `yield*`. Esto significa que el primer valor cedido de `two` es igual al primer valor cedido en el iterador. El iterador es el array `['a', 'b', 'c']`. El primer valor producido es `a`, por lo que la primera vez que llamamos a `two.next().value`, se devuelve `a`."
+    ],
+    "id": 111,
+    "options": [
+      "`a` y `a`",
+      "`a` y `undefined`",
+      "`['a', 'b', 'c']` y `a`",
+      "`a` y `['a', 'b', 'c']`"
+    ],
+    "problem": "function* generatorOne() {\n  yield ['a', 'b', 'c'];\n}\n\nfunction* generatorTwo() {\n  yield* ['a', 'b', 'c'];\n}\n\nconst one = generatorOne()\nconst two = generatorTwo()\n\nconsole.log(one.next().value)\nconsole.log(two.next().value)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Las expresiones dentro de las plantillas de cadena de texto se evalúan primero. Esto significa que la cadena contendrá el valor devuelto de la expresión, la función invocada inmediatamente `(x => x)('I love')` en este caso. Pasamos el valor `'I love'` como argumento para la función de flecha `x => x`. `x` es igual a `'I love'`, que se devuelve tal cual. Esto da como resultado `I love to program`."
+    ],
+    "id": 112,
+    "options": [
+      "`I love to program`",
+      "`undefined to program`",
+      "`${(x => x)('I love') to program`",
+      "`TypeError`"
+    ],
+    "problem": "console.log(`${(x => x)('I love')} to program`)\n",
+    "question": "¿Cuál es el resultado?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Normalmente, cuando establecemos objetos iguales a `null`, esos objetos se recogen por el _recolector de basura_ ya que ya no hay ninguna referencia a ese objeto. Sin embargo, dado que la función de devolución de llamada dentro de `setInterval` es una función flecha (por lo tanto vinculada al objeto` config`), la función de devolución de llamada todavía tiene una referencia al objeto `config`. Mientras haya una referencia, el objeto no será recolectado. Como no es recolectado, la función de devolución de llamada `setInterval` aún se invocará cada 1000ms (1s)."
+    ],
+    "id": 113,
+    "options": [
+      "The `setInterval` callback won't be invoked",
+      "The `setInterval` callback gets invoked once",
+      "The `setInterval` callback will still be called every second",
+      "We never invoked `config.alert()`, config is `null`"
+    ],
+    "problem": "let config = {\n  alert: setInterval(() => {\n    console.log('Alert!')\n  }, 1000)\n}\n\nconfig = null\n",
+    "question": "¿Qué ocurrirá?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Al agregar un par clave/valor utilizando el método `set`, la clave será el valor del primer argumento pasado a la función `set`, y el valor será el segundo argumento pasado a la función `set`. La clave es la _función_ `() => 'greeting'` en este caso, y el valor `'Hello world'`. `myMap` ahora es `{ () => 'greeting' => 'Hello world!' }`.",
+      "1 es incorrecto, ya que la clave no es `'greeting'` sino `() => 'greeting'`.\n3 es incorrecto, ya que estamos creando una nueva función pasándola como parámetro al método `get`. El objeto interactúa por _referencia_. Las funciones son objetos, por eso dos funciones nunca son estrictamente iguales, aunque sean idénticas: tienen una referencia a un punto diferente en la memoria."
+    ],
+    "id": 114,
+    "options": [
+      "1",
+      "2",
+      "2 and 3",
+      "All of them"
+    ],
+    "problem": "const myMap = new Map()\nconst myFunc = () => 'greeting'\n\nmyMap.set(myFunc, 'Hello world!')\n\n//1\nmyMap.get('greeting')\n//2\nmyMap.get(myFunc)\n//3\nmyMap.get(() => 'greeting')\n",
+    "question": "¿Qué método(s) devolverá el valor `'Hello world!'`?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Tanto las funciones `changeAge` como `changeAgeAndName` tienen un parámetro por defecto, a saber, un objeto _nuevo_ creado `{ ...person }`. Este objeto tiene copias de todos los pares clave/valor en el objeto `person`.",
+      "Primero, invocamos la función `changeAge` y le pasamos el objeto `person` como argumento. Esta función aumenta el valor de la propiedad `age` en 1. `person` ahora es `{name: \"Lydia\", age: 22}`.",
+      "Luego, invocamos la función `changeAgeAndName`, sin embargo, no pasamos un parámetro. En cambio, el valor de `x` es igual a un _nuevo_ objeto: `{ ...person }`. Dado que es un objeto nuevo, no afecta los valores de las propiedades en el objeto `person`. `person` sigue siendo igual a `{ name: \"Lydia\",age: 22 }`."
+    ],
+    "id": 115,
+    "options": [
+      "`{name\"Sarah\", age22}`",
+      "`{name\"Sarah\", age23}`",
+      "`{name\"Lydia\", age22}`",
+      "`{name\"Lydia\", age23}`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia\",\n  age: 21\n}\n\nconst changeAge = (x = { ...person }) => x.age += 1\nconst changeAgeAndName = (x = { ...person }) => {\n  x.age += 1\n  x.name = \"Sarah\"\n}\n\nchangeAge(person)\nchangeAgeAndName()\n\nconsole.log(person)\n",
+    "question": "¿Cuál es el resultado?"
+  }
+]

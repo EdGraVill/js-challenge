@@ -1,50 +1,52 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Base = styled.button`
-  background-color: transparent;
-  border: 1px solid #6264a7;
-  border-radius: 5px;
-  color: #6264a7;
-  cursor: pointer;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: .5rem 1rem;
-  line-height: 1.7rem;
-  margin: .5rem 1rem;
-  user-select: none;
-  width: 100%;
+  ${({ theme: { colors, fonts } }: { theme: Theme }) => css`
+    background-color: ${colors.transparent};
+    border: 1px solid ${colors.primary};
+    border-radius: 5px;
+    color: ${colors.primary};
+    cursor: pointer;
+    font-family: ${fonts.titles};
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: .5rem 1rem;
+    line-height: 1.7rem;
+    margin: .5rem 1rem;
+    user-select: none;
+    width: 100%;
 
-  & > p {
-    margin: 0;
-    padding: 0;
-  }
+    & > p {
+      margin: 0;
+      padding: 0;
+    }
 
-  & code {
-    background-color: #FFFFFF20;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    padding: .3rem .5rem;
-  }
+    & code {
+      background-color: #FFFFFF20;
+      font-family: ${fonts.code};
+      padding: .3rem .5rem;
+    }
 
-  &:focus {
-    outline: none;
-  }
+    &:focus {
+      outline: none;
+    }
 
-  &:hover {
-    background-color: #6264a715;
-  }
+    &:hover {
+      background-color: ${`${colors.primary}15`};
+    }
 
-  &:disabled {
-    background-color: #CCCCCC15;
-    border: 1px solid #CCC;
-    color: #CCC;
-    cursor: default;
-  }
+    &:disabled {
+      background-color: ${`${colors.disabled}15`};
+      border: 1px solid ${colors.disabled};
+      color: ${colors.disabled};
+      cursor: default;
+    }
+  `}
 `;
 
-const Button = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return <Base {...props} />;
-};
+const Button = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <Base {...props} />
+);
 
 export default Button;

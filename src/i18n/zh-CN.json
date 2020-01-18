@@ -1,0 +1,14 @@
+{
+  "summary": {
+    "title": "你真棒！",
+    "body": "/10 - 您可以转到特定问题并查看说明"
+  },
+  "questions": {
+    "loading": "载入中..."
+  },
+  "question": {
+    "previous": "以前",
+    "next": "下一个",
+    "explanation": "说明"
+  }
+}

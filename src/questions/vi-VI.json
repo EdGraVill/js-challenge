@@ -1,0 +1,2382 @@
+[
+  {
+    "answer": 3,
+    "explanation": [
+      "Trong hàm chúng ta đã khai báo biến `name` với `var`. Điều đó có nghĩa là biến này sẽ được hoisted (một vùng nhớ sẽ được set up khi biến được khởi tạo) với giá trị mặc định là `undefined`, cho tới khi chúng ta thực sự định nghĩa biến đó. Trong hàm này, chúng ta chưa hề định nghĩa biến `name` tại dòng mà ta log ra, vậy nên giá trị mặc định của nó vẫn là `undefined`.",
+      "Các biến được khai báo với keyword `let` (và `const`) cũng được hoisted nhưng không giống như `var`, chúng không được <i>khởi tạo</i>. Chúng ta sẽ không thể truy cập chúng cho tới khi chúng ta khai báo (khởi tạo) chúng. Người ta gọi đó là \"temporal dead zone\". Khi ta truy cập đến một giá trị trước khi chúng được khai báo, JavaScript sẽ throws một `ReferenceError`."
+    ],
+    "id": 0,
+    "options": [
+      "`Lydia` và `undefined`",
+      "`Lydia` và `ReferenceError`",
+      "`ReferenceError` và `21`",
+      "`undefined` và `ReferenceError`"
+    ],
+    "problem": "function sayHi() {\n  console.log(name);\n  console.log(age);\n  var name = \"Lydia\";\n  let age = 21;\n}\n\nsayHi();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Bởi vì event queue trong JavaScript, hàm `setTimeout` callback sẽ được gọi _sau khi_ vòng lặp được thực hiện. Bời vì biến `i` trong vòng lặp đầu tiên được khai báo với từ khóa `var`, nên nó sẽ là một biến global. Trong suốt vòng lặp, mỗi lần chúng ta tăng giá trị của `i` lên `1`, sử dụng phép toán `++`. Cho tới khi callback `setTimeout` được gọi, giá trị của `i` đã trở thành `3` rồi.",
+      "Trong vòng lặp thứ 2, biến `i` được khai báo với từ khóa `let`, có nghĩa nó là một biến block-scoped (block là những gì được viết bên trong cặp ngoặc `{ }`). Tại mỗi vòng lặp, `i` sẽ là một biến mới có một giá trị mới, và giá trị đó có scope là bên trong vòng lặp mà thôi."
+    ],
+    "id": 1,
+    "options": [
+      "`0 1 2` and `0 1 2`",
+      "`0 1 2` and `3 3 3`",
+      "`3 3 3` and `0 1 2`"
+    ],
+    "problem": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}\n\nfor (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}\n",
+    "question": "Output sẽ là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Chú ý rằng giá trị `diameter` là một hàm thông thường, còn `perimeter` là một _arrow function_.",
+      "Không giống như hàm thông thường, với _arrow function_, biến`this` sẽ trỏ tới surrounding scope! Có nghĩa là khi chúng ta gọi `perimeter`, nó sẽ không được gọi bởi shape object, mà nó được gọi bởi object nào đó tại surrounding scope (ví dụ `window` chẳng hạn).",
+      "Khi không có giá trị `radius` tại object đó, nó sẽ trả về `undefined`."
+    ],
+    "id": 2,
+    "options": [
+      "`20` and `62.83185307179586`",
+      "`20` and `NaN`",
+      "`20` and `63`",
+      "`NaN` and `63`"
+    ],
+    "problem": "const shape = {\n  radius: 10,\n  diameter() {\n    return this.radius * 2;\n  },\n  perimeter: () => 2 * Math.PI * this.radius\n};\n\nshape.diameter();\nshape.perimeter();\n",
+    "question": "Output sẽ là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Phép toán cộng `+` sẽ convert một toán hạng sang dạng number. `true` là `1`, và `false` is `0`.",
+      "Chuỗi `'Lydia'` là một _truthy value_. Điều chúng ta thật sự đang hỏi chính là  \"có phải một giá trị truthy là falsy?\". Rõ ràng câu trả lời là `false` rồi."
+    ],
+    "id": 3,
+    "options": [
+      "`1` and `false`",
+      "`false` and `NaN`",
+      "`false` and `false`"
+    ],
+    "problem": "+true;\n!\"Lydia\";\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Trong JavaScript thì tất cả keys của các object đều là string (ngoại trừ khi nó là một Symbol). Dù chúng ta không viết chúng như một string, về cơ bản chúng sẽ luôn được chuyển sang dạng string.",
+      "JavaScript thông dịch (hay unboxes) từng câu lệnh. Khi chúng ta sử dụng cặp dấu ngoặc `[]`, nó sẽ tìm kiếm dấu mở ngoặc đầu tiên `[`, và sẽ tiếp tục tìm kiếm cho tới khi gặp dấu đóng ngoặc `]`. Chỉ khi đó thì câu lệnh mới được thực thi.",
+      "`mouse[bird.size]`: Giá trị đầu tiên `bird.size` là `\"small\"`. `mouse[\"small\"]` sẽ trả về `true`",
+      "Tuy nhiên, khi chúng ta sử dụng dấu chấm `.`, điều trên không còn đúng nữa. `mouse` không hề có key nào tên là `bird`, có nghĩa `mouse.bird` sẽ là `undefined`. Sau đó chúng ta gọi `size` sử dụng chấm `.`: `mouse.bird.size`. Vì  `mouse.bird` là `undefined`, lời gọi sẽ trở thành `undefined.size`. Đây là một lời gọi không hợp lệ, nó sẽ throw ra một lỗi kiểu như `Cannot read property \"size\" of undefined`."
+    ],
+    "id": 4,
+    "options": [
+      "`mouse.bird.size` không hợp lệ",
+      "`mouse[bird.size]` không hợp lệ",
+      "`mouse[bird[\"size\"]]` không hợp lệ",
+      "Tất cả đều hợp lệ"
+    ],
+    "problem": "const bird = {\n  size: \"small\"\n};\n\nconst mouse = {\n  name: \"Mickey\",\n  small: true\n};\n",
+    "question": "Cái nào đúng?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Trong JavaScript, tất cả các object sẽ được _tham chiếu_ khi chúng được gán _bằng_wwwww  một giá trị khác.",
+      "Đầu tiên, giá trị `c` có giá trị là một object. Sau đó, chúng ta gán `d` tham chiếu tới object mà `c` trỏ tới.",
+      "<img src=\"https://i.imgur.com/ko5k0fs.png\" width=\"200\">",
+      "Khi ta thay đổi giá trị của object, tất cả các biến tham chiếu cũng đều thay đổi giá trị theo."
+    ],
+    "id": 5,
+    "options": [
+      "`Hello`",
+      "`Hey`",
+      "`undefined`",
+      "`ReferenceError`",
+      "`TypeError`"
+    ],
+    "problem": "let c = { greeting: \"Hey!\" };\nlet d;\n\nd = c;\nc.greeting = \"Hello\";\nconsole.log(d.greeting);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`new Number()` là một hàm built-in constructor. Mặc dù nó trông có vẻ giống như là một số, nhưng không phải: nó thực sự là một object với hàng tá những thông số khác nữa.",
+      "Khi ta sử dụng phép so sánh `==`, nó đơn thuần chỉ kiểm tra xem 2 biến có _giá trị_ giống nhau. Chúng đều có giá trị là `3`, vậy nên phép toán đầu trả về `true`.",
+      "Tuy nhiên khi sử dụng phép so sánh `===`, cả _giá trị_ và _kiểu_ đều phải giống nhau. Rõ ràng: `new Number()` không phải là một số, nó là một **object**. Cả 2 phép toán sau đều trả về `false.`"
+    ],
+    "id": 6,
+    "options": [
+      "`true` `false` `true`",
+      "`false` `false` `true`",
+      "`true` `false` `false`",
+      "`false` `true` `true`"
+    ],
+    "problem": "let a = 3;\nlet b = new Number(3);\nlet c = 3;\n\nconsole.log(a == b);\nconsole.log(a === b);\nconsole.log(b === c);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Hàm `colorChange` là một hàm static (hàm tĩnh). Hàm static được thiết kế để chỉ để tồn tại ở mức class, và không thể truyền cho bất cứ instance con nào. Vì `freddie` là một instance con, hàm static này sẽ không được truyền xuống, và do đó không thể gọi được tại `freddie` instance: nó sẽ throw ra một `TypeError`."
+    ],
+    "id": 7,
+    "options": [
+      "`orange`",
+      "`purple`",
+      "`green`",
+      "`TypeError`"
+    ],
+    "problem": "class Chameleon {\n  static colorChange(newColor) {\n    this.newColor = newColor;\n    return this.newColor;\n  }\n\n  constructor({ newColor = \"green\" } = {}) {\n    this.newColor = newColor;\n  }\n}\n\nconst freddie = new Chameleon({ newColor: \"purple\" });\nfreddie.colorChange(\"orange\");\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Nó sẽ log ra object `greetign`, bởi vì chúng ta vừa khởi tạo một global object! Khi chúng ta đánh máy nhầm `greeting` thành `greetign`, trình thông dịch của JS sẽ coi nó như là `global.greetign = {}` (hay `window.greetign = {}` nếu chạy trên browser).",
+      "Để tránh điều này chúng ta có thể sử dụng `\"use strict\"`. Nó sẽ đảm bảo rẳng các biến đều phải được khai báo trước khi sử dụng."
+    ],
+    "id": 8,
+    "options": [
+      "`{}`",
+      "`ReferenceErrorgreetign is not defined`",
+      "`undefined`"
+    ],
+    "problem": "let greeting;\ngreetign = {}; // Lỗi đánh máy!\nconsole.log(greetign);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Điều này là có thể với Javascript, bởi vì `function` cũng chỉ là `object` mà thôi! (Mọi primitive types đều là object)",
+      "Function là một object đặc biệt. Phần code mà bạn viết không phải là function thực tế đâu. Function ở đây chính là một object với các thuộc tính. Và các thuộc tính này có thể gọi được."
+    ],
+    "id": 9,
+    "options": [
+      "Hoàn toàn không có vấn đề gì!",
+      "`SyntaxError`. Bạn không thể thêm thuộc tính theo cách này.",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "function bark() {\n  console.log(\"Woof!\");\n}\n\nbark.animal = \"dog\";\n",
+    "question": "Điều gì sẽ xảy ra khi chúng ta làm thế này?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Chúng ta không thể add thêm một thuộc tính cho một constructor giống như một object thông thường. Nếu bạn muốn add thêm thuộc tính nào đó cho tất cả các object một lần, bạn phải dùng `prototype`. Trong trường hợp này cũng vậy.",
+      "khi này `member.getFullName()` sẽ hoạt động. Tại sao nên làm vậy? Hãy thử thêm chúng trực tiếp vào constructor xem sao. Không phải mọi instance `Person` đều cần phương thức này. Nó sẽ dẫn tới việc lãng phí rất nhiều bộ nhớ, khi chúng đều phải lưu trữ thuộc tính này cho mỗi instance. Thay vì thế, nếu ta chỉ thêm chúng vào `prototype`, ta sẽ chỉ tốn bộ nhớ _một lần_ mà thôi, và mọi object khác đều có thể truy cập đến nó!"
+    ],
+    "id": 10,
+    "options": [
+      "`TypeError`",
+      "`SyntaxError`",
+      "`Lydia Hallie`",
+      "`undefined` `undefined`"
+    ],
+    "problem": "function Person(firstName, lastName) {\n  this.firstName = firstName;\n  this.lastName = lastName;\n}\n\nconst member = new Person(\"Lydia\", \"Hallie\");\nPerson.getFullName = function() {\n  return `${this.firstName} ${this.lastName}`;\n};\n\nconsole.log(member.getFullName());\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Với `sarah`, chúng ta khai báo mà không có từ khóa `new`. Khi sử dụng `new`, nó sẽ trỏ đến một object mới mà ta vừa tạo ra. Tuy nhiên nếu ta không dùng `new` thì nó sẽ trỏ tới **global object**!",
+      "Chúng ta cho rằng `this.firstName` là `\"Sarah\"` và `this.lastName` là `\"Smith\"`. Tuy nhiên sự thực là chúng ta đã định nghĩa `global.firstName = 'Sarah'` và `global.lastName = 'Smith'`. Bản thân biến `sarah` vẫn là `undefined`."
+    ],
+    "id": 11,
+    "options": [
+      "`Person {firstName\"Lydia\", lastName\"Hallie\"}` và `undefined`",
+      "`Person {firstName\"Lydia\", lastName\"Hallie\"}` và `Person {firstName\"Sarah\", lastName\"Smith\"}`",
+      "`Person {firstName\"Lydia\", lastName\"Hallie\"}` và `{}`",
+      "\"Lydia\", lastName\"Hallie\"}` và `ReferenceError`"
+    ],
+    "problem": "function Person(firstName, lastName) {\n  this.firstName = firstName;\n  this.lastName = lastName;\n}\n\nconst lydia = new Person(\"Lydia\", \"Hallie\");\nconst sarah = Person(\"Sarah\", \"Smith\");\n\nconsole.log(lydia);\nconsole.log(sarah);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Trong **capturing** phase, event được truyền từ các phần tử cha cho tới phần tử target. Sau khi tới được phần tử **target** thì **bubbling** sẽ bắt đầu.",
+      "<img src=\"https://i.imgur.com/N18oRgd.png\" width=\"200\">"
+    ],
+    "id": 12,
+    "options": [
+      "Target > Capturing > Bubbling",
+      "Bubbling > Target > Capturing",
+      "Target > Bubbling > Capturing",
+      "Capturing > Target > Bubbling"
+    ],
+    "problem": "",
+    "question": "3 giai đoạn của event propagation là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Tất cả các object đều có prototypes, ngoại trừ **base object**. Object base có thể truy cập đến vài methods và properties, ví dụ như `.toString`. Đó là lý do tại sao chúng ta có thể sử dụng được các built-in methods trong JavaScript! Tất cả các phương thức đó đều có trong prototype. Mặc dù JavaScript không thể tìm thấy chúng trong object một cách trực tiếp, nó sẽ được truyền xuống thông qua prototype chain và xuống tới object, tại đây chúng ta có thể truy cập được nó.",
+      "</p>",
+      "</details>"
+    ],
+    "id": 13,
+    "options": [
+      "đúng",
+      "sai"
+    ],
+    "problem": "",
+    "question": "Tất cả các object đều có prototypes."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "JavaScript là một ngôn ngữ **dynamically typed**: chúng ta không khai báo kiểu dữ liệu khi khai báo biến. Giá trị có thể bị tự động convert sang một kiểu dữ liệu khác mà ta không hề hay biết, điều này được gọi là _implicit type coercion_. **Coercion** có nghĩa là convert từ kiểu này sang kiểu khác.",
+      "Trong ví dụ này, JavaScript sẽ convert số `1` sang dạng string. Mỗi khi ta cộng một số (`1`) với một string (`'2'`), số sẽ luôn được xem như là một string. Kết quả sẽ là một phép nối chuỗi giống như `\"Hello\" + \"World\"`, vậy nên `\"1\" + \"2\"` sẽ trả về là `\"12\"`."
+    ],
+    "id": 14,
+    "options": [
+      "`NaN`",
+      "`TypeError`",
+      "`\"12\"`",
+      "`3`"
+    ],
+    "problem": "function sum(a, b) {\n  return a + b;\n}\n\nsum(1, \"2\");\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Khi phép toán `++` nằm ở **đằng sau** (**postfix**):",
+      "Trả về giá trị (trả về `0`)",
+      "Tăng giá trị lên (number giờ là `1`)",
+      "Khi phép toán `++` nằm ở **đằng trước** (**prefix**):",
+      "Tăng giá trị lên (number giờ là `2`)",
+      "Trả về giá trị (trả về `2`)",
+      "Vậy kết quả là `0 2 2`."
+    ],
+    "id": 15,
+    "options": [
+      "`1` `1` `2`",
+      "`1` `2` `2`",
+      "`0` `2` `2`",
+      "`0` `1` `2`"
+    ],
+    "problem": "let number = 0;\nconsole.log(number++);\nconsole.log(++number);\nconsole.log(number);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Nếu bạn dùng _tagged template literals_, giá trị của đối số đầu tiên luôn luôn là một mảng các string. Những đối số còn lại sẽ lấy giá trị từ biểu thức đưa vào!"
+    ],
+    "id": 16,
+    "options": [
+      "`\"Lydia\"` `21` `[\"\", \" is \", \" years old\"]`",
+      "`[\"\", \" is \", \" years old\"]` `\"Lydia\"` `21`",
+      "`\"Lydia\"` `[\"\", \" is \", \" years old\"]` `21`"
+    ],
+    "problem": "function getPersonInfo(one, two, three) {\n  console.log(one);\n  console.log(two);\n  console.log(three);\n}\n\nconst person = \"Lydia\";\nconst age = 21;\n\ngetPersonInfo`${person} is ${age} years old`;\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Khi test sự bằng nhau, các kiểu dữ liệu cơ bản sẽ so sánh _giá trị_ của chúng, còn object thì so sánh _tham chiếu_. JavaScript sẽ kiểm tra xem các object đó có trỏ đến những vùng nhớ giống nhau hay không.",
+      "Hai object chúng ta đang so sánh không có được điều đó: object đối số tham chiếu đến một vùng nhớ khác với object chúng ta dùng để kiểm tra sự bằng nhau.",
+      "Đó là lý do tại sao cả `{ age: 18 } === { age: 18 }` và `{ age: 18 } == { age: 18 }` đều trả về `false`."
+    ],
+    "id": 17,
+    "options": [
+      "`You are an adult!`",
+      "`You are still an adult.`",
+      "`Hmm.. You don't have an age I guess`"
+    ],
+    "problem": "function checkAge(data) {\n  if (data === { age: 18 }) {\n    console.log(\"You are an adult!\");\n  } else if (data == { age: 18 }) {\n    console.log(\"You are still an adult.\");\n  } else {\n    console.log(`Hmm.. You don't have an age I guess`);\n  }\n}\n\ncheckAge({ age: 18 });\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "_Spread operator_ (`...args`.) sẽ trả về một mảng các đối số. Mảng thực chất là một object, vậy nên `typeof args` sẽ trả về `\"object\"`."
+    ],
+    "id": 18,
+    "options": [
+      "`\"number\"`",
+      "`\"array\"`",
+      "`\"object\"`",
+      "`\"NaN\"`"
+    ],
+    "problem": "function getAge(...args) {\n  console.log(typeof args);\n}\n\ngetAge(21);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Với `\"use strict\"`, chúng ta sẽ đảm bảo được rằng ta sẽ không bao giờ khai báo biến global một cách vô ý. Tại đây chúng ta chưa khai báo biến `age`, và khi dùng `\"use strict\"`, nó sẽ throw ra một _reference error_. Nếu như không dùng `\"use strict\"`, nó sẽ vẫn hoạt động, vì thuộc tính `age` sẽ được thêm vào global object."
+    ],
+    "id": 19,
+    "options": [
+      "`21`",
+      "`undefined`",
+      "`ReferenceError`",
+      "`TypeError`"
+    ],
+    "problem": "function getAge() {\n  \"use strict\";\n  age = 21;\n  console.log(age);\n}\n\ngetAge();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`eval` sẽ đánh giá đoạn code bên trong string. Nếu nó là một biểu thức, giống như trong trường hợp này, nó sẽ tính toán giá trị đó. Biểu thức là `10 * 10 + 5`, kết quả sẽ là `105`."
+    ],
+    "id": 20,
+    "options": [
+      "`105`",
+      "`\"105\"`",
+      "`TypeError`",
+      "`\"10*10+5\"`"
+    ],
+    "problem": "const sum = eval(\"10*10+5\");\n",
+    "question": "Giá trị của `sum` là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Dữ liệu được lưu trữ trong `sessionStorage` sẽ được xóa khi đóng _tab_.",
+      "Nếu chúng ta dùng `localStorage`, data sẽ được lưu trữ mãi mãi, trừ phi hàm `localStorage.clear()` được gọi."
+    ],
+    "id": 21,
+    "options": [
+      "Mãi mãi, dữ liệu sẽ không bao giờ mất.",
+      "Khi user đóng tab lại.",
+      "Khi user không chỉ là đóng tab, mà đóng browser lại.",
+      "Khi user tắt máy tính đi."
+    ],
+    "problem": "sessionStorage.setItem(\"cool_secret\", 123);\n",
+    "question": "Biến cool_secret sẽ truy cập được trong bao lâu?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Với từ khóa `var` bạn có thể khai báo bao nhiêu biến trùng tên tùy thích. Biến đó sẽ có giá trị là lần cuối khai báo.",
+      "Bạn không thể làm điều tương tự với `let` hay `const` vì chúng là _block-scoped_."
+    ],
+    "id": 22,
+    "options": [
+      "`8`",
+      "`10`",
+      "`SyntaxError`",
+      "`ReferenceError`"
+    ],
+    "problem": "var num = 8;\nvar num = 10;\n\nconsole.log(num);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Tất cả các keys của object (ngoại trừ Symbols) về bản chất đều là string, dù chúng ta có viết chúng ra dạng string hay không. Nó là lý do tại sao `obj.hasOwnProperty('1')` cũng trả về `true`.",
+      "Tuy nhiên điều đó không đúng với `set`. Không hề có `'1'` trong set của chúng ta: `set.has('1')` trả về `false`. Có số `1` trong set, nên `set.has(1)` trả về `true`."
+    ],
+    "id": 23,
+    "options": [
+      "`false` `true` `false` `true`",
+      "`false` `true` `true` `true`",
+      "`true` `true` `false` `true`",
+      "`true` `true` `true` `true`"
+    ],
+    "problem": "const obj = { 1: \"a\", 2: \"b\", 3: \"c\" };\nconst set = new Set([1, 2, 3, 4, 5]);\n\nobj.hasOwnProperty(\"1\");\nobj.hasOwnProperty(1);\nset.has(\"1\");\nset.has(1);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Nếu chúng ta có 2 keys giống nhau, thì chúng sẽ bị replace. Nó sẽ vẫn nằm ở vị trí đầu tiên chúng được khai báo, nhưng giá trị thì sẽ là giá trị lần cuối."
+    ],
+    "id": 24,
+    "options": [
+      "`{ a\"one\", b\"two\" }`",
+      "`{ b\"two\", a\"three\" }`",
+      "`{ a\"three\", b\"two\" }`",
+      "`SyntaxError`"
+    ],
+    "problem": "const obj = { a: \"one\", b: \"two\", a: \"three\" };\nconsole.log(obj);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Ngữ cảnh thực thi cơ bản chính là ngữ cảnh global: nó là thứ mà chúng ta có thể truy cập được ở bất cứ đâu trong code."
+    ],
+    "id": 25,
+    "options": [
+      "đúng",
+      "sai",
+      "còn tùy"
+    ],
+    "problem": "",
+    "question": "Ngữ cảnh thực thi global của JavaScript tạo ra 2 thứ cho chúng ta: global object, và từ khóa \"this\"."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Lệnh `continue` sẽ bỏ qua một vòng lặp nếu điều kiện của nó là `true`."
+    ],
+    "id": 26,
+    "options": [
+      "`1` `2`",
+      "`1` `2` `3`",
+      "`1` `2` `4`",
+      "`1` `3` `4`"
+    ],
+    "problem": "for (let i = 1; i < 5; i++) {\n  if (i === 3) continue;\n  console.log(i);\n}\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`String` là một built-in constructor, có nghĩa là chúng ta có thể thêm các thuộc tính vào đó. Ta vừa thêm vào đó một thuộc tính. Kiểu String cơ bản sẽ được convert sang dạng object bởi hàm string prototype. Vì thế nên tất cả các string object đều có thể truy cập đến hàm `giveLydiaPizza` này!"
+    ],
+    "id": 27,
+    "options": [
+      "`\"Just give Lydia pizza already!\"`",
+      "`TypeErrornot a function`",
+      "`SyntaxError`",
+      "`undefined`"
+    ],
+    "problem": "String.prototype.giveLydiaPizza = () => {\n  return \"Just give Lydia pizza already!\";\n};\n\nconst name = \"Lydia\";\n\nname.giveLydiaPizza();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Object keys sẽ tự động được convert sang dạng string. Chúng ta đang set một object như là một key cho object `a`, với giá trị là `123`.",
+      "Tuy nhiên khi ta string hóa một object, nó sẽ trở thành `\"[object Object]\"`. Nên tại đây phép gán này thực chất chính là `a[\"object Object\"] = 123`. Phép gán tiếp theo cũng giống hệt vậy. `c` là một object khác mà chúng ta đang string hóa nó. Theo đó, `a[\"object Object\"] = 456`.",
+      "Cuối cùng khi gọi `a[b]`, thực chất chính là gọi `a[\"object Object\"]`. Giá trị của nó là `456`, nên trả về là `456`."
+    ],
+    "id": 28,
+    "options": [
+      "`123`",
+      "`456`",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "const a = {};\nconst b = { key: \"b\" };\nconst c = { key: \"c\" };\n\na[b] = 123;\na[c] = 456;\n\nconsole.log(a[b]);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Chúng ta có một hàm `setTimeout` được gọi đầu tiên. Nên, nó sẽ được log ra cuối cùng.",
+      "Điều đó bởi vì trên browser, chúng ta không hề có runtime engine, đơn thuần chỉ có `WebAPI`. `WebAPI` cho chúng ta một hàm `setTimeout`, ta hãy ví dụ nó trên DOM.",
+      "Sau khi _callback_ được gửi tới WebAPI, bản thân hàm `setTimeout` (nhưng không phải callback nhé!) sẽ được đưa ra khỏi stack.",
+      "<img src=\"https://i.imgur.com/X5wsHOg.png\" width=\"200\">",
+      "Giờ đây, `foo` được gọi, và `\"First\"` được log ra.",
+      "<img src=\"https://i.imgur.com/Pvc0dGq.png\" width=\"200\">",
+      "`foo` được đưa ra khỏi stack, và `baz` được gọi. `\"Third\"` được log ra.",
+      "<img src=\"https://i.imgur.com/WhA2bCP.png\" width=\"200\">",
+      "WebAPI không thể thêm thứ gì đó vào stack cho tới khi nó được sẵn sàng. Thay vào đó, nó đẩy callback function đến một nơi gọi là _queue_.",
+      "<img src=\"https://i.imgur.com/NSnDZmU.png\" width=\"200\">",
+      "Đó chính là nơi mà **event loop** làm việc. Một **event loop** sẽ quan sát stack và task queue. Nếu stack trở nên rỗng, nó sẽ lấy giá trị đầu tiên trong queue để đưa tiếp vào stack.",
+      "<img src=\"https://i.imgur.com/uyiScAI.png\" width=\"200\">",
+      "`bar` được gọi, `\"Second\"` được log ra, và nó được đưa ra khỏi stack."
+    ],
+    "id": 29,
+    "options": [
+      "`First` `Second` `Third`",
+      "`First` `Third` `Second`",
+      "`Second` `First` `Third`",
+      "`Second` `Third` `First`"
+    ],
+    "problem": "const foo = () => console.log(\"First\");\nconst bar = () => setTimeout(() => console.log(\"Second\"));\nconst baz = () => console.log(\"Third\");\n\nbar();\nfoo();\nbaz();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Phần tử sâu nhất trong các phần tử lồng nhau sẽ là target của event. Bạn có thể ngăn việc đó lại bằng cách sử dụng `event.stopPropagation`"
+    ],
+    "id": 30,
+    "options": [
+      "Outer `div`",
+      "Inner `div`",
+      "`button`",
+      "Một mảng với toàn bộ các phần tử lồng nhau."
+    ],
+    "problem": "<div onclick=\"console.log('first div')\">\n  <div onclick=\"console.log('second div')\">\n    <button onclick=\"console.log('button')\">\n      Click!\n    </button>\n  </div>\n</div>\n",
+    "question": "Giá trị của event.target là gì khi click button?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Nếu ta click vào `p`, ta sẽ thấy hai log: `p` và `div`. Trong chuỗi event sẽ có 3 phases: capturing, target, và bubbling. Mặc định thì event handlers sẽ được thực hiện tại bubbling phase (trừ phi chúng ta khai báo `useCapture` là `true`). Chúng sẽ đi từ phần tử sâu nhất ra đến bên ngoài."
+    ],
+    "id": 31,
+    "options": [
+      "`p` `div`",
+      "`div` `p`",
+      "`p`",
+      "`div`"
+    ],
+    "problem": "<div onclick=\"console.log('div')\">\n  <p onclick=\"console.log('p')\">\n    Click here!\n  </p>\n</div>\n",
+    "question": "Khi bạn click vào đoạn văn, giá trị của output sẽ là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Với cả hai, chúng ta có thể đưa vào object để sử dụng từ khóa `this`. Tuy nhiên, `.call` có nghĩa là _thực hiện ngay lập tức_!",
+      "`.bind.` trả về một bản _copy_ của function, với context kèm theo! Nó sẽ không thực hiện ngay lập tức."
+    ],
+    "id": 32,
+    "options": [
+      "`undefined is 21` `Lydia is 21`",
+      "`function` `function`",
+      "`Lydia is 21` `Lydia is 21`",
+      "`Lydia is 21` `function`"
+    ],
+    "problem": "const person = { name: \"Lydia\" };\n\nfunction sayHi(age) {\n  console.log(`${this.name} is ${age}`);\n}\n\nsayHi.call(person, 21);\nsayHi.bind(person, 21);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`sayHi` function trả về giá trị của một _hàm gọi ngay lập tức_ (immediately invoked function - IIFE). Function này trả về `0`, kiểu dữ liệu `\"number\"`.",
+      "FYI: chỉ có 7 kiểu dữ liệu built-in: `null`, `undefined`, `boolean`, `number`, `string`, `object`, and `symbol`. `\"function\"` không phải là một kiểu, mà là objects, kiểu dữ liệu là `\"object\"`."
+    ],
+    "id": 33,
+    "options": [
+      "`\"object\"`",
+      "`\"number\"`",
+      "`\"function\"`",
+      "`\"undefined\"`"
+    ],
+    "problem": "function sayHi() {\n  return (() => 0)();\n}\n\ntypeof sayHi();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Chỉ có 6 giá trị _falsy_:",
+      "`undefined`",
+      "`null`",
+      "`NaN`",
+      "`0`",
+      "`''` (chuỗi rỗng)",
+      "`false`",
+      "Function constructors như `new Number` và `new Boolean` đều là _truthy_."
+    ],
+    "id": 34,
+    "options": [
+      "`0`, `''`, `undefined`",
+      "`0`, `new Number(0)`, `''`, `new Boolean(false)`, `undefined`",
+      "`0`, `''`, `new Boolean(false)`, `undefined`",
+      "Tất cả đều là falsy"
+    ],
+    "problem": "0;\nnew Number(0);\n(\"\");\n(\" \");\nnew Boolean(false);\nundefined;\n",
+    "question": "Giá trị nào trong các giá trị dưới đây là falsy?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`typeof 1` trả về `\"number\"`.\n`typeof \"number\"` trả về `\"string\"`"
+    ],
+    "id": 35,
+    "options": [
+      "`\"number\"`",
+      "`\"string\"`",
+      "`\"object\"`",
+      "`\"undefined\"`"
+    ],
+    "problem": "console.log(typeof typeof 1);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Mỗi khi chúng ta set một giá trị cho một phần tử trong mảng mà vượt quá độ dài của mảng, JavaScript sẽ tạo ra những \"empty slots\". Chúng sẽ có giá trị là `undefined`, nhưng khi ghi ra thì chúng ta sẽ thấy dạng:",
+      "`[1, 2, 3, 7 x empty, 11]`",
+      "phụ thuộc vào nơi mà chúng ta chạy chúng (có thể khác nhau tùy môi trường browser, node, etc.)"
+    ],
+    "id": 36,
+    "options": [
+      "`[1, 2, 3, 7 x null, 11]`",
+      "`[1, 2, 3, 11]`",
+      "`[1, 2, 3, 7 x empty, 11]`",
+      "`SyntaxError`"
+    ],
+    "problem": "const numbers = [1, 2, 3];\nnumbers[10] = 11;\nconsole.log(numbers);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`catch` block nhận về giá trị `x`. Đây không phải là giá trị `x` mà ta khai báo với từ khóa `let` ở bên trên. Đây là biến `x` trong _block-scoped_.",
+      "Tiếp đó, chúng ta set giá trị của biến block-scoped này là `1`, và đồng thời cũng set giá trị cho biến `y`. Giờ đây chúng ta log ra giá trị của biến block-scoped variable `x`, bằng `1`.",
+      "Bên ngoài `catch` block, `x` vẫn là `undefined`, và `y` là `2`. Khi gọi `console.log(x)` bên ngoài `catch` block, nó sẽ trả về `undefined`, và `y` trả về `2`."
+    ],
+    "id": 37,
+    "options": [
+      "`1` `undefined` `2`",
+      "`undefined` `undefined` `undefined`",
+      "`1` `1` `2`",
+      "`1` `undefined` `undefined`"
+    ],
+    "problem": "(() => {\n  let x, y;\n  try {\n    throw new Error();\n  } catch (x) {\n    (x = 1), (y = 2);\n    console.log(x);\n  }\n  console.log(x);\n  console.log(y);\n})();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "JavaScript chỉ có primitive types và objects.",
+      "Primitive types là `boolean`, `null`, `undefined`, `bigint`, `number`, `string`, and `symbol`.",
+      "Điểm khác nhau giữa primitive và object chính là primitives không có thuộc tính hay phương thức; tuy nhiên, chúng ta để ý rằng là `'foo'.toUpperCase()` sẽ trả về `'FOO'` mà không phải là một `TypeError`. Đó là bởi vì khi chúng ta truy cập các thuộc tính hay phương thức của một primitive như là string, JavaScript sẽ ngầm bao nó bởi một `wrapper class`, ví dụ `String`, và sau đó sẽ hủy việc bao đó ngay sau khi thực hiện xong. Mọi primitives ngoại trừ `null` và `undefine` đều hoạt động giống như vậy."
+    ],
+    "id": 38,
+    "options": [
+      "primitives hoặc object",
+      "function hoặc object",
+      "hỏi mẹo khó đấy! chỉ _object_ thôi",
+      "number hoặc object"
+    ],
+    "problem": "",
+    "question": "Mọi thứ trong JavaScript đều là..."
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`[1, 2]` là giá trị khởi tạo. Đây là giá trị chúng ta bắt đầu, và cũng là giá trị đầu tiên của `acc`. Tại vòng đầu tiên, `acc` là `[1,2]`, và `cur` là `[0, 1]`. Ta nối chúng lại tạo ra `[1, 2, 0, 1]`.",
+      "Tiếp tục, `[1, 2, 0, 1]` là `acc` và `[2, 3]` là `cur`. Ta nối chúng lại tạo ra `[1, 2, 0, 1, 2, 3]`."
+    ],
+    "id": 39,
+    "options": [
+      "`[0, 1, 2, 3, 1, 2]`",
+      "`[6, 1, 2]`",
+      "`[1, 2, 0, 1, 2, 3]`",
+      "`[1, 2, 6]`"
+    ],
+    "problem": "[[0, 1], [2, 3]].reduce(\n  (acc, cur) => {\n    return acc.concat(cur);\n  },\n  [1, 2]\n);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`null` là falsy. `!null` trả về `true`. `!true` trả về `false`.",
+      "`\"\"` là falsy. `!\"\"` trả về `true`. `!true` trả về `false`.",
+      "`1` là truthy. `!1` trả về `fa\u001bse`. `!false` trả về `true`."
+    ],
+    "id": 40,
+    "options": [
+      "`false` `true` `false`",
+      "`false` `false` `true`",
+      "`false` `true` `true`",
+      "`true` `true` `false`"
+    ],
+    "problem": "!!null;\n!!\"\";\n!!1;\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Nó trả về một id duy nhất. Id này dùng để clear interval sau này với hàm `clearInterval()`."
+    ],
+    "id": 41,
+    "options": [
+      "một id duy nhất",
+      "số lượng milliseconds",
+      "function truyền vào",
+      "`undefined`"
+    ],
+    "problem": "setInterval(() => console.log(\"Hi\"), 1000);\n",
+    "question": "Hàm `setInterval` trả về cái gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "String là một _iterable_. Thế nên _spread operator_ sẽ map toàn bộ các ký tự trong chuỗi lại thành một mảng."
+    ],
+    "id": 42,
+    "options": [
+      "`[\"L\", \"y\", \"d\", \"i\", \"a\"]`",
+      "`[\"Lydia\"]`",
+      "`[[], \"Lydia\"]`",
+      "`[[\"L\", \"y\", \"d\", \"i\", \"a\"]]`"
+    ],
+    "problem": "[...\"Lydia\"];\n",
+    "question": "Giá trị trả về là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Một hàm bình thường không thể bị dừng giữa chừng khi được gọi. Tuy nhiên một _generator_ thì khác, nó có thể \"dừng lại\" được, và sau đó nó sẽ tiếp tục từ vị trí nó dừng lại. Mỗi khi một _generator_ gặp một từ khóa `yield`, nó sẽ sinh ra giá trị ngay phía sau nó. Chú ý là _generator_ không _trả về_ giá trị, nó _sinh ra_ giá trị.",
+      "Đầu tiên, chúng ta khởi tạo generator với giá trị `i` là `10`. Generator được gọi bằng cách sử dụng phương thức `next()`. Khi lần đầu gọi thì `i` vẫn là `10`. Khi nó bắt gặp từ khóa `yield`: nó sẽ sinh ra giá trị `i`. Generator sẽ được \"tạm dừng\" tại đây, và ghi ra giá trị `10`.",
+      "Sau đó chung ta tiếp tục gọi generator bằng cách sử dụng tiếp phương thức `next()`. Nó sẽ bắt đầu từ vị trí nó tạm dừng lúc trước, khi `i` vẫn đang là `10`. Và khi nó bắt gặp từ khóa `yield`, nó sẽ sinh ra giá trị `i * 2`. `i` là `10`, nên nó sẽ sinh ra `10 * 2`, tức `20`. Vậy kết quả cuối cùng là `10, 20`."
+    ],
+    "id": 43,
+    "options": [
+      "`[0, 10], [10, 20]`",
+      "`20, 20`",
+      "`10, 20`",
+      "`0, 10 and 10, 20`"
+    ],
+    "problem": "function* generator(i) {\n  yield i;\n  yield i * 2;\n}\n\nconst gen = generator(10);\n\nconsole.log(gen.next().value);\nconsole.log(gen.next().value);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Khi chúng ta đưa các promise vào trong một hàm `Promise.race`, nó sẽ chỉ resolves hay rejects promise _đầu tiên_ được resolves/rejects. Với hàm `setTimeout`, chúng ta đưa vào một khoảng thời gian: 500 mili giây cho promise đầu tiên (`firstPromise`), và 100 mili giây cho promise thứ hai (`secondPromise`). Nó có nghĩa là `secondPromise` sẽ hoàn thành trước và trả về giá trị `'two'`. `res` khi này sẽ nhận giá trị `'two'` và được in ra console."
+    ],
+    "id": 44,
+    "options": [
+      "`\"one\"`",
+      "`\"two\"`",
+      "`\"two\" \"one\"`",
+      "`\"one\" \"two\"`"
+    ],
+    "problem": "const firstPromise = new Promise((res, rej) => {\n  setTimeout(res, 500, \"one\");\n});\n\nconst secondPromise = new Promise((res, rej) => {\n  setTimeout(res, 100, \"two\");\n});\n\nPromise.race([firstPromise, secondPromise]).then(res => console.log(res));\n",
+    "question": "Giá trị trả về là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Đầu tiên, chúng ta khai báo một biến `person` là một object có thuộc tính `name`.",
+      "<img src=\"https://i.imgur.com/TML1MbS.png\" width=\"200\">",
+      "Sau đó chúng ta khai báo một biến `members`. Ta set giá trị đầu tiên của mảng là giá trị của biến `person`. Khi sử dụng gán bằng, object sẽ được _tham chiếu_ tới object mà nó được gán. Khi ta gán tham chiếu từ một biến sang biến khác, ta tạo ra một bản sao của tham chiếu đó. (nên nhớ rằng đó vẫn là 2 tham chiếu hoàn toàn khác nhau!)",
+      "<img src=\"https://i.imgur.com/FSG5K3F.png\" width=\"300\">",
+      "Sau đó ta set giá trị của `person` bằng `null`.",
+      "<img src=\"https://i.imgur.com/sYjcsMT.png\" width=\"300\">",
+      "Chúng ta chỉ đơn thuần là thay đổi giá trị của biến `person` mà thôi, chứ không phải giá trị của phần tử đầu tiên ở trong mảng, vì chúng ta có một tham chiếu khác đến object đó. Phần tử đầu tiên của mảng `members` vẫn giữ tham chiêu đến object gốc. Do vậy, khi chúng ta in ra mảng `members`, phần tử đầu tiên sẽ vẫn in ra giá trị của objet gốc."
+    ],
+    "id": 45,
+    "options": [
+      "`null`",
+      "`[null]`",
+      "`[{}]`",
+      "`[{ name\"Lydia\" }]`"
+    ],
+    "problem": "let person = { name: \"Lydia\" };\nconst members = [person];\nperson = null;\n\nconsole.log(members);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Với vòng lặp `for-in` chúng ta sẽ lặp qua tất cả các `keys` của object, trong trường hợp này là `name` và `age`. Về cơ bản, object keys là string (nếu nó không phải là Symbol). Tại mỗi vòng lặp, giá trị của `item` chính là giá trị của key hiện tại trong vòng lặp. Đầu tiên, `item` là `name`, và được in ra. Vòng lặp sau, `item` là `age`, và được in ra."
+    ],
+    "id": 46,
+    "options": [
+      "`{ name\"Lydia\" }, { age21 }`",
+      "`\"name\", \"age\"`",
+      "`\"Lydia\", 21`",
+      "`[\"name\", \"Lydia\"], [\"age\", 21]`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia\",\n  age: 21\n};\n\nfor (const item in person) {\n  console.log(item);\n}\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Compiler sẽ đánh giá biểu thức dựa trên độ ưu tiên giữa các phép toán trong biểu thức đó, từ đó nó sẽ tính toán hoặc trái-sang-phải hoặc phải-qua-trái. Ở đây chúng ta chỉ có một phép toán mà thôi, phép cộng: `+`. Với phép cộng, tính toán sẽ là từ trái-qua-phải.",
+      "Giá trị `3 + 4` được tính toán trước. Kết quả là `7`.",
+      "`7 + '5'` sẽ ra kết quả là `\"75\"` bởi xuất hiện ép kiểu tại đây. JavaScript sẽ convert `7` sang dạng string, bạn có thể xem thêm tại câu hỏi 15. Và sau đó 2 string sẽ được nối lại với nhau bởi phép toán cộng `+`. Kết quả `\"7\" + \"5\"` sẽ là `\"75\"`."
+    ],
+    "id": 47,
+    "options": [
+      "`\"345\"`",
+      "`\"75\"`",
+      "`12`",
+      "`\"12\"`"
+    ],
+    "problem": "console.log(3 + 4 + \"5\");\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Chỉ có số đầu tiên trong chuỗi kí tự được trả về. Hệ cơ số là _hệ thập phân_ (đối số thứ 2 trong hàm chính là cơ số: hệ thập phân, hệ 16, hệ 8, hệ nhị phân, vv.), Hàm `parseInt` sẽ kiểm tra xem các ký tự trong chuỗi có đảm bảo hợp lệ hay không. Một khi chúng tìm ra ký tự không phải là ký tự hợp lệ trong hệ cơ số, nó dừng lại và bỏ qua các ký tự phía sau.",
+      "`*` không phải là một số. Vậy nên nó sẽ chỉ convert ký tự `\"7\"` sang hệ thập phân là `7`. `num` sẽ có giá trị là `7`."
+    ],
+    "id": 48,
+    "options": [
+      "`42`",
+      "`\"42\"`",
+      "`7`",
+      "`NaN`"
+    ],
+    "problem": "const num = parseInt(\"7*6\", 10);\n",
+    "question": "Giá trị của `num` là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Khi ta tiến hành `map` một mảng, giá trị của `num` sẽ chính là giá trị của phần tử hiện giờ trong vòng lặp. Trong trường hợp này, các phần tử đều là dạng số, tức là `typeof num === \"number\"` sẽ là `true`. Hàm `map` sẽ tạo ra một mảng mởi từ các giá trị của mảng ban đầu.",
+      "Tuy nhiên chúng ta không hề trả về giá trị nào cả. Khi đó, hàm số sẽ mặc định trả về `undefined`. Do đó qua mỗi vòng lặp, ta lại nhận được thêm một giá trị `undefined` nữa."
+    ],
+    "id": 49,
+    "options": [
+      "`[]`",
+      "`[null, null, null]`",
+      "`[undefined, undefined, undefined]`",
+      "`[ 3 x empty ]`"
+    ],
+    "problem": "[1, 2, 3].map(num => {\n  if (typeof num === \"number\") return;\n  return num * 2;\n});\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`Đối số` sẽ được đưa vào hàm dạng _tham trị_, trừ phi nó là object, khi đó nó sẽ được đưa vào hàm dạng _tham chiếu_. `birthYear` là dạng giá trị, vì nó là string chứ không phải object. Khi chúng ta đưa vào dạng giá trị, một bản sao của giá trị đó sẽ được tạo ra (xem thêm câu 46).",
+      "`birthYear` trỏ đến giá trị là `\"1997\"`. Đối số `year` cũng sẽ rỏ đến giá trị `\"1997\"`, nhưng giá trị này chỉ là một bản sao của giá trị mà `birthYear` trỏ tới mà thôi, hai giá trị đó hoàn toàn khác nhau. Do đó khi ta thay đổi giá trị `year` bằng `\"1998\"`, chúng ta chỉ thay đổi giá trị của `year` mà thôi. `birthYear` sẽ vẫn giữ giá trị là `\"1997\"`.",
+      "`person` là một object. Biến `member` có một tham chiếu tới cùng object mà `person` trỏ tới. Khi chúng ta thay đổi một thuộc tính của object mà `member` trỏ tới, giá trị của `person` cũng sẽ tự động thay đổi theo, vì chúng có chung tham chiếu. `name` của `person` khi này sẽ có giá trị mới là `\"Lydia\"`."
+    ],
+    "id": 50,
+    "options": [
+      "`{ name\"Lydia\" }, \"1997\"`",
+      "`{ name\"Sarah\" }, \"1998\"`",
+      "`{ name\"Lydia\" }, \"1998\"`",
+      "`{ name\"Sarah\" }, \"1997\"`"
+    ],
+    "problem": "function getInfo(member, year) {\n  member.name = \"Lydia\";\n  year = \"1998\";\n}\n\nconst person = { name: \"Sarah\" };\nconst birthYear = \"1997\";\n\ngetInfo(person, birthYear);\n\nconsole.log(person, birthYear);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Với lệnh `throw`, chúng ta có thể tạo ra các errors tùy ý. Với câu lệnh đó, chúng ta có thể throw các exception. Một _exeption_ có thể là một <b>chuỗi</b>, một <b>số</b>, một <b>boolean</b> hoặc một <b>object</b>. Trong trường hợp này thì nó là chuỗi `'Hello world'`.",
+      "Với lệnh `catch` chúng ta có thể xử lý những exeption được throw ra khi thực hiện `try`. Một exeption đã được throw ra: chuỗi `'Hello world'`. `e` chính là chuỗi đó và chúng ta sẽ in ra. Kết quả là `'Oh an error: Hello world'`."
+    ],
+    "id": 51,
+    "options": [
+      "`\"It worked! Hello world!\"`",
+      "`\"Oh no an errorundefined`",
+      "`SyntaxErrorcan only throw Error objects`",
+      "`\"Oh no an errorHello world!`"
+    ],
+    "problem": "function greeting() {\n  throw \"Hello world!\";\n}\n\nfunction sayHi() {\n  try {\n    const data = greeting();\n    console.log(\"It worked!\", data);\n  } catch (e) {\n    console.log(\"Oh no an error!\", e);\n  }\n}\n\nsayHi();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Khi chúng ta trả về một thuộc tính, giá trị của thuộc tính bằng với giá trị đã được trả về bởi lệnh _return_, chứ không phải giá trị được set trong constructor. Chúng ta trả về giá trị là `\"Maserati\"`, do đó `myCar.make` sẽ là `\"Maserati\"`."
+    ],
+    "id": 52,
+    "options": [
+      "`\"Lamborghini\"`",
+      "`\"Maserati\"`",
+      "`ReferenceError`",
+      "`TypeError`"
+    ],
+    "problem": "function Car() {\n  this.make = \"Lamborghini\";\n  return { make: \"Maserati\" };\n}\n\nconst myCar = new Car();\nconsole.log(myCar.make);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`let x = y = 10;` chính là cách viết ngắn gọn của:",
+      "Khi ta set `y` bằng `10`, thực tế chúng ta đã sử dụng biến global `y` (`window` nếu là trên browser, `global` nếu là môi trường Node).Trên browser, `window.y` sẽ là `10`.",
+      "Sau đó, chúng ta khai báo giá trị của `x` với giá trị của `y`, tức `10`. Tuy nhiên khi ta khai báo với từ khóa `let` biến x sẽ chỉ tồn tại trong _block scoped_; hay trong trường hợp này là `hàm thực hiện ngay lập tức` (immediately-invoked function - IIFE). Khi ta sử dụng phép toán `typeof`, `x` hoàn toàn chưa được định nghĩa: vì `x` lúc này nằm bên ngoài block nó được định nghĩa lúc trước. Nghĩa là `x` là `undefined`. Do đó `console.log(typeof x)` trả về `\"undefined\"`.",
+      "Tuy nhiên với `y` thì khác, ta đã có giá trị của `y` khi set `y` bằng `10`. Giá trị đó có thể truy cập được từ bất kì đâu bởi chúng là biến global. `y` được định nghĩa với kiểu là `\"number\"`. Do đó `console.log(typeof y)` trả về `\"number\"`."
+    ],
+    "id": 53,
+    "options": [
+      "`\"undefined\", \"number\"`",
+      "`\"number\", \"number\"`",
+      "`\"object\", \"number\"`",
+      "`\"number\", \"undefined\"`"
+    ],
+    "problem": "(() => {\n  let x = (y = 10);\n})();\n\nconsole.log(typeof x);\nconsole.log(typeof y);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Chúng ta có thể xóa các thuộc tính khỏe object bằng từ khóa `delete`, kể cả với prototype. Khi chúng ta xóa một thuộc tính trên prototype, nó sẽ bị vô hiệu hóa hoàn toàn trong chuỗi prototype. Trong trường hợp này, hàm `bark` sẽ bị vô hiệu hóa ngay sau khi chúng ta thực hiện hàm xóa `delete Dog.prototype.bark`, tất nhiên ta vẫn có thể truy cập vào nó nhưng giá trị sẽ là `undefined`.",
+      "Khi chúng ta chạy một thứ không phải là `hàm`, nó sẽ bắn ra một `TypeError`. Trong trường hợp này là `TypeError: pet.bark is not a function`, vì bản thân thuộc tính `pet.bark` là `undefined`."
+    ],
+    "id": 54,
+    "options": [
+      "`\"Woof I am Mara\"`, `TypeError`",
+      "`\"Woof I am Mara\"`,`\"Woof I am Mara\"`",
+      "`\"Woof I am Mara\"`, `undefined`",
+      "`TypeError`, `TypeError`"
+    ],
+    "problem": "class Dog {\n  constructor(name) {\n    this.name = name;\n  }\n}\n\nDog.prototype.bark = function() {\n  console.log(`Woof I am ${this.name}`);\n};\n\nconst pet = new Dog(\"Mara\");\n\npet.bark();\n\ndelete Dog.prototype.bark;\n\npet.bark();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "`Set` là một tập hơp các giá trị _không trùng nhau_.",
+      "Chúng ta đưa đầu vào là một mảng `[1, 1, 2, 3, 4]` với giá trị `1` bị trùng. Giá trị trùng đó sẽ bị loại bỏ. Kết quả là `{1, 2, 3, 4}`."
+    ],
+    "id": 55,
+    "options": [
+      "`[1, 1, 2, 3, 4]`",
+      "`[1, 2, 3, 4]`",
+      "`{1, 1, 2, 3, 4}`",
+      "`{1, 2, 3, 4}`"
+    ],
+    "problem": "const set = new Set([1, 1, 2, 3, 4]);\n\nconsole.log(set);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Một module khi được import sẽ là __read-only__: chúng ta sẽ không thể chỉnh sửa module đó, chỉ có bản thân module đó có thể chỉnh sửa giá trị của nó mà thôi.",
+      "Khi ta thay đổi giá trị cuả `myCounter`, nó sẽ throw ra một lỗi: `myCounter` là _read-only_ và không thể thay đổi."
+    ],
+    "id": 56,
+    "options": [
+      "`10`",
+      "`11`",
+      "`Error`",
+      "`NaN`"
+    ],
+    "problem": "// counter.js\nlet counter = 10;\nexport default counter;\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Phép toán `delete` sẽ trả về một giá trị boolean: `true` nếu xóa thành công, `false` nếu thất bại. Tuy nhiên, nếu biến được khai báo với các từ khóa `var`, `const` hay `let` thì nó sẽ không thể bị xóa bởi phép toán `delete`.",
+      "Biến `name` được khai báo với từ khóa `const`, nên nó sẽ không thể bị xóa và trả về `false`. Khi ta set `age` bằng `21`, thực tế là ta đang sử dụng biến global `age`. Ta có thể xóa sử dụng phép toán `delete`, khi này `delete age` trả về `true`."
+    ],
+    "id": 57,
+    "options": [
+      "`false`, `true`",
+      "`\"Lydia\"`, `21`",
+      "`true`, `true`",
+      "`undefined`, `undefined`"
+    ],
+    "problem": "const name = \"Lydia\";\nage = 21;\n\nconsole.log(delete name);\nconsole.log(delete age);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Chúng ta có thể unpack các giá trị từ mảng hoặc thuộc tính từ objects bằng phương pháp `destructuring`. Ví dụ:",
+      "<img src=\"https://i.imgur.com/ADFpVop.png\" width=\"200\">",
+      "Giá trị của `a` sẽ là `1`, `b` sẽ là `2`. Thực tế, câu hỏi của chúng ta đơn giản là:",
+      "<img src=\"https://i.imgur.com/NzGkMNk.png\" width=\"200\">",
+      "Có nghĩa là `y` chính là giá trị đầu tiên trong mảng, tức số `1`. Do đó khi ta in ra `y` thì sẽ là`1`."
+    ],
+    "id": 58,
+    "options": [
+      "`[[1, 2, 3, 4, 5]]`",
+      "`[1, 2, 3, 4, 5]`",
+      "`1`",
+      "`[1]`"
+    ],
+    "problem": "const numbers = [1, 2, 3, 4, 5];\nconst [y] = numbers;\n\nconsole.log(y);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Ta có thể kết hợp 2 object sử dụng phép toán `spread operator` `...`. Nó cho phép ta tạo ra bản sao của từng cặp key/values trong từng object và nối chúng lại với nhau thành một object mới. Trong trường hợp này chúng ta tạo ra các bản sao của các cặp key/value của object `user` object, và nối chúng vào object `admin`. `admin` object khi này sẽ trở thành `{ admin: true, name: \"Lydia\", age: 21 }`."
+    ],
+    "id": 59,
+    "options": [
+      "`{ admintrue, user{ name\"Lydia\", age21 } }`",
+      "`{ admintrue, name\"Lydia\", age21 }`",
+      "`{ admintrue, user[\"Lydia\", 21] }`",
+      "`{ admintrue }`"
+    ],
+    "problem": "const user = { name: \"Lydia\", age: 21 };\nconst admin = { admin: true, ...user };\n\nconsole.log(admin);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Với phương thức `defineProperty`, chúng ta có thể thêm các thuộc tính mới, cũng như sửa các thuộc tính sẵn có của object. Khi chúng ta thêm thuộc tính vào object bằng `defineProperty`, chúng sẽ mặc định là thuộc tính _not enumerable_. Phương thức `Object.keys` sẽ trả về tất cả các thuộc tính _enumerable_ của object, trong trường hợp này thì chỉ có `\"name\"` mà thôi.",
+      "Thêm nữa, các thuộc tính được thêm bởi `defineProperty` là mặc định không thể thay đổi được. Tất nhiên ta có thể override các điều đó bằng các thuộc tính như `writable`, `configurable` và `enumerable`. Tức là `defineProperty` là một cách rất mềm dẻo để tạo ra và điều chỉnh thuộc tính của object."
+    ],
+    "id": 60,
+    "options": [
+      "`{ name\"Lydia\", age21 }`, `[\"name\", \"age\"]`",
+      "`{ name\"Lydia\", age21 }`, `[\"name\"]`",
+      "`{ name\"Lydia\"}`, `[\"name\", \"age\"]`",
+      "`{ name\"Lydia\"}`, `[\"age\"]`"
+    ],
+    "problem": "const person = { name: \"Lydia\" };\n\nObject.defineProperty(person, \"age\", { value: 21 });\n\nconsole.log(person);\nconsole.log(Object.keys(person));\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Đối số thứ hai của `JSON.stringify` là _replacer_. Replacer Có thể là một hàm hoặc một mảng, nó sẽ quy định xem giá trị nào sẽ được chuỗi hóa ra sao.",
+      "Nếu replacer là một _mảng_, chỉ có các thuộc tính có tên trong mảng được convert thành chuỗi JSON. Trong trường hợp này, chỉ có các thuộc tính `\"level\"` và `\"health\"` được đưa vào, `\"username\"` bị loại bỏ. `data` giờ sẽ là `\"{\"level\":19, \"health\":90}\"`.",
+      "Nếu replacer là _function_, hàm này sẽ được gọi trên từng thuộc tính của object được chuỗi hóa. Giá trị trả về sẽ là giá trị được đưa vào chuỗi JSON. Nếu trả về `undefined`, thuộc tính này sẽ bị loại bỏ khỏi chuỗi."
+    ],
+    "id": 61,
+    "options": [
+      "`\"{\"level\":19, \"health\":90}\"`",
+      "`\"{\"username\"\"lydiahallie\"}\"`",
+      "`\"[\"level\", \"health\"]\"`",
+      "`\"{\"username\"\"lydiahallie\", \"level\":19, \"health\":90}\"`"
+    ],
+    "problem": "const settings = {\n  username: \"lydiahallie\",\n  level: 19,\n  health: 90\n};\n\nconst data = JSON.stringify(settings, [\"level\", \"health\"]);\nconsole.log(data);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Phép toán `++` sẽ _trả về trước_ giá trị của toán hạng, _sau đó tăng_ giá trị của toán hạng lên. Giá trị của `num1` là `10`, vì `increaseNumber` sẽ trả về giá trị của `num`, đang là `10`, và sau đó mới tăng giá trị của `num` lên.",
+      "`num2` cũng là `10`, vì chúng ta đưa `num1` vào `increasePassedNumber`. `number` bằng `10`(tức giá trị của `num1`). Cũng giống như trên, phép toán `++` sẽ _trả về trước_ giá trị của toán hạng, _sau đó tăng_ giá trị của toán hạng lên. Giá trị của `number` là `10`, do đó `num2` cũng sẽ là `10`."
+    ],
+    "id": 62,
+    "options": [
+      "`10`, `10`",
+      "`10`, `11`",
+      "`11`, `11`",
+      "`11`, `12`"
+    ],
+    "problem": "let num = 10;\n\nconst increaseNumber = () => num++;\nconst increasePassedNumber = number => number++;\n\nconst num1 = increaseNumber();\nconst num2 = increasePassedNumber(num1);\n\nconsole.log(num1);\nconsole.log(num2);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Trong ES6 thì chúng ta có thể khởi tạo tham số với giá trị mặc định. Giá trị của tham số sẽ là giá trị mặc định nếu ta không truyền gì vào hàm, hoặc khi giá trị truyền vào là `\"undefined\"`. Trong trường hợp này, ta dùng `spread operator` (toán tử mở rộng) để biến `value` thành một object mới, do đó `x` sẽ có giá trị mặc định là `{ number: 10 }`.",
+      "Chú ý một điều là đối số sẽ được xét giá trị tại _call time_! Có nghĩa là mỗi khi chúng ta gọi hàm, một _object mới_ sẽ được tạo ra. Chúng ta gọi hàm `multiply` hai lần mà không truyền vào đối số nào cả: `x` sẽ nhận giá trị mặc định `{ number: 10 }`. Sau đó chúng ta sẽ ghi ra giá trị là `20`.",
+      "Lần gọi thứ ba chúng ta truyền vào một đối số: chính là `value`. Toán tử `*=` chính là cách viết gọn của `x.number = x.number * 2`: chúng ta thay đổi giá trị của `x.number`, và ghi ra giá trị `20`.",
+      "Tại lần gọi thứ tư, chúng ta truyền vào `value` một lần nữa. `x.number` trước đó đã bị thay đổi thành `20`, nên `x.number *= 2` sẽ ghi ra `40`."
+    ],
+    "id": 63,
+    "options": [
+      "`20`, `40`, `80`, `160`",
+      "`20`, `40`, `20`, `40`",
+      "`20`, `20`, `20`, `40`",
+      "`NaN`, `NaN`, `20`, `40`"
+    ],
+    "problem": "const value = { number: 10 };\n\nconst multiply = (x = { ...value }) => {\n  console.log((x.number *= 2));\n};\n\nmultiply();\nmultiply();\nmultiply(value);\nmultiply(value);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Đối số đầu tiên của hàm `reduce` chính là _accumulator_ (tổng tích lũy), trong trường hợp này là `x`. Đối số thứ 2 chính là _giá trị hiện tại_, tức `y`. Với hàm reduce, ta sẽ gọi callback trên mỗi phần tử của mảng, cứ vậy cho tới khi ra đến một giá trị cuối cùng.",
+      "Trong trường hợp này, chúng ta không trả về bất cứ giá trị nào cả, mà đơn thuần chỉ là ghi ra giá trị của _tổng tích lũy_ và _giá trị hiện tại_ mà thôi.",
+      "Giá trị của tổng tích lũy chính là giá trị được hàm callback trả về tại vòng lặp trước đó. Nếu ta không đặt giá trị khởi tạo cho đối số trong hàm `reduce`, thì tổng tích lũy sẽ chính bằng giá trị đầu tiên tại lời gọi đầu tiên.",
+      "Trong lời gọi đầu tiên, tổng tích lũy (`x`) là `1`, và giá trị hiện tại (`y`) là `2`. Chúng ta không trả về giá trị cho hàm callback, mà đơn thuần chỉ ghi chúng ta, vậy nên `1` và `2` được ghi ra.",
+      "Nếu ta không trả về giá trị trong một function, thì nó sẽ mặc định trả về là `undefined`. Do đó trong lời gọi tiếp theo tổng tích lũy sẽ là `undefined`, và giá trị hiện tại là `3`. `undefined` và `3` sẽ được ghi ra.",
+      "Tiếp tục như vậy, trong lời gọi thứ tư thì tổng tích lũy sẽ vẫn là `undefined`, giá trị hiện tại là `4`. `undefined` và `4` sẽ được ghi ra.\n</p>\n</details>"
+    ],
+    "id": 64,
+    "options": [
+      "`1` `2` and `3` `3` and `6` `4`",
+      "`1` `2` and `2` `3` and `3` `4`",
+      "`1` `undefined` and `2` `undefined` and `3` `undefined` and `4` `undefined`",
+      "`1` `2` and `undefined` `3` and `undefined` `4`"
+    ],
+    "problem": "[1, 2, 3, 4].reduce((x, y) => console.log(x, y));\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Trong class dẫn xuất, ta không thể truy cập từ khóa `this` trước khi gọi `super`. Nếu bạn chạy thử, nó sẽ throw ra một `ReferenceError`, do đó 1 và 4 sẽ throw ra reference error.",
+      "Với việc gọi `super`, chúng ta đã gọi hàm constructor của class cha với tham số truyền vào. Trong trường hợp này, class cha nhận `name` làm đối số trong constructor, do đó chúng cần đưa `name` vào hàm `super`.",
+      "`Labrador` class nhận vào hai đối số, `name` vì nó kế thừa `Dog`, và `size` - một thuộc tính của `Labrador` class. Cả hai đều cần thiết để đưa vào trong constructor của class `Labrador`, do đó cách khởi tạo đúng là 2.\n</p>\n</details>"
+    ],
+    "id": 65,
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "problem": "class Dog {\n  constructor(name) {\n    this.name = name;\n  }\n};\n\nclass Labrador extends Dog {\n  // 1 \n  constructor(name, size) {\n    this.size = size;\n  }\n  // 2\n  constructor(name, size) {\n    super(name);\n    this.size = size;\n  }\n  // 3\n  constructor(size) {\n    super(name);\n    this.size = size;\n  }\n  // 4 \n  constructor(name, size) {\n    this.name = name;\n    this.size = size;\n  }\n\n};\n",
+    "question": "Với cách nào chúng ta có thể kế thừa `Dog` class?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Với `import`, tất cả các module import vào đều sẽ được _pre-parsed_ (đánh giá trước). Có nghĩa là những module được import vào sẽ được _chạy trước_, còn code trong file sẽ _chạy sau_.",
+      "Đó chính là điều khác biệt giữa `require()` trong CommonJS và `import`! Với `require()`, ta có thể load các dependencies tại bất cứ khi nào ta cần. Nếu ta sử dụng `require` thay thế cho `import` thì `running index.js`, `running sum.js`, `3` sẽ được ghi ra."
+    ],
+    "id": 66,
+    "options": [
+      "`running index.js`, `running sum.js`, `3`",
+      "`running sum.js`, `running index.js`, `3`",
+      "`running sum.js`, `3`, `running index.js`",
+      "`running index.js`, `undefined`, `running sum.js`"
+    ],
+    "problem": "// index.js\nconsole.log('running index.js');\nimport { sum } from './sum.js';\nconsole.log(sum(1, 2));\n\n// sum.js\nconsole.log('running sum.js');\nexport const sum = (a, b) => a + b;\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Mỗi Symbol là một thứ hoàn toàn khác biệt. Giá trị truyền vào làm đối số trong Symbol chỉ đơn thuần là phần giải thích cho Symbol đó mà thôi, và nó không liên quan gì tới giá trị của Symbol đó cả. Chúng ta kiểm tra tính bằng nhau của hai Symbol hoàn toàn khác biệt: `Symbol('foo')` thứ nhất, và `Symbol('foo')` thứ hai. Mỗi giá trị đều là riêng biệt và duy nhất, nên `Symbol('foo') === Symbol('foo')` sẽ trả về `false`."
+    ],
+    "id": 67,
+    "options": [
+      "`true`, `true`, `false`",
+      "`false`, `true`, `false`",
+      "`true`, `false`, `true`",
+      "`true`, `true`, `true`"
+    ],
+    "problem": "console.log(Number(2) === Number(2))\nconsole.log(Boolean(false) === Boolean(false))\nconsole.log(Symbol('foo') === Symbol('foo'))****\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Với hàm `padStart` chúng ta có thể thêm vào khoảng trắng đằng trước mỗi chuỗi. Giá trị đưa vào trong hàm là _tổng độ dài_ của chuỗi sau khi thêm vào khoảng trắng. Chuỗi `\"Lydia Hallie\"` có độ dài là `12` nên `name.padStart(13)` sẽ thêm vào một khoảng trắng đằng trước chuỗi.",
+      "Nếu đối số truyền vào cho hàm `padStart` nhỏ hơn độ dài của chuỗi, không có khoảng trắng nào được thêm vào."
+    ],
+    "id": 68,
+    "options": [
+      "`\"Lydia Hallie\"`, `\"Lydia Hallie\"`",
+      "`\"           Lydia Hallie\"`, `\"  Lydia Hallie\"` (`\"[13x whitespace]Lydia Hallie\"`, `\"[2x whitespace]Lydia Hallie\"`)",
+      "`\" Lydia Hallie\"`, `\"Lydia Hallie\"` (`\"[1x whitespace]Lydia Hallie\"`, `\"Lydia Hallie\"`)",
+      "`\"Lydia Hallie\"`, `\"Lyd\"`,"
+    ],
+    "problem": "const name = \"Lydia Hallie\"\nconsole.log(name.padStart(13))\nconsole.log(name.padStart(2))\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Với phép toán `+`, ta có thể nối các xâu chuỗi. Trong trường hợp này, ta nối chuỗi `\"🥑\"` với chuỗi `\"💻\"`, kết quả tạo ra `\"🥑💻\"`."
+    ],
+    "id": 69,
+    "options": [
+      "`\"🥑💻\"`",
+      "`257548`",
+      "A string containing their code points",
+      "Error"
+    ],
+    "problem": "console.log(\"🥑\" + \"💻\");\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Một _generator_ sẽ \"tạm dừng\" khi nhìn thấy từ khóa `yield`. Đầu tiên ra sẽ đưa ra chuỗi \"Do you love JavaScript?\", bằng cách gọi `game.next().value`.",
+      "Chương trình sẽ chạy từng dòng, cho tới khi nó tìm thấy từ khóa `yield`. Có một từ khóa `yield` tại dòng đầu tiên của hàm: chương trình sẽ dừng tại đâ! _Điều đó có nghĩa là biến `answer` chưa hề được định nghĩa!_",
+      "Khi ta gọi `game.next(\"Yes\").value`, `yield` trước đó sẽ được thay thế bởi giá trị được truyền vào hàm `next()`, trong trường hợp này là`\"Yes\"`. Theo đó giá trị của biến `answer` giờ sẽ là `\"Yes\"`. Điều kiện if sẽ trả về `false`, và `JavaScript loves you back ❤️` sẽ được ghi ra."
+    ],
+    "id": 70,
+    "options": [
+      "`game.next(\"Yes\").value` and `game.next().value`",
+      "`game.next.value(\"Yes\")` and `game.next.value()`",
+      "`game.next().value` and `game.next(\"Yes\").value`",
+      "`game.next.value()` and `game.next.value(\"Yes\")`"
+    ],
+    "problem": "function* startGame() {\n  const answer = yield \"Do you love JavaScript?\";\n  if (answer !== \"Yes\") {\n    return \"Oh wow... Guess we're gone here\";\n  }\n  return \"JavaScript loves you back ❤️\";\n}\n\nconst game = startGame();\nconsole.log(/* 1 */); // Do you love JavaScript?\nconsole.log(/* 2 */); // JavaScript loves you back ❤️\n",
+    "question": "Làm thế nào có thể ghi ra giá trị giống như trong comment khi console.log?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`String.raw` trả về chuỗi nguyên bản, các ký tự (`\\n`, `\\v`, `\\t` etc.) sẽ vẫn là nguyên bản và không biến thành xuống dòng hay khoảng trắng! Nếu ta không để là chuỗi nguyên bản, sẽ có trường hợp xảy ra lỗi không mong muốn, ví dụ với đường dẫn:",
+      "`` const path = `C:\\Documents\\Projects\\table.html` ``",
+      "Sẽ cho ta chuỗi là:",
+      "`\"C:DocumentsProjects able.html\"`",
+      "Với `String.raw`, nó sẽ trả về là:",
+      "`C:\\Documents\\Projects\\table.html`",
+      "Do đó, trong trường hợp này `Hello\\nworld` sẽ được ghi ra."
+    ],
+    "id": 71,
+    "options": [
+      "`Hello world!`",
+      "`Hello` <br />&nbsp; &nbsp; &nbsp;`world`",
+      "`Hello\\nworld`",
+      "`Hello\\n` <br /> &nbsp; &nbsp; &nbsp;`world`"
+    ],
+    "problem": "console.log(String.raw`Hello\\nworld`);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Một hàm `async` luôn luôn trả về một `promise`. `await` sẽ chờ cho tới khi promise đó được hoàn thành: một pending promise sẽ được trả về khi ta gọi `getData()` bằng cách gán nó cho biến `data`.",
+      "Nếu ta muốn truy cập giá trị đã hoàn thành của promise, trong trường hợp này là `\"I made it\"`, ta có thể sử dụng hàm `.then()` ngay sau `data` như sau:",
+      "`data.then(res => console.log(res))`",
+      "Khi này nó sẽ ghi ra `\"I made it!\"`"
+    ],
+    "id": 72,
+    "options": [
+      "`\"I made it!\"`",
+      "`Promise {<resolved>\"I made it!\"}`",
+      "`Promise {<pending>}`",
+      "`undefined`"
+    ],
+    "problem": "async function getData() {\n  return await Promise.resolve(\"I made it!\");\n}\n\nconst data = getData();\nconsole.log(data);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Hàm `.push()` trả về _độ dài_ của mảng mới! Trước đó, mảng chỉ hồm một phần tử là `\"banana\"` và có độ dài là `1`. Sau khi thêm chuỗi `\"apple\"` vào mảng, mảng lúc này có hai chuỗi và có độ dài là `2`. Do đó hàm `addToList` sẽ trả về 2.",
+      "Hàm `push` sẽ thay đổi chính bản thân mảng truyền vào. Do đó nếu chúng ta muốn trả về _mảng_ thay vì chỉ trả về _độ dài_, chúng ta nên trả về trực tiếp mảng `list` sau khi đã thêm `item` vào đó."
+    ],
+    "id": 73,
+    "options": [
+      "`['apple', 'banana']`",
+      "`2`",
+      "`true`",
+      "`undefined`"
+    ],
+    "problem": "function addToList(item, list) {\n  return list.push(item);\n}\n\nconst result = addToList(\"apple\", [\"banana\"]);\nconsole.log(result);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`Object.freeze` khiến cho chúng ta không thể thêm vào, xóa đi hay thay đổi bất kì thuộc tính nào của object (trừ phi giá trị của thuộc tính lại chính là một object khác).",
+      "Khi chúng ta tạo ra biến `shape` và set cho nó giá trị bằng với một object đã được đóng băng là `box`, thì `shape` cũng sẽ trỏ tới một object đã được đóng băng. Ta có thể check một object có đang bị đóng băng hay không bằng `Object.isFrozen`. Trong trường hợp này, `Object.isFrozen(shape)` trả về true, vì `shape` đang trỏ tới một object bị đóng băng.",
+      "Do đó, cộng với việc `x` không phải là object, ta sẽ không thể thay đổi giá trị của `x`. `x` sẽ vẫn là `10`, và `{ x: 10, y: 20 }` được ghi ra."
+    ],
+    "id": 74,
+    "options": [
+      "`{ x100, y20 }`",
+      "`{ x10, y20 }`",
+      "`{ x100 }`",
+      "`ReferenceError`"
+    ],
+    "problem": "const box = { x: 10, y: 20 };\n\nObject.freeze(box);\n\nconst shape = box;\nshape.x = 100;\n\nconsole.log(shape);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Khi ta tiến hành unpack giá trị `name` từ object ở phía bên phải, ta đã gán giá trị `\"Lydia\"` của nó cho biến có tên là `myName`.",
+      "Với cú pháp `{ name: myName }`, chúng ta muốn khai báo một biến `myName` với giá trị là giá trị của thuộc tính `name` trong object phía bên phải.",
+      "Do `name` chưa được định nghĩa, nên ghi log ra, nó sẽ throw ra một ReferenceError."
+    ],
+    "id": 75,
+    "options": [
+      "`\"Lydia\"`",
+      "`\"myName\"`",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "const { name: myName } = { name: \"Lydia\" };\n\nconsole.log(name);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Một hàm được gọi là _pure function_ khi nó luôn luôn trả về một giá trị giống nhau, nếu đối số đưa vào là giống nhau.",
+      "Hàm `sum` luôn trả về giá trị giống nhau. Nếu ta đưa vào `1` và `2`, nó sẽ _luôn_ trả về `3`. Nếu ta đưa vào `5` và `10`, nó _luôn_ trả về `15`. Cứ như vậy, đây là một _pure function_."
+    ],
+    "id": 76,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "problem": "function sum(a, b) {\n  return a + b;\n}\n",
+    "question": "Đây có phải là một pure function không?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Hàm `add` chính là một hàm _memoized_ (hàm có nhớ). Với việc có nhớ, chúng ta có thể cache lại kết quả của function để tăng tốc độ tính toán lên. Trong trường hợp này, chúng ta tạo ra một `cache` object để lưu trữ những kết quả tính toán trước đó.",
+      "Mỗi lần chúng ta gọi hàm `addFunction` với đối số giống nhau, đầu tiên nó sẽ check xem đối số đó có tồn tại trong cache hay không. Nếu có, giá trị trong cache sẽ được trả về luôn, tiết kiệm thời gian tính toán. Còn nếu không thì nó sẽ tiến hành tính toán kết quả và tiếp tục lưu vào cache.",
+      "Chúng ta gọi hàm `addFunction` ba lần với cùng một đối số: trong lần gọi đầu tiên, giá trị của `num` là `10` và chưa có mặt trong cache. Do đó `num in cache` trả về `false`, và sẽ chạy vào else block: `Calculated! 20` sẽ được ghi ra, và 10 sẽ được đưa vào cạche. `cache` khi này sẽ là `{ 10: 20 }`.",
+      "Tại lần gọi thứ hai, `cache` object đã có giá trị `10`. `num in cache` trả về `true`, và `'From cache! 20'` được ghi ra.",
+      "Tại lần gọi thứ ba, ta đưa vào `5 * 2`, tức `10` vào hàm. Tiếp tục giống như trên, `'From cache! 20'` sẽ được ghi ra."
+    ],
+    "id": 77,
+    "options": [
+      "`Calculated! 20` `Calculated! 20` `Calculated! 20`",
+      "`Calculated! 20` `From cache! 20` `Calculated! 20`",
+      "`Calculated! 20` `From cache! 20` `From cache! 20`",
+      "`Calculated! 20` `From cache! 20` `Error`"
+    ],
+    "problem": "const add = () => {\n  const cache = {};\n  return num => {\n    if (num in cache) {\n      return `From cache! ${cache[num]}`;\n    } else {\n      const result = num + 10;\n      cache[num] = result;\n      return `Calculated! ${result}`;\n    }\n  };\n};\n\nconst addFunction = add();\nconsole.log(addFunction(10));\nconsole.log(addFunction(10));\nconsole.log(addFunction(5 * 2));\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Với vòng lặp _for-in_, chúng ta có thể duyệt qua các thuộc tính **enumerable** của object. Với mảng, thuộc tính enumerable chính là các \"key\" của mảng, hay chính là các index của mảng đó. Ta có thể coi mảng như là:",
+      "`{0: \"☕\", 1: \"💻\", 2: \"🍷\", 3: \"🍫\"}`",
+      "Do đó `0` `1` `2` `3` được ghi ra.",
+      "Với vòng lặp _for-of_, chúng ta sẽ duyệt qua các phần tử của một **iterable**. Một mảng chính là một iterable. Khi chúng ta duyệt qua mảng, biến \"item\" chính là phần tử mà nó đang duyệt qua, do đó `\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"` được ghi ra."
+    ],
+    "id": 78,
+    "options": [
+      "`0` `1` `2` `3` and `\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"`",
+      "`\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"` and `\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"`",
+      "`\"☕\"` ` \"💻\"` `\"🍷\"` `\"🍫\"` and `0` `1` `2` `3`",
+      " `0` `1` `2` `3` and `{0\"☕\", 1\"💻\", 2\"🍷\", 3\"🍫\"}`"
+    ],
+    "problem": "const myLifeSummedUp = [\"☕\", \"💻\", \"🍷\", \"🍫\"]\n\nfor (let item in myLifeSummedUp) {\n  console.log(item)\n}\n\nfor (let item of myLifeSummedUp) {\n  console.log(item)\n}\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Mảng có thể nhận bất cứ giá trị nào. Số, chuỗi, objects, mảng khác, null, boolean, undefined, và nhiều dạng biểu thức nữa như ngày tháng, hàm, và các tính toán.",
+      "Giá trị của phần tử chính là giá trị trả về.  `1 + 2` trả về `3`, `1 * 2` trả về `2`, và `1 / 2` trả về `0.5`."
+    ],
+    "id": 79,
+    "options": [
+      "`[\"1 + 2\", \"1 * 2\", \"1 / 2\"]`",
+      "`[\"12\", 2, 0.5]`",
+      "`[3, 2, 0.5]`",
+      " `[1, 1, 1]`"
+    ],
+    "problem": "const list = [1 + 2, 1 * 2, 1 / 2]\nconsole.log(list)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Mặc định, đối số sẽ có giá trị là `undefined`, trừ phi ta gán giá trị cho nó khi đưa vào hàm. Trong trường hợp này, ta không đưa vào giá trị nào cho đối số `name` cả. Do đó `name` sẽ là `undefined` và được ghi ra.",
+      "Với cú pháp ES6, ta có thể thay đổi giá trị mặc định `undefined` bằng một giá trị mặc định khác. Ví dụ:",
+      "`function sayHi(name = \"Lydia\") { ... }`",
+      "Trong trường hợp này, nếu ta không đưa giá trị nào vào hoặc đưa vào `undefined`, `name` cũng sẽ nhận giá trị mặc định là `Lydia`."
+    ],
+    "id": 80,
+    "options": [
+      "`Hi there, `",
+      "`Hi there, undefined`",
+      "`Hi there, null`",
+      " `ReferenceError`"
+    ],
+    "problem": "function sayHi(name) {\n  return `Hi there, ${name}`\n}\n\nconsole.log(sayHi())\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Giá trị của `this` phụ thuộc vào vị trí mà nó được gọi. Trong một **phương thức**, ví dụ `getStatus`, `this` trỏ tới _object chứa phương thức đó_. Phương thức này thuộc `data` object, do đó `this` trỏ tới `data` object. Khi chúng ta gọi `this.status` thì thuộc tính `status` của `data` sẽ được ghi ra, chính là `\"🥑\"`.",
+      "Với phương thức `call`, chúng ta thay đổi tham chiếu mà `this` trỏ tới. Trong **hàm**, từ khóa `this` trỏ tới _object chứa hàm đó_. Chúng ta khai báo hàm `setTimeout` trong _global object_, do đó bên trong hàm `setTimeout` thì `this` sẽ trỏ tới _global object_. Tại biến global object, có một biến _status_ với giá trị `\"😎\"`. Do đó khi gọi `this.status`, `\"😎\"` sẽ được ghi ra."
+    ],
+    "id": 81,
+    "options": [
+      "`\"🥑\"` and `\"😍\"`",
+      "`\"🥑\"` and `\"😎\"`",
+      "`\"😍\"` and `\"😎\"`",
+      "`\"😎\"` and `\"😎\"`"
+    ],
+    "problem": "var status = \"😎\"\n\nsetTimeout(() => {\n  const status = \"😍\"\n\n  const data = {\n    status: \"🥑\",\n    getStatus() {\n      return this.status\n    }\n  }\n\n  console.log(data.getStatus())\n  console.log(data.getStatus.call(this))\n}, 0)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Chúng ta set biến `city` bằng với giá trị của thuộc tính `city` của object `person`. Nhưng object này không có thuộc tính nào là `city` cả, nên giá trị của biến `city` sẽ là `undefined`.",
+      "Chú ý là chúng ta _không tham chiếu_ tới bản thân object `person`! Chúng ta chỉ đơn giản là set giá trị của biến `city` bằng với giá trị của thuộc tính `city` trong object `person` mà thôi.",
+      "Sau đó chúng ta set biến `city` bằng với chuỗi `\"Amsterdam\"`. Điều này không hề ảnh hưởng gì tới object person vì không có tham chiếu nào ở đây cả.",
+      "Do đó khi ghi object `person` ra, Tất cả các thuộc tính vẫn như cũ không hề thay đổi gì cả."
+    ],
+    "id": 82,
+    "options": [
+      "`{ name\"Lydia\", age21 }`",
+      "`{ name\"Lydia\", age21, city\"Amsterdam\" }`",
+      "`{ name\"Lydia\", age21, cityundefined }`",
+      "`\"Amsterdam\"`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia\",\n  age: 21\n}\n\nlet city = person.city\ncity = \"Amsterdam\"\n\nconsole.log(person)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Biến số được khai báo với các từ khóa như `const` hay `let` đều là _block-scoped_. Block chính là những khối được bao bọc bởi cặp ngoặc nhọn (`{ }`). Trong trường hợp này nó chính là cặp ngoặc bao quanh những câu lệnh `if/else`. Chúng ta không thể truy cập đến biến đó bên ngoài block, và kết quả là throw một ReferenceError."
+    ],
+    "id": 83,
+    "options": [
+      "`\"Sorry, you're too young.\"`",
+      "`\"Yay! You're old enough!\"`",
+      "`ReferenceError`",
+      "`undefined`"
+    ],
+    "problem": "function checkAge(age) {\n  if (age < 18) {\n    const message = \"Sorry, you're too young.\"\n  } else {\n    const message = \"Yay! You're old enough!\"\n  }\n\n  return message\n}\n\nconsole.log(checkAge(21))\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Giá trị của `res` trong `.then` thứ hai chính là giá trị trả về từ `.then` trước đó. Chúng ta có thể thực hiện `.then` liên tiếp như vậy, các giá trị sẽ liên tiếp được truyền tới hàm xử lý tiếp theo."
+    ],
+    "id": 84,
+    "options": [
+      "The result of the `fetch` method.",
+      "The result of the second invocation of the `fetch` method.",
+      "The result of the callback in the previous `.then()`.",
+      "It would always be undefined."
+    ],
+    "problem": "fetch('https://www.website.com/api/user/1')\n  .then(res => res.json())\n  .then(res => console.log(res))\n",
+    "question": "Những thông tin nào sẽ được ghi ra?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Với `!!name`, chúng ta sẽ đánh giá giá trị của `name` là _truthy_ hay _falsy_. Nếu name là truthy, thì `!name` sẽ trả về `false`. `!false` (hay chính là `!!name` khi này) sẽ trả về `true`.",
+      "Bằng cách set `hasName` bằng với `name`, chúng ta set `hasName` bằng với giá trị đối số đưa vào trong hàm `getName`, không thỏa mãn vì ta đã giới hạn là không đưa `true` vào.",
+      "`new Boolean(true)` trả về một object wrapper, chứ không phải là một giá trị boolean.",
+      "`name.length` trả về độ dài của đối số, chứ không phải `true`."
+    ],
+    "id": 85,
+    "options": [
+      "`!!name`",
+      "`name`",
+      "`new Boolean(name)`",
+      "`name.length`"
+    ],
+    "problem": "function getName(name) {\n  const hasName = //\n}\n",
+    "question": "Bằng cách nào chúng ta có thể set `hasName` bằng `true`, nếu chúng ta không đưa `true` vào đối số?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Trong trường hợp ta muốn lấy ra một ký tự trong một chuỗi, ta có thể sử dụng toán tử ngoặc vuông. Ký tự đầu tiên sẽ có thứ tự là 0, và cứ tiếp tục như vậy. Trong trường hợp này chúng ta lấy ra ký tự có thứ tự là 0, đó chính là ký tự `\"I'`.",
+      "Chú ý là phương thức này không hoạt động với IE7 trở xuống. Thay vì thế ta sử dụng `.charAt()`"
+    ],
+    "id": 86,
+    "options": [
+      "`\"\"\"`",
+      "`\"I\"`",
+      "`SyntaxError`",
+      "`undefined`"
+    ],
+    "problem": "console.log(\"I want pizza\"[0])\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Ta có thể set giá trị mặc định của một tham số là tham số khác trong hàm, miễn là tham số đó được khai báo _trước_ tham số mặc định. Chúng ta đưa `10` vào hàm `sum`. Nếu hàm `sum` chỉ nhận 1 đối số, nó có nghĩa là giá trị của `num2` không được đưa vào, nên nó sẽ lấy giá trị mặc định là giá trị của `num1` đã được đưa vào, hay chính là `10` trong trường hợp này. Khi này `num1 + num2` trả về `20`.",
+      "Nếu chúng ta thử set một giá trị mặc định của tham số bằng với giá trị của tham số khai báo _sau_ (về bên phải), giá trị của tham số đó sẽ không được khởi tạo và dẫn đến throw ra lỗi."
+    ],
+    "id": 87,
+    "options": [
+      "`NaN`",
+      "`20`",
+      "`ReferenceError`",
+      "`undefined`"
+    ],
+    "problem": "function sum(num1, num2 = num1) {\n  console.log(num1 + num2)\n}\n\nsum(10)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Cú pháp `import * as data` sẽ import _tất cả những gì được export_ từ `module.js` vào trong `index.js` và lưu trữ dưới một object có tên là `data`. Trong file `module.js`, có hai thứ được export ra: default export và một named export. Default export là một hàm trả về chuỗi `\"Hello World\"`, và named export là một biến `name` nhận giá trị là chuỗi `\"Lydia\"`.",
+      "Do đó `data` object có thuộc tính `default` cho default export, các thuộc tính khác sẽ có tên chính là tên của named exports và giá trị đi kèm."
+    ],
+    "id": 88,
+    "options": [
+      "`{ defaultfunction default(), name\"Lydia\" }`",
+      "`{ defaultfunction default() }`",
+      "`{ default\"Hello world\", name\"Lydia\" }`",
+      "Global object of `module.js`"
+    ],
+    "problem": "// module.js \nexport default () => \"Hello world\"\nexport const name = \"Lydia\"\n\n// index.js \nimport * as data from \"./module\"\n\nconsole.log(data)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Classes chỉ đơn thuần là `syntactical sugar` (cú pháp đặc biệt) của function constructors mà thôi. Nó tương đương với việc ta viết một function thế này:",
+      "Gọi một constructor với từ khóa `new` sẽ tạo ra một instance của class `Person`, `typeof` sẽ trả về là `\"object\"` cho các instance. Do đó `typeof member` trả về `\"object\"`."
+    ],
+    "id": 89,
+    "options": [
+      "`\"class\"`",
+      "`\"function\"`",
+      "`\"object\"`",
+      "`\"string\"`"
+    ],
+    "problem": "class Person {\n  constructor(name) {\n    this.name = name\n  }\n}\n\nconst member = new Person(\"John\")\nconsole.log(typeof member)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Hàm `.push` trả về _độ dài mới_ của mảng, chứ không phải bản thân mảng đó! Bằng cách set `newList` bằng với `[1, 2, 3].push(4)`, ta đã set cho `newList` giá trị là `4` - tức độ dài của mảng lúc này.",
+      "Sau đó chúng ta tiến hành `.push` trên `newList`. Vì `newList` là một số thông thường, ta không thể dùng `.push` được, nên sẽ throw ra một TypeError."
+    ],
+    "id": 90,
+    "options": [
+      "`[1, 2, 3, 4, 5]`",
+      "`[1, 2, 3, 5]`",
+      "`[1, 2, 3, 4]`",
+      "`Error`"
+    ],
+    "problem": "let newList = [1, 2, 3].push(4)\n\nconsole.log(newList.push(5))\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Hàm thông thường giống như `giveLydiaPizza`, sẽ có thuộc tính `prototype` là một object (prototype object) với một thuộc tính là `constructor`. Còn `arrow functions` giống như `giveLydiaChocolate`thì không có thuộc tính `prototype` này. `undefined` trả về khi ta truy cập thuộc tính `prototype` bằng cách gọi `giveLydiaChocolate.prototype`."
+    ],
+    "id": 91,
+    "options": [
+      "`{ constructor...}` `{ constructor...}`",
+      "`{}` `{ constructor...}`",
+      "`{ constructor...}` `{}`",
+      "`{ constructor...}` `undefined`"
+    ],
+    "problem": "function giveLydiaPizza() {\n  return \"Here is pizza!\"\n}\n\nconst giveLydiaChocolate = () => \"Here's chocolate... now go hit the gym already.\"\n\nconsole.log(giveLydiaPizza.prototype)\nconsole.log(giveLydiaChocolate.prototype)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "`Object.entries(person)` sẽ trả về một mảng của mảng, bao gồm các key và các object:",
+      "`[ [ 'name', 'Lydia' ], [ 'age', 21 ] ]`",
+      "Khí sử dụng `for-of`, chúng ta sẽ duyệt qua từng thành phần của mảng, trong trường hợp này chính là những mảng con. Đồng thời tiến hành gán giá trị luôn trong vongf lặp for-of, bằng cách sử dụng `const [x, y]`. Khi này `x` sẽ là phần tử đầu tiên trong mảng con, `y` chính là phần tử thứ hai trong mảng con.",
+      "Mảng con đầu tiên là `[ \"name\", \"Lydia\" ]`, nên `x` sẽ là `\"name\"`, và `y` sẽ là `\"Lydia\"`, và được ghi ra.\nMảng con thứ hai là `[ \"age\", 21 ]`, nên `x` sẽ là `\"age\"`, và `y` sẽ là `21`, và được ghi ra."
+    ],
+    "id": 92,
+    "options": [
+      "`name` `Lydia` và `age` `21`",
+      "`[\"name\", \"Lydia\"]` và `[\"age\", 21]`",
+      "`[\"name\", \"age\"]` và `undefined`",
+      "`Error`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia\",\n  age: 21\n}\n\nfor (const [x, y] of Object.entries(person)) {\n  console.log(x, y)\n}\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "`...args` là cú pháp tham số cuối cùng. Giá trị của tham số cuối cùng chính là toàn bộ các đối số còn lại, **và nó là tham số cuối cùng duy nhất**! Trong trường hợp này, tham số cuối cùng lại là tham số thứ hai. Điều đó là không thể được, và sẽ throw ra một lỗi cú pháp.",
+      "Nếu ta code như thế này thì lại đúng. Giá trị trả về sẽ là `[ 'banana', 'apple', 'orange', 'pear' ]`\n</p>\n</details>"
+    ],
+    "id": 93,
+    "options": [
+      "`[\"banana\", \"apple\", \"pear\", \"orange\"]`",
+      "`[[\"banana\", \"apple\"], \"pear\", \"orange\"]`",
+      "`[\"banana\", \"apple\", [\"pear\"], \"orange\"]`",
+      "`SyntaxError`"
+    ],
+    "problem": "function getItems(fruitList, ...args, favoriteFruit) {\n  return [...fruitList, ...args, favoriteFruit]\n}\n\ngetItems([\"banana\", \"apple\"], \"pear\", \"orange\")\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Với JavaScript, ta _không bắt buộc_ phải viết dấu chấm phẩy (`;`), JavaScript engine sẽ tự động thêm vào sau mỗi câu lệnh. Nó gọi là **Automatic Semicolon Insertion**. Một câu lệnh có thể là khai báo biến, hoặc từ khóa như `throw`, `return`, `break`, vv.",
+      "Ở đây ta sử dụng câu lệnh `return` ở một dòng và giá trị `a + b` ở một _dòng khác_. Tuy nhiên do khác dòng nên JS engine không thể biết đâu là giá trị ta thực sự muốn trả về. Thay vì thế, nó sẽ tự động thêm vào dấu chấm phẩy ngay sau `return` giống như này:",
+      "Có nghĩa là `a + b` sẽ không bao giờ được thực hiện, vì hàm đã được `return` rồi. Do không giá trị nào được trả về, nên giá trị trả về của hàm sẽ là `undefined`. Lưu ý là sẽ không tự động thêm dấu chấm phẩy ngay sau `if/else` đâu nhé!"
+    ],
+    "id": 94,
+    "options": [
+      "`a is bigger`, `6` và `b is bigger`, `3`",
+      "`a is bigger`, `undefined` và `b is bigger`, `undefined`",
+      "`undefined` và `undefined`",
+      "`SyntaxError`"
+    ],
+    "problem": "function nums(a, b) {\n  if\n  (a > b)\n  console.log('a is bigger')\n  else \n  console.log('b is bigger')\n  return \n  a + b\n}\n\nconsole.log(nums(4, 2))\nconsole.log(nums(1, 2))\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Chúng ta có thể set một class với giá trị là một classes/function constructor khác. Trong trường hợp này, ta set `Person` bằng với `AnotherPerson`. Trong constructor, `this.name` là `Sarah`, do đó giá trị của thuộc tính này trong instance `member` chính là `\"Sarah\"`."
+    ],
+    "id": 95,
+    "options": [
+      "`\"Lydia\"`",
+      "`\"Sarah\"`",
+      "`Errorcannot redeclare Person`",
+      "`SyntaxError`"
+    ],
+    "problem": "class Person {\n  constructor() {\n    this.name = \"Lydia\"\n  }\n}\n\nPerson = class AnotherPerson {\n  constructor() {\n    this.name = \"Sarah\"\n  }\n}\n\nconst member = new Person()\nconsole.log(member.name)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Phương thức `Object.keys` sẽ trả về toàn bộ những key của các thuộc tính _enumerable_ trên một object. Nhưng Symbol không phải dạng _enumerable_. do đó nó sẽ trả về một mảng rỗng. Tuy nhiên khi ta log ra toàn bộ object, thì ta sẽ ghi ra toàn bộ các thuộc tính, cho dù đó có là thuộc tính _enumerable_ hay không.",
+      "Đó chính là một đặc trưng của Symbol: Bên cạnh việc nó biểu diễn một giá trị duy nhất (tránh việc xảy ra xung đột tên gọi, ví dụ khi ta sử dụng 2 thư viện mà muốn thêm thuộc tính vào cho cùng một object chẳng hạn), nó còn giúp \"ẩn\" thuộc tính đó đi (dù không hoàn toàn, ta vẫn có thể truy cập được bằng cách sử dụng phương thức `Object.getOwnPropertySymbols()`)."
+    ],
+    "id": 96,
+    "options": [
+      "`{Symbol('a')'b'}` và `[\"{Symbol('a')\"]`",
+      "`{}` và `[]`",
+      "`{ a\"b\" }` và `[\"a\"]`",
+      "`{Symbol('a')'b'}` và `[]`"
+    ],
+    "problem": "const info = {\n  [Symbol('a')]: 'b'\n}\n\nconsole.log(info)\nconsole.log(Object.keys(info))\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Hàm `getList` nhận vào một mảng các đối số, và tiến hành xử lý mảng đó luôn khi đưa vào hàm:",
+      "`[x, ...y] = [1, 2, 3, 4]`",
+      "Với việc sử dụng cú pháp tham số cuối cùng `...y`, chúng ta đưa toàn bộ \"những đối số còn lại\" vào một mảng y. Trong trường hợp này đó là mảng gồm các phần tử `2`, `3` và `4`. Do đó giá trị của `y` lúc này chính là mảng `[2, 3, 4]`. Giá trị của `x` là `1`, nên khi ghi `[x, y]` ra, kết quả sẽ là `[1, [2, 3, 4]]`.",
+      "Hàm `getUser` nhận vào một object. Với cú pháp arrow function, chúng ta sẽ không phải viết trong ngoặc nhọn `{}` nữa nếu ta chỉ muốn đơn thuần trả về giá trị. Tuy nhiên, nếu ta muốn trả về một _object_ t arrow function, ta sẽ phải viết chúng trong dấu ngoặc tròn `()`, nếu không thì sẽ không có giá trị nào được trả về! Ví dụ như sau:",
+      "```const getUser = user => ({ name: user.name, age: user.age })```",
+      "Do không giá trị nào được trả về, kết quả sẽ là `undefined`."
+    ],
+    "id": 97,
+    "options": [
+      "`[1, [2, 3, 4]]` và `undefined`",
+      "`[1, [2, 3, 4]]` và `{ name\"Lydia\", age21 }`",
+      "`[1, 2, 3, 4]` và `{ name\"Lydia\", age21 }`",
+      "`Error` và `{ name\"Lydia\", age21 }`"
+    ],
+    "problem": "const getList = ([x, ...y]) => [x, y]\nconst getUser = user => { name: user.name, age: user.age }\n\nconst list = [1, 2, 3, 4]\nconst user = { name: \"Lydia\", age: 21 }\n\nconsole.log(getList(list))\nconsole.log(getUser(user))\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Biến `name` có giá trị là một chuỗi, không phải hàm, vì thế không thể gọi được.",
+      "TypeErrors sẽ được throw ra nếu một giá trị không được sử dụng đúng kiểu. JavaScript muốn `name` là một hàm khi ta tiến hành gọi nó. Nhưng nó là chuỗi, nên sẽ throw ra một TypeError.",
+      "SyntaxErrors sẽ được throw khi ta viết code không đúng cú pháp của JavaScript, ví dụ thay vì `return` ta viết `retrun`.",
+      "ReferenceErrors sẽ được throw ra khi Javascript không thể tìm được tham chiếu nào đến giá trị mà ta đang cố truy cập."
+    ],
+    "id": 98,
+    "options": [
+      "`SyntaxError`",
+      "`ReferenceError`",
+      "`TypeError`",
+      "`undefined`"
+    ],
+    "problem": "const name = \"Lydia\"\n\nconsole.log(name())\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "`[]` là một giá trị truthy. Với phép toán `&&` , giá trị bên phải sẽ được trả về nếu giá trị bên trái là truthy. Trong trường hợp này giá trị bên trái `[]` là truthy, nên `\"Im'` sẽ được trả về.",
+      "`\"\"` là một giá trị falsy. Nếu giá trị bên trái là falsy, không có gì được trả về cả. Do đó `n't` sẽ không được trả về."
+    ],
+    "id": 99,
+    "options": [
+      "`possible! You should see a therapist after so much JavaScript lol`",
+      "`Impossible! You should see a therapist after so much JavaScript lol`",
+      "`possible! You shouldn't see a therapist after so much JavaScript lol`",
+      "`Impossible! You shouldn't see a therapist after so much JavaScript lol`"
+    ],
+    "problem": "// 🎉✨ Đây là câu hỏi thứ 100 của tôi! ✨🎉\n\nconst output = `${[] && 'Im'}possible!\nYou should${'' && `n't`} see a therapist after so much JavaScript lol`\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Với phép toán `||`, ta sẽ trả về giá trị truethy đầu tiên. Nếu tất cả đều là falsy, giá trị cuối cùng sẽ được trả về.",
+      "`(false || {} || null)`: object rỗng `{}` là một giá trị truthy. Nó là giá trị truethy đầu tiên và duy nhất nên sẽ được trả về. Do đó `one` sẽ là `{}`.",
+      "`(null || false || \"\")`: Tất cả toán hạng đều là falsy. Có nghĩa là toán hạng cuối cùng `\"\"` sẽ được trả về. Do đó `two` sẽ là `\"\"`.",
+      "`([] || 0 || \"\")`: mảng rỗng `[]` là một giá trị truthy. Nó là giá trị truthy đầu tiên nên sẽ được trả về. Do đó `three` sẽ là `[]`."
+    ],
+    "id": 100,
+    "options": [
+      "`false` `null` `[]`",
+      "`null` `\"\"` `true`",
+      "`{}` `\"\"` `[]`",
+      "`null` `null` `true`"
+    ],
+    "problem": "const one = (false || {} || null)\nconst two = (null || false || \"\")\nconst three = ([] || 0 || true)\n\nconsole.log(one, two, three)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Có thể tưởng tượng đơn giản cách promise thực thi như sau: _bây giờ tôi sẽ để tạm nó sang một bên vì nó tính toán mất thời gian. Chỉ khi nào nó được hoàn thành (resolved) hay bị hủy bỏ (rejected) hay khi call stack trở nên rỗng thì tôi sẽ lấy giá trị trả về ra._",
+      "Dù chúng ta có thể sử dụng giá trị thu được bằng cú pháp `.then`, hoặc sử dụng cặp cú pháp `await/async`, nhưng, cách chúng hoạt động là khác nhau.",
+      "Trong `firstFunction`, chúng ta đưa promise qua một bên chờ cho nó tính toán xong, và vẫn tiếp tục chạy những code tiếp sau đó, theo đó `console.log('second')` sẽ được chạy. Sau đó promise được hoàn thành trả về giá trị `I have resolved`, giá trị này sẽ được log ra khi call stack trở nên rỗng.",
+      "Với từ khóa `await` trong `secondFunction`, ta đã tạm dừng một hàm bất đồng bộ cho tới khi chúng trả về giá trị, sau đó ta mới đi tiếp đến các câu lệnh tiếp theo.",
+      "Do đó nó sẽ chờ cho tới khi `myPromise` được hoàn thành và trả về giá trị `I have resolved`, sau đó chúng ta sẽ chạy tiếp câu lệnh tiếp theo in ra `second`."
+    ],
+    "id": 101,
+    "options": [
+      "`I have resolved!`, `second` và `I have resolved!`, `second`",
+      "`second`, `I have resolved!` và `second`, `I have resolved!`",
+      "`I have resolved!`, `second` và `second`, `I have resolved!`",
+      "`second`, `I have resolved!` và `I have resolved!`, `second`"
+    ],
+    "problem": "const myPromise = () => Promise.resolve('I have resolved!')\n\nfunction firstFunction() {\n  myPromise().then(res => console.log(res))\n  console.log('second')\n}\n\nasync function secondFunction() {\n  console.log(await myPromise())\n  console.log('second')\n}\n\nfirstFunction()\nsecondFunction()\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Phép toán `+` không chỉ dùng để cộng các số, mà nó còn dùng để nối chuỗi nữa. Mỗi khi Javascript engine gặp một giá trị trong phép toán không phải dạng số, nó sẽ chuyển các số trong phép toán đó sang dạng chuỗi.",
+      "Phép toán đầu tiên item là một số `1`, nên `1 + 2` trả về 3.",
+      "Ở phép toán thứ hai, item là một chuỗi `\"Lydia\"`. trong khi đó `2` là một số, nên `2` sẽ bị chuyển sang dạng chuỗi, sau khi nối vào ta có chuỗi `\"Lydia2\"`.",
+      "Ở phép toán thứ ba, `{ name: \"Lydia\" }` là một object. Tuy nhiên dù có là object hay gì đi nữa thì nó cũng sẽ bị chuyển sang dạng chuỗi. Đối với object thì khi chuyển sang dạng chuỗi nó sẽ trở thành `\"[object Object]\"`. `\"[object Object]\"` nối với `\"2\"` trở thành `\"[object Object]2\"`."
+    ],
+    "id": 102,
+    "options": [
+      "`3`, `NaN`, `NaN`",
+      "`3`, `7`, `NaN`",
+      "`3`, `Lydia2`, `[object Object]2`",
+      "`\"12\"`, `Lydia2`, `[object Object]2`"
+    ],
+    "problem": "const set = new Set()\n\nset.add(1)\nset.add(\"Lydia\")\nset.add({ name: \"Lydia\" })\n\nfor (let item of set) {\n  console.log(item + 2)\n}\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Ta có thể truyền vào giá trị bất kì cho `Promise.resolve`, dù có là promise hay không promise. Bản thân nó sẽ là một hàm trả về một promise với giá trị đã được resolved.",
+      "Trong trường hợp này ta đưa vào giá trị `5`. Nó sẽ trả về một resolved promise với giá trị `5`."
+    ],
+    "id": 103,
+    "options": [
+      "`5`",
+      "`Promise {<pending>5}`",
+      "`Promise {<resolved>5}`",
+      "`Error`"
+    ],
+    "problem": "Promise.resolve(5)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Object sẽ được truyền vào hàm theo reference. Khi chúng ta nói so sánh strict equal (`===`), nghĩa là ta đang so sánh các reference của chúng.",
+      "Ta set giá trị mặc định của `person2` là object `person`, và đưa object `person` vào làm giá trị cho đối số `person1`.",
+      "Điều đó có nghĩa là chúng cùng trỏ đến một object trong bộ nhớ, do đó chúng bằng nhau, và `They are the same!` được in ra."
+    ],
+    "id": 104,
+    "options": [
+      "`Not the same!`",
+      "`They are the same!`",
+      "`ReferenceError`",
+      "`SyntaxError`"
+    ],
+    "problem": "function compareMembers(person1, person2 = person) {\n  if (person1 !== person2) {\n    console.log(\"Not the same!\")\n  } else {\n    console.log(\"They are the same!\")\n  }\n}\n\nconst person = { name: \"Lydia\" }\n\ncompareMembers(person)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Trong Javascript ta có hai cách để truy cập thuộc tính của một object: sử dụng ngoặc vuông `[]`, hoặc sử dụng chấm `.`. Trong trương hợp này chúng ta sử dụng chấm (`colorConfig.colors`) thay cho ngoặc vuông (`colorConfig[\"colors\"]`).",
+      "Với cách sử dụng chấm, Javascript sẽ tìm kiếm một thuộc tính có tên chính xác như tên ta đưa vào. Trong trường hợp này nó là thuộc tính `colors` trong object `colorConfig` Tuy nhiên trong object này không có thuộc tính nào tên là  `colors`, nên nó sẽ trả về `undefined`. Sau đó chúng ta cố truy cậ vào thuộc tính 1 của nó bằng cách gọi `[1]`. Chúng ta không thể làm như vậy trên giá trị `undefined`, nên nó sẽ trả về `TypeError`: `Cannot read property '1' of undefined`.",
+      "Javascript thông dịch theo câu lệnh. Khi ta sử dụng ngoặc vuông, Nnó sẽ tìm mở ngoặc đầu tiên `[` và tiếp tục cho tới khi gặp đóng ngoặc tương ứng `]`. Chỉ khi đó nó mới đánh giá câu lệnh. Nếu chúng ta sử dụng cú pháp `colorConfig[colors[1]]`, nó sẽ trả về giá trị của thuộc tính `red` trong object `colorConfig`."
+    ],
+    "id": 105,
+    "options": [
+      "`true`",
+      "`false`",
+      "`undefined`",
+      "`TypeError`"
+    ],
+    "problem": "const colorConfig = {\n  red: true,\n  blue: false,\n  green: true,\n  black: true,\n  yellow: false,\n}\n\nconst colors = [\"pink\", \"red\", \"blue\"]\n\nconsole.log(colorConfig.colors[1])\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Về cơ bản, emoji vẫn là các ký tự unicode mà thôi. Mã unicode cho hình trái tim là `\"U+2764 U+FE0F\"`. Chúng luôn luôn là một, nên phép toán đơn giản trả về `true`."
+    ],
+    "id": 106,
+    "options": [
+      "`true`",
+      "`false`"
+    ],
+    "problem": "console.log('❤️' === '❤️')\n",
+    "question": "Ouput là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Với `splice`, ta thay đổi mảng gốc bằng cách thêm sửa xóa các phần tử. Trong trường hợp này ta xóa 2 phần tử kể từ index 1 (ta xóa `'🥑'` và `'😍'`) và thêm vào ✨ emoji.",
+      "`map`, `filter` và `slice` trả về một mảng mới, `find` trả về một phần tử, và `reduce` trả về giá trị tích lũy."
+    ],
+    "id": 107,
+    "options": [
+      "`All of them`",
+      "`map` `reduce` `slice` `splice`",
+      "`map` `slice` `splice`",
+      "`splice`"
+    ],
+    "problem": "const emojis = ['✨', '🥑', '😍']\n\nemojis.map(x => x + '✨')\nemojis.filter(x => x !== '🥑')\nemojis.find(x => x !== '🥑')\nemojis.reduce((acc, cur) => acc + '✨')\nemojis.slice(1, 2, '✨') \nemojis.splice(1, 2, '✨')\n",
+    "question": "Phép toán nào sau đây làm thay đổi mảng gốc?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Trong Javascript tất cả các kiểu cơ bản (mọi thứ không phải object) đều tương tác bằng _giá trị_. Chúng ta set giá trị của thuộc tính `favoriteFood` trong object `info` bằng ký tự bánh pizza, `'🍕'`. Chuỗi trong javascript là một kiểu cơ bản, nên nó cũng sẽ tương tác bằng giá trị.",
+      "Bản thân mảng `food` không hề thay đổi, do giá trị của `favoriteFood` chỉ là một bản _copy_ của giá trị đầu tiên trong mảng mà thôi, và không hề trỏ tới reference của `food[0]`. Do đó khi ghi ra, giá trị của mảng vẫn là giá trị ban đầu, `['🍕', '🍫', '🥑', '🍔']`."
+    ],
+    "id": 108,
+    "options": [
+      "`['🍕', '🍫', '🥑', '🍔']`",
+      "`['🍝', '🍫', '🥑', '🍔']`",
+      "`['🍝', '🍕', '🍫', '🥑', '🍔']`",
+      "`ReferenceError`"
+    ],
+    "problem": "const food = ['🍕', '🍫', '🥑', '🍔']\nconst info = { favoriteFood: food[0] }\n\ninfo.favoriteFood = '🍝'\n\nconsole.log(food)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Với phương thức `JSON.parse()`, ta sẽ parse một chuỗi JSON thành một giá trị JavaScript.",
+      "Ví dụ:"
+    ],
+    "id": 109,
+    "options": [
+      "Parse JSON thành một giá trị JavaScript",
+      "Parse một JavaScript object thành JSON",
+      "Parse giá trị JavaScript bất kì thành JSON",
+      "Parse JSON thành một JavaScript object"
+    ],
+    "problem": "JSON.parse()\n",
+    "question": "Phép toán này dùng để làm gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Mỗi hàm sẽ có một _context thực thi_ (hay _scope_) của riêng nó. Hàm `getName` đầu tiên sẽ tìm trong context của nó (scope) để tìm xem có biến nào tên là `name` hay không. Trong trường hợp này, hàm `getName` có biến `name` được khai báo với từ khóa `let`, giá trị là `'Sarah'`.",
+      "Một biến được khai báo với từ khóa `let` (hoặc `const`) sẽ được `hoisted`, nhưng không giống như `var`, nó sẽ không được _khởi tạo_. Nó sẽ không thể truy cập được trước dòng ta khai báo (initialize). Nó được gọi là \"temporal dead zone\". Khi ta cố truy cập một biến trước khi nó được khai báo, JavaScript sẽ throw ra `ReferenceError`.",
+      "Nếu ta không khai báo biến `name` bên trong hàm `getName`, thì Javascript engine sẽ tiếp tục tìm kiếm trong _scope chain_. Nó sẽ tìm thấy ở scope phía ngoài một biến `name` với giá trị là `Lydia`. Trong trường hợp này nó sẽ log ra `Lydia`."
+    ],
+    "id": 110,
+    "options": [
+      "Lydia",
+      "Sarah",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "let name = 'Lydia'\n\nfunction getName() {\n  console.log(name)\n  let name = 'Sarah'\n}\n\ngetName()\n",
+    "question": "Ouput là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Với từ khóa `yield`, ta sẽ trả về các giá trị trong một `generator`. Với từ khóa `yield*`, ta có thể trả về giá trị từ một `engerator` khác, hoặc một `iterable object` (ví dụ mảng).",
+      "Trong `generatorOne`, ta trả về toàn bộ mảng `['a', 'b', 'c']` sử dụng từ khóa `yield`. Giá trị của thuộc tính `value` trong object thu được bởi phương thức `next` trong `one` (`one.next().value`) là toàn bộ mảng `['a', 'b', 'c']`.",
+      "Trong `generatorTwo`, ta sử dụng từ khóa `yield*`. Có nghĩa là giá trị đầu tiên mà `two` trả về là giá trị đầu tiên trong `iterator`. Trong trường hợp này `iterator` của chúng ta là mảng `['a', 'b', 'c']`. Giá trị đầu tiên của mảng là `a`, nên lần đầu tiên khi ta gọi `two.next().value`, `a` sẽ được trả về."
+    ],
+    "id": 111,
+    "options": [
+      "`a` and `a`",
+      "`a` and `undefined`",
+      "`['a', 'b', 'c']` and `a`",
+      "`a` and `['a', 'b', 'c']`"
+    ],
+    "problem": "function* generatorOne() {\n  yield ['a', 'b', 'c'];\n}\n\nfunction* generatorTwo() {\n  yield* ['a', 'b', 'c'];\n}\n\nconst one = generatorOne()\nconst two = generatorTwo()\n\nconsole.log(one.next().value)\nconsole.log(two.next().value)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Biểu thức bên trong chuỗi template (tức chuỗi nằm trong hai dấu ``, gọi là `template literals`) sẽ được đánh giá trước. Sau đó kết quả của biểu thức sẽ được đưa vào chuỗi, trong trường hợp này biểu thức là `(x => x)('I love')`. Chúng ta truyền giá trị đối số `'I love'` cho một arrow function `x => x`. `x` lúc này là `'I love'`, và trả về chính nó. Cuối cùng kết quả của chuỗi là `I love to program`."
+    ],
+    "id": 112,
+    "options": [
+      "`I love to program`",
+      "`undefined to program`",
+      "`${(x => x)('I love') to program`",
+      "`TypeError`"
+    ],
+    "problem": "console.log(`${(x => x)('I love')} to program`)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Thông thường khi ta set một object bằng `null`, thì object này sẽ được bộ dọn rác dọn đi do không còn gì reference đến nó nữa (_garbage collected_). Tuy nhiên, do callback trong `setInterval` là một arrow function (do đó nó sẽ gắn với object `config`), nên callback này vẫn sẽ giữ reference đến object `config`. Vì vẫn còn giữ reference, nên object sẽ không bị dọn đi. Do đó nó vẫn sẽ được gọi sau mỗi 1000ms (tức 1 giây)."
+    ],
+    "id": 113,
+    "options": [
+      "Callback `setInterval` sẽ không được gọi",
+      "Callback `setInterval` sẽ được gọi một lần duy nhất",
+      "Callback `setInterval` vẫn sẽ được gọi mỗi giây một lần",
+      "`config.alert()` không bao giờ được gọi bởi config là `null`"
+    ],
+    "problem": "let config = {\n  alert: setInterval(() => {\n    console.log('Alert!')\n  }, 1000)\n}\n\nconfig = null\n",
+    "question": "Điều gì sẽ xảy ra?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Khi ta thêm vào một cặp key/value với từ khóa `set`, key sẽ là đối số đầu tiên đưa vào trong hàm `set` function, và value sẽ là đối số thứ hai.Trong trường hơp này key chính là _hàm_ `() => 'greeting'`, value là `'Hello world'`. `myMap` trở thành `{ () => 'greeting' => 'Hello world!' }`.",
+      "1 sai, vì key là `() => 'greeting'` chứ không phải là `'greeting'`.\n3 sai, vì khi chúng ta đưa một hàm vào làm đối số trong phương thức `get`, nó sẽ được đưa vào dưới dạng _reference_. Function vốn là object, do đó 2 hàm sẽ không bao giờ là `strictly equal`, mặc dù chúng có trông giống nhau đi chăng nữa thì chúng vẫn trỏ đến các vùng nhớ khác nhau."
+    ],
+    "id": 114,
+    "options": [
+      "1",
+      "2",
+      "2 và 3",
+      "Tất cả"
+    ],
+    "problem": "const myMap = new Map()\nconst myFunc = () => 'greeting'\n\nmyMap.set(myFunc, 'Hello world!')\n\n//1\nmyMap.get('greeting')\n//2\nmyMap.get(myFunc)\n//3\nmyMap.get(() => 'greeting')\n",
+    "question": "Những hàm nào sẽ trả về `'Hello world!'`?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Cả hai hàm `changeAge` và `changeAgeAndName` đều có tham số mặc định - nó là một _bản copy_ mới của object `{ ...person }`. Object này sẽ copy tất cả những cặp key/values bên trong object `person`.",
+      "Đầu tiên, chúng ta gọi hàm `changeAge` và đưa chính object `person` vào làm đối số. Hàm này sẽ tăng giá trị của thuộc tính `age` lên 1. `person` lúc này là `{ name: \"Lydia\", age: 22 }`.",
+      "Sau đó, chúng ta gọi hàm `changeAgeAndName` tuy nhiên không đưa vào đối số nào cả. Do đó giá trị của `x` lúc này sẽ là giá trị mặc định, tức một bản _copy_ của object `{ ...person }`. Do nó chỉ là một bản copy (tức object mới), nên nó không ảnh hưởng gì tới giá trị của object `person` gốc, giá trị của `person` gốc sẽ vẫn là `{ name: \"Lydia\", age: 22 }`."
+    ],
+    "id": 115,
+    "options": [
+      "`{name\"Sarah\", age22}`",
+      "`{name\"Sarah\", age23}`",
+      "`{name\"Lydia\", age22}`",
+      "`{name\"Lydia\", age23}`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia\",\n  age: 21\n}\n\nconst changeAge = (x = { ...person }) => x.age += 1\nconst changeAgeAndName = (x = { ...person }) => {\n  x.age += 1\n  x.name = \"Sarah\"\n}\n\nchangeAge(person)\nchangeAgeAndName()\n\nconsole.log(person)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Với toán tử ba chấm (`spread operator`) `...`, chúng ta có thể unpack một iterable thành từng các phần tử riêng biệt. Hàm `sumValues` nhận vào 3 giá trị: `x`, `y` và `z`. `...[1, 2, 3]` sẽ trả về `1, 2, 3`, đưa vào `sumValues` sẽ cho ta kết quả là 6."
+    ],
+    "id": 116,
+    "options": [
+      "`sumValues([...1, 2, 3])`",
+      "`sumValues([...[1, 2, 3]])`",
+      "`sumValues(...[1, 2, 3])`",
+      "`sumValues([1, 2, 3])`"
+    ],
+    "problem": "function sumValues(x, y, z) {\n\treturn x + y + z;\n}\n",
+    "question": "Phép tính nào dưới đây trả về `6`?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Với phép toán `+=`, Ta tăng giá trị của `num` lên `1`. `num` có giá trị khởi tạo là `1`, do đó `1 + 1` là `2`. Phần tử thứ hai của `list` là 🥰, do đó `console.log(list[2])` sẽ in ra 🥰."
+    ],
+    "id": 117,
+    "options": [
+      "`🤠`",
+      "`🥰`",
+      "`SyntaxError`",
+      "`ReferenceError`"
+    ],
+    "problem": "let num = 1;\nconst list = [\"🥳\", \"🤠\", \"🥰\", \"🤪\"];\n\nconsole.log(list[(num += 1)]);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Với phép toán optional chaining `?.`, chúng ta sẽ không cần phải check xem giá trị phía sau nó có được phép truy cập hay có tồn tại hay không. Nếu ta cố lấy một thuộc tính của `undefined` hay `null` (_nullish_), biểu thức sẽ dừng lại và trả về `undefined`.",
+      "`person.pet?.name`: `person` có thuộc tính `pet`: do đó `person.pet` không phải là một nullish. Nó có một thuộc tính `name`, với giá trị `Mara`.",
+      "`person.pet?.family?.name`: `person` có thuộc tính `pet`: do đó `person.pet` không phải là nullish. Tuy nhiên `pet` không có thuộc tính `family`, nên `person.pet.family` là nullish. Biểu thức sẽ trả về `undefined`.",
+      "`person.getFullName?.()`: `person` có thuộc tính `getFullName`: do đó `person.getFullName()` không phải nullish và có thể gọi ra, trả về `Lydia Hallie`.",
+      "`member.getLastName?.()`: `member` không được định nghĩa: do đó `member.getLastName()` là nullish. Biểu thức trả về `undefined`."
+    ],
+    "id": 118,
+    "options": [
+      "`undefined` `undefined` `undefined` `undefined`",
+      "`Mara` `undefined` `Lydia Hallie` `undefined`",
+      "`Mara` `null` `Lydia Hallie` `null`",
+      "`null` `ReferenceError` `null` `ReferenceError`"
+    ],
+    "problem": "const person = {\n\tfirstName: \"Lydia\",\n\tlastName: \"Hallie\",\n\tpet: {\n\t\tname: \"Mara\",\n\t\tbreed: \"Dutch Tulip Hound\"\n\t},\n\tgetFullName() {\n\t\treturn `${this.firstName} ${this.lastName}`;\n\t}\n};\n\nconsole.log(person.pet?.name);\nconsole.log(person.pet?.family?.name);\nconsole.log(person.getFullName?.());\nconsole.log(member.getLastName?.());\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Ta đưa một điều kiện `groceries.indexOf(\"banana\")` vào câu lệnh `if`. `groceries.indexOf(\"banana\")` trả về `0`, là một giá trị `falsy`. Do đó điệu kiện `if` sẽ chạy vào khối `else` và in ra `We don't have to buy bananas!`."
+    ],
+    "id": 119,
+    "options": [
+      "We have to buy bananas!",
+      "We don't have to buy bananas",
+      "`undefined`",
+      "`1`"
+    ],
+    "problem": "const groceries = [\"banana\", \"apple\", \"peanuts\"];\n\nif (groceries.indexOf(\"banana\")) {\n\tconsole.log(\"We have to buy bananas!\");\n} else {\n\tconsole.log(`We don't have to buy bananas!`);\n}\n",
+    "question": "Ouput là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Phương thức `language` là một `setter`. Setter không mang giá trị, nhiệm vụ của nó chỉ đơn giản là _thay đổi_ thuộc tính. Khi ta gọi một phương thức `setter` nó sẽ trả về `undefined`."
+    ],
+    "id": 120,
+    "options": [
+      "`function language(lang) { this.languages.push(lang }`",
+      "`0`",
+      "`[]`",
+      "`undefined`"
+    ],
+    "problem": "const config = {\n\tlanguages: [],\n\tset language(lang) {\n\t\treturn this.languages.push(lang);\n\t}\n};\n\nconsole.log(config.language);\n",
+    "question": "Ouput là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "`typeof name` trả về `\"string\"`. Chuỗi `\"string\"` là một giá trị `truthy`, do đó `!typeof name` sẽ trả về một giá trị bool là `false`. Do đó `false === \"object\"` và `false === \"string\"` đều trả về`false`.",
+      "(Nếu chúng ta muốn check xem một kiểu dữ liệu không phải là một kiểu nào đó, chúng ta nên viết `!==` thay vì `!typeof`)"
+    ],
+    "id": 121,
+    "options": [
+      "`false` `true`",
+      "`true` `false`",
+      "`false` `false`",
+      "`true` `true`"
+    ],
+    "problem": "const name = \"Lydia Hallie\";\n\nconsole.log(!typeof name === \"object\");\nconsole.log(!typeof name === \"string\");\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Hàm `add` trả về một arrow function, arrow function này lại trả về một arrow function khác, arrow function này lại trả về một arrow function khác nữa. Hàm đầu tiên nhận vào một tham số `x` với giá trị là 4 `4`. Chúng ta gọi hàm thứ hai, nhận vào giá trị của `y` là `5`. Sau đó chúng ta gọi hàm thứ 3, nhận vào giá trị của `z` là `6`. Sau đó ta truy cập các giá trị của `x`, `y` và `z` bên trong arrow function cuối cùng, khi này JS engine sẽ lần ngược lại scope chain để tìm các giá trị `x` và `y` tương ứng. Do đó cuối cùng nó sẽ trả về `4` `5` `6`."
+    ],
+    "id": 122,
+    "options": [
+      "`4` `5` `6`",
+      "`6` `5` `4`",
+      "`4` `function` `function`",
+      "`undefined` `undefined` `6`"
+    ],
+    "problem": "const add = x => y => z => {\n\tconsole.log(x, y, z);\n\treturn x + y + z;\n};\n\nadd(4)(5)(6);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Generator `range` trả về một async object với các promise tương ứng với mỗi phần tử ta đưa vào: `Promise{1}`, `Promise{2}`, `Promise{3}`. Ta set giá trị `gen` bằng với một async object để thực hiện vòng lặp `for await ... of` sau đó. Tiếp đó ta lại set giá trị của `item` bằng với giá trị trả về của mỗi promise: đầu tiên là `Promise{1}`, sau đó `Promise{2}`, sau đó `Promise{3}`. Do chúng ta sử dụng cú pháp `async/await` nên sẽ trả về giá trị đã được resolve của promise `item`, do đó lần lượt `1`, `2`, và `3` được in ra."
+    ],
+    "id": 123,
+    "options": [
+      "`Promise {1}` `Promise {2}` `Promise {3}`",
+      "`Promise {<pending>}` `Promise {<pending>}` `Promise {<pending>}`",
+      "`1` `2` `3`",
+      "`undefined` `undefined` `undefined`"
+    ],
+    "problem": "async function* range(start, end) {\n\tfor (let i = start; i <= end; i++) {\n\t\tyield Promise.resolve(i);\n\t}\n}\n\n(async () => {\n\tconst gen = range(1, 3);\n\tfor await (const item of gen) {\n\t\tconsole.log(item);\n\t}\n})();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "`myFunc` nhận vào một object có các thuộc tính `x`, `y` và `z` làm đối số của nó. Do chúng ta đưa vào 3 số riêng biệt (1, 2, 3) chứ không phải một object với các thuộc tính `x`, `y`, `z` như ({x: 1, y: 2, z: 3}), nên `x`, `y`, `z` đều có giá trị là `undefined`."
+    ],
+    "id": 124,
+    "options": [
+      "`1` `2` `3`",
+      "`{11}` `{22}` `{33}`",
+      "`{ 1undefined }` `undefined` `undefined`",
+      "`undefined` `undefined` `undefined`"
+    ],
+    "problem": "const myFunc = ({ x, y, z }) => {\n\tconsole.log(x, y, z);\n};\n\nmyFunc(1, 2, 3);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Với phương thức `Intl.NumberFormat`, chúng ta có thể format bất cứ số nào theo định dạng ta mong muốn. Ở đây ta format giá trị `130` theo định dạng `en-US`, kiểu `unit`, đơn vị là `mile-per-hour`, và nó sẽ trả về `130 mph`. Tiếp theo số `300` sẽ được format theo định dạng `en-US`, kiểu `currentcy`, đơn vị `USD`, và kết quả là `$300.00`."
+    ],
+    "id": 125,
+    "options": [
+      "The driver drove 130 and has to pay 300",
+      "The driver drove 130 mph and has to pay \\$300.00",
+      "The driver drove undefined and has to pay undefined",
+      "The driver drove 130.00 and has to pay 300.00"
+    ],
+    "problem": "function getFine(speed, amount) {\n  const formattedSpeed = new Intl.NumberFormat({\n    'en-US',\n    { style: 'unit', unit: 'mile-per-hour' }\n  }).format(speed)\n\n  const formattedAmount = new Intl.NumberFormat({\n    'en-US',\n    { style: 'currency', currency: 'USD' }\n  }).format(amount)\n\n  return `The driver drove ${formattedSpeed} and has to pay ${formattedAmount}`\n}\n\nconsole.log(getFine(130, 300))\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Khi tiến hành cú pháp destructuring object, chúng ta có thể unpack các giá trị ở phía phải của một object, và đưa giá trị đã được unpack đó làm giá trị của thuộc tính tương ứng của object phía trái. Trong trường hợp này, ta đã gán giá trị \"💀\" cho `spookyItems[3]`. Có nghĩa là mảng `spookyItems` đã bị thay đổi, chúng ta đã thêm vào nó một phần tử \"💀\". Do đó khi in ra thì kết quả sẽ là `[\"👻\", \"🎃\", \"🕸\", \"💀\"]` ."
+    ],
+    "id": 126,
+    "options": [
+      "`[\"👻\", \"🎃\", \"🕸\"]`",
+      "`[\"👻\", \"🎃\", \"🕸\", \"💀\"]`",
+      "`[\"👻\", \"🎃\", \"🕸\", { item\"💀\" }]`",
+      "`[\"👻\", \"🎃\", \"🕸\", \"[object Object]\"]`"
+    ],
+    "problem": "const spookyItems = [\"👻\", \"🎃\", \"🕸\"];\n({ item: spookyItems[3] } = { item: \"💀\" });\n\nconsole.log(spookyItems);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Với phương thức `Number.isNaN`, ta có thể check một giá trị có phải là _dạng số_ và bằng `NaN` hay không. `name` không phải là một số, do đó `Number.isNaN(name)` sẽ trả về `false`. `age` là một số, nhưng không bằng `NaN`, do đó `Number.isNaN(age)` cũng trả về `false`.\nVới phương thức `isNaN`, ta đơn thuần chỉ check xem giá trị đưa vào không phải là _dạng số_ hay không. `name` không phải là dạng số, nên `isNaN(name)` trả về `true`. `age` là số, nên `isNaN(age)` trả về `false`."
+    ],
+    "id": 127,
+    "options": [
+      "`true` `false` `true` `false`",
+      "`true` `false` `false` `false`",
+      "`false` `false` `true` `false`",
+      "`false` `true` `false` `true`"
+    ],
+    "problem": "const name = \"Lydia Hallie\";\nconst age = 21;\n\nconsole.log(Number.isNaN(name));\nconsole.log(Number.isNaN(age));\n\nconsole.log(isNaN(name));\nconsole.log(isNaN(age));\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Một biến được khai báo với từ khóa `const` sẽ không thể truy cập trước khi nó được khởi tạo: nó gọi là _temporal dead zone_. Trong hàm `getInfo`, giá trị `randomValue` sẽ được tìm kiếm đầu tiên trong scope của hàm `getInfo`. Tại dòng ta muốn lấy ra `typeof randomValue`, giá trị `randomValue` chưa được khởi tạo, do đó một `ReferenceError` sẽ được throw ra! Lưu ý nhỏ là Javascript engine sẽ không tìm kiếm ở scope khác nữa do `randomValue` đã được khai báo bên trong hàm `getInfo`."
+    ],
+    "id": 128,
+    "options": [
+      "`\"number\"`",
+      "`\"string\"`",
+      "`undefined`",
+      "`ReferenceError`"
+    ],
+    "problem": "const randomValue = 21;\n\nfunction getInfo() {\n\tconsole.log(typeof randomValue);\n\tconst randomValue = \"Lydia Hallie\";\n}\n\ngetInfo();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Trong khối `try`, ta in ra giá trị của biến `myPromise`: `\"Woah some cool data\"`. Do không có lỗi gì xảy ra ở đây cả, nên các lệnh trong khối `catch` sẽ không được chạy. Tuy nhiên các lệnh trong khối `finally` thì sẽ _luôn luôn_ chạy, nên `\"Oh finally!\"` sẽ được in ra."
+    ],
+    "id": 129,
+    "options": [
+      "`Woah some cool data`",
+      "`Oh finally!`",
+      "`Woah some cool data` `Oh finally!`",
+      "`Oops didn't work` `Oh finally!`"
+    ],
+    "problem": "const myPromise = Promise.resolve(\"Woah some cool data\");\n\n(async () => {\n\ttry {\n\t\tconsole.log(await myPromise);\n\t} catch {\n\t\tthrow new Error(`Oops didn't work`);\n\t} finally {\n\t\tconsole.log(\"Oh finally!\");\n\t}\n})();\n",
+    "question": "Ouput là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Với phương thức `flat`, ta có thể tạo một mảng mới với các phần tử đã được `flattened` (làm phẳng). Độ sâu của mảng đã làm phẳng sẽ phụ thuộc vào giá trị ta đưa vào. Trong trường hợp này ta đưa vào là `1` (thực ra đây là giá trị default, ta không đưa vào cũng không sao), có nghĩa là chỉ những phần tử ở độ sâu 1 sẽ được làm phẳng. Chúng là`['🥑']` và `['✨', '✨', ['🍕', '🍕']]` trong trường hợp này. Nối lại ta sẽ có mảng mới `['🥑', '✨', '✨', ['🍕', '🍕']]`."
+    ],
+    "id": 130,
+    "options": [
+      "`['🥑', ['✨', '✨', ['🍕', '🍕']]]`",
+      "`['🥑', '✨', '✨', ['🍕', '🍕']]`",
+      "`['🥑', ['✨', '✨', '🍕', '🍕']]`",
+      "`['🥑', '✨', '✨', '🍕', '🍕']`"
+    ],
+    "problem": "const emojis = [\"🥑\", [\"✨\", \"✨\", [\"🍕\", \"🍕\"]]];\n\nconsole.log(emojis.flat(1));\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "`counterOne` là một instance của class `Counter`. Trong counter class có thuộc tính `count` bên trong constructor, và một phương thức `increment`. Đầu tiên chúng ta gọi phương thức `increment` hai lần bằng `counterOne.increment()`. Nên hiện tại giá trị của `counterOne.count` là `2`.",
+      "<img src=\"https://i.imgur.com/KxLlTm9.png\" width=\"400\">",
+      "Sau đó chúng ta có thêm một biến mới là `counterTwo`, và set cho nó giá trị bằng với `counterOne`. Do object được tương tác bằng reference, nên việc này tương ứng với ta đã tạo thêm một reference đến bộ nhớ mà biến `counterOne` đã trỏ vào. Do chúng có chung bộ nhớ, bất cứ thay đổi nào trên `counterTwo` cũng sẽ thay đổi trên `counterOne`. Lúc này `counterTwo.count` cũng sẽ là `2`.",
+      "Ta gọi hàm `counterTwo.increment()` để tăng `count` lên `3`. Sau đó chúng ta in ra `count` ở `counterOne`, kết quả là `3`.",
+      "<img src=\"https://i.imgur.com/BNBHXmc.png\" width=\"400\">"
+    ],
+    "id": 131,
+    "options": [
+      "`0`",
+      "`1`",
+      "`2`",
+      "`3`"
+    ],
+    "problem": "class Counter {\n\tconstructor() {\n\t\tthis.count = 0;\n\t}\n\n\tincrement() {\n\t\tthis.count++;\n\t}\n}\n\nconst counterOne = new Counter();\ncounterOne.increment();\ncounterOne.increment();\n\nconst counterTwo = counterOne;\ncounterTwo.increment();\n\nconsole.log(counterOne.count);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Đầu tiên chúng ta gọi `funcOne`. Trong dòng đầu tiên của `funcOne`, chúng ta gọi `myPromise`, đây là một hàm _bất đồng bộ_. Trong khi chờ promise này hoàn thành, nó sẽ tiếp tục thực thi các dòng khác trong `funcOne`. Dòng tiếp theo là cũng là một hàm _bất đồng bộ_ `setTimeout`, phần callback của nó sẽ được gửi tới Web API (các bạn có thể tham khảo câu hỏi trước đó để hiểu về callstack và Web API).",
+      "Do cả promise và timeout đều là những hàm xử lý bất đồng bộ, nên trong khi chờ chúng hoàn thành thì các dòng tiếp theo vẫn tiếp tục được thực thi. Có nghĩa là `Last line!` sẽ được in ra đầu tiên, do nó là một hàm chạy _đồng bộ_. Và đây cũng là dòng cuối cùng của hàm `funcOne`, khi này promise sẽ được resolve, trả về `Promise!`. Tuy nhiên do ta tiếp tục gọi hàm `funcTwo()`, call stack của ta vẫn chưa rỗng, nên callback của `setTimeout` vẫn chưa thể được đưa vào callstack (vẫn đang năm ở Web API).",
+      "Trong hàm `funcTwo` đầu tiên ta sẽ _awaiting_ myPromise. Với từ khóa `await`, Ta sẽ tạm dừng thực thi cho tới khi n ào promise được resolved (hay rejected). Khi này ta sẽ in ra giá trị của `res` (do bản thân hàm promise lại trả về một promise). Nó sẽ in ra `Promise!`.",
+      "Dòng tiếp theo lại là một hàm _bất đồng bộ_ `setTimeout`, callback khi này tiếp tục được gửi tới Web API.",
+      "Ta tiếp tục thực thi dòng cuối cùng của `funcTwo`, trả về `Last line!`. Khi này `funcTwo` đã làm rỗng call stack. Các callback khi nãy (`() => console.log(\"Timeout!\")` từ `funcOne`, và `() => console.log(\"Timeout!\")` từ `funcTwo`) lần lượt được đưa vào trong call stack. Callback đầu tiên in ra `Timeout!`. Callback thứ hai in ra `Timeout!`. Kết quả cuối cùng sẽ là `Last line! Promise! Promise! Last line! Timeout! Timeout!`"
+    ],
+    "id": 132,
+    "options": [
+      "`Promise! Last line! Promise! Last line! Last line! Promise!`",
+      "`Last line! Timeout! Promise! Last line! Timeout! Promise!`",
+      "`Promise! Last line! Last line! Promise! Timeout! Timeout!`",
+      "`Last line! Promise! Promise! Last line! Timeout! Timeout!`"
+    ],
+    "problem": "const myPromise = Promise.resolve(Promise.resolve(\"Promise!\"));\n\nfunction funcOne() {\n\tmyPromise.then(res => res).then(res => console.log(res));\n\tsetTimeout(() => console.log(\"Timeout!\", 0));\n\tconsole.log(\"Last line!\");\n}\n\nasync function funcTwo() {\n\tconst res = await myPromise;\n\tconsole.log(await res);\n\tsetTimeout(() => console.log(\"Timeout!\", 0));\n\tconsole.log(\"Last line!\");\n}\n\nfuncOne();\nfuncTwo();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Với dấu hoa thị `*`, ta sẽ import tất cả những gì đã được export ra bởi file đó, cả default lẫn những hàm có tên. Nếu ta có một dòng như sau:",
+      "Thì kết quả sẽ là:",
+      "Trong ví dụ hàm `sum`, nó giống với chúng ta đã import hàm `sum` như thế này:",
+      "Ta có thể gọi hàm này bằng cách sử dụng `sum.default`"
+    ],
+    "id": 133,
+    "options": [
+      "`sum(4)`",
+      "`sum.sum(4)`",
+      "`sum.default(4)`",
+      "Default aren't imported with `*`, only named exports"
+    ],
+    "problem": "// sum.js\nexport default function sum(x) {\n\treturn x + x;\n}\n\n// index.js\nimport * as sum from \"./sum\";\n",
+    "question": "Làm thế nào có thể gọi hàm `sum` trong `index.js` từ `sum.js?`"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Với Proxy object, ta có thể add thêm được các hành vi (behavior) cho object bằng cách đưa nó vào làm đối số thứ hai. Trong trường hợp này, chúng ta đưa vào object `handler` có hai thuộc tính: `set` và `get`. `set` sẽ được gọi mỗi khi ta _thay đổi_ giá trị của thuộc tính, `get` sẽ được gọi mỗi khi ta _truy cập_ giá trị của thuộc tính.",
+      "Giá trị của `person` sẽ là đối số đầu tiên đưa vào, là một object rỗng `{}`. Hành vi của `person` là đối số thứ hai, tức `handler`. Do đó môi khi ta thêm thuộc tính của obejct `person`, `set` sẽ được gọi. Nếu ta truy cập thuộc tính của `person` thì `get` sẽ được gọi.",
+      "Đầu tiên ra thêm vào thuộc tính `name` cho proxy object (`person.name = \"Lydia\"`). `set` được gọi và in ra `\"Added a new property!\"`.",
+      "Sau đó chúng truy cập thuộc tính này, `get` được gọi và in ra `\"Accessed a property!\"`."
+    ],
+    "id": 134,
+    "options": [
+      "`Added a new property!`",
+      "`Accessed a property!`",
+      "`Added a new property!` `Accessed a property!`",
+      "Nothing gets logged"
+    ],
+    "problem": "const handler = {\n\tset: () => console.log(\"Added a new property!\"),\n\tget: () => console.log(\"Accessed a property!\")\n};\n\nconst person = new Proxy({}, handler);\n\nperson.name = \"Lydia\";\nperson.name;\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Với `Object.seal` ta có thể ngăn _thêm vào_ các thuộc tính mới, hay _xóa đi_ các thuộc tính cũ.",
+      "Tuy nhiên ta vẫn có thể _thay đổi_ các thuộc tính cũ."
+    ],
+    "id": 135,
+    "options": [
+      "`person.name = \"Evan Bacon\"`",
+      "`person.age = 21`",
+      "`delete person.name`",
+      "`Object.assign(person, { age21 })`"
+    ],
+    "problem": "const person = { name: \"Lydia Hallie\" };\n\nObject.seal(person);\n",
+    "question": "Cách nào sau đây sẽ thay đổi object `person`?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Phương thức `Object.freeze` sẽ _đóng băng_ object. Ta không thể thêm/sửa/xóa bất kì thuộc tính nào.",
+      "Tuy nhiên trên thực tế đây chỉ là đóng băng _nông_ (_shallowly_) object, có nghĩa là nó chỉ đóng băng các thuộc tính _trực tiếp_ của object mà thôi. Nếu thuộc tính lại là một object khác, như `address` trong trường hợp này, thuộc tính bên trong của `address` sẽ không bị đóng băng, và ta vẫn có thể chỉnh sửa như bình thường."
+    ],
+    "id": 136,
+    "options": [
+      "`person.name = \"Evan Bacon\"`",
+      "`delete person.address`",
+      "`person.address.street = \"101 Main St\"`",
+      "`person.pet = { name\"Mara\" }`"
+    ],
+    "problem": "const person = {\n\tname: \"Lydia Hallie\",\n\taddress: {\n\t\tstreet: \"100 Main St\"\n\t}\n};\n\nObject.freeze(person);\n",
+    "question": "Cách nào sau đây có thể thay đổi object `person`?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Phương thức `Object.freeze` sẽ _đóng băng_ object. Ta không thể thêm/sửa/xóa bất kì thuộc tính nào.",
+      "Tuy nhiên trên thực tế đây chỉ là đóng băng _nông_ (_shallowly_) object, có nghĩa là nó chỉ đóng băng các thuộc tính _trực tiếp_ của object mà thôi. Nếu thuộc tính lại là một object khác, như `address` trong trường hợp này, thuộc tính bên trong của `address` sẽ không bị đóng băng, và ta vẫn có thể chỉnh sửa như bình thường."
+    ],
+    "id": 137,
+    "options": [
+      "`person.name = \"Evan Bacon\"`",
+      "`delete person.address`",
+      "`person.address.street = \"101 Main St\"`",
+      "`person.pet = { name\"Mara\" }`"
+    ],
+    "problem": "const person = {\n\tname: \"Lydia Hallie\",\n\taddress: {\n\t\tstreet: \"100 Main St\"\n\t}\n};\n\nObject.freeze(person);\n",
+    "question": "Cách nào sau đây có thể thay đổi object `person`?"
+  },
+  {
+    "answer": 0,
+    "explanation": [
+      "Đầu tiên, ta gọi hàm `myFunc()` nhưng không đưa vào đối số nào. Do đó `num` và `value` sẽ nhận các giá trị mặc định: `num` là `2`, và `value` sẽ là giá trị trả về của hàm `add`. Với hàm `add`, ta đưa `num` vào làm đối số, tức `2`. `add` trả về `4`, đây sẽ là giá trị của `value`.",
+      "Sau đó ta gọi hàm `myFunc(3)`, khi này `3` sẽ là giá trị của `num`. Ta không đưa vào giá trị cho `value`. Lúc này `value` tiếp tục nhận giá trị mặc định: giá trị trả về của hàm `add`. Trong `add`, ta đưa vào `num`, khi này là `3`. `add` sẽ trả về `6`, đây sẽ là giá trị của `value`."
+    ],
+    "id": 138,
+    "options": [
+      "`2` `4` and `3` `6`",
+      "`2` `NaN` and `3` `NaN`",
+      "`2` `Error` and `3` `6`",
+      "`2` `4` and `3` `Error`"
+    ],
+    "problem": "const add = x => x + x;\n\nfunction myFunc(num = 2, value = add(num)) {\n\tconsole.log(num, value);\n}\n\nmyFunc();\nmyFunc(3);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Với cú pháp ES2020, ta có thể thêm các thuộc tính private vào class bằng cách sử dụng `#`. Ta không thể truy cập được biến này bên ngoài class. Khi ta in ra `counter.#number`, một SyntaxError sẽ được throw: ta không thể truy cập từ phía ngoài class `Counter`!"
+    ],
+    "id": 139,
+    "options": [
+      "`10`",
+      "`11`",
+      "`undefined`",
+      "`SyntaxError`"
+    ],
+    "problem": "class Counter {\n  #number = 10\n\n  increment() {\n    this.#number++\n  }\n\n  getNum() {\n    return this.#number\n  }\n}\n\nconst counter = new Counter()\ncounter.increment()\n\nconsole.log(counter.#number)\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Ta duyệt và in ra giá trị của từng member bên trong `members`, mà `members` lại nằm bên trong mảng `teams`, ta cần đưa vào đối số `teams[i].members` cho hàm generator `getMembers` trong phần code thiếu. Hàm generator sẽ trả về một generator object. Để duyệt qua từng phần tử của một generator object, ta dùng từ khóa `yield*`.",
+      "Nếu ta dùng `yield`, `return yield`, hay `return`, toàn bộ generator sẽ được trả về trong lần đầu tiên chúng ta gọi phương thức `next`."
+    ],
+    "id": 140,
+    "options": [
+      "`yield getMembers(teams[i].members)`",
+      "`yield* getMembers(teams[i].members)`",
+      "`return getMembers(teams[i].members)`",
+      "`return yield getMembers(teams[i].members)`"
+    ],
+    "problem": "const teams = [\n\t{ name: \"Team 1\", members: [\"Paul\", \"Lisa\"] },\n\t{ name: \"Team 2\", members: [\"Laura\", \"Tim\"] }\n];\n\nfunction* getMembers(members) {\n\tfor (let i = 0; i < members.length; i++) {\n\t\tyield members[i];\n\t}\n}\n\nfunction* getTeams(teams) {\n\tfor (let i = 0; i < teams.length; i++) {\n\t\t// ✨ SOMETHING IS MISSING HERE ✨\n\t}\n}\n\nconst obj = getTeams(teams);\nobj.next(); // { value: \"Paul\", done: false }\nobj.next(); // { value: \"Lisa\", done: false }\n",
+    "question": "Câu lệnh còn thiếu là gì?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Hàm `addHobby` nhận vào hai đối số, `hobby`, và `hobbies` với giá trị default là mảng `hobbies` của object `person`.",
+      "Đầu tiên chúng ta gọi hàm `addHobby` và đưa vào `\"running\"` làm giá trị cho `hobby`, và một mảng rỗng cho `hobbies`. Do chúng ta đưa vào một mảng rỗng cho `hobbies`, `\"running\"` sẽ được add vào một mảng rỗng.",
+      "Sau đó chúng ta tiếp tục gọi hàm `addHobby`, đưa `\"dancing\"` vào làm giá trị cho `hobby`. Chúng ta không hề đưa vào giá trị nào cho `hobbies`, do đó nó sẽ sử dụng giá trị mặc định, tức mảng `hobbies` trong thuộc tính của object `person`. Có nghĩa là ta đã thêm `dancing` vào trong mảng `person.hobbies`.",
+      "Cuối cùng chúng ta lại gọi `addHobby`, đưa `\"baking\"` vào làm giá trị cho `hobby`, và mảng `person.hobbies` làm giá trị cho `hobbies`. Có nghĩa là ta đã thêm `baking` vào trong mảng `person.hobbies`.",
+      "Sau khi thêm `dancing` và `baking`, giá trị của `person.hobbies` là `[\"coding\", \"dancing\", \"baking\"]`"
+    ],
+    "id": 141,
+    "options": [
+      "`[\"coding\"]`",
+      "`[\"coding\", \"dancing\"]`",
+      "`[\"coding\", \"dancing\", \"baking\"]`",
+      "`[\"coding\", \"running\", \"dancing\", \"baking\"]`"
+    ],
+    "problem": "const person = {\n\tname: \"Lydia Hallie\",\n\thobbies: [\"coding\"]\n};\n\nfunction addHobby(hobby, hobbies = person.hobbies) {\n\thobbies.push(hobby);\n\treturn hobbies;\n}\n\naddHobby(\"running\", []);\naddHobby(\"dancing\");\naddHobby(\"baking\", person.hobbies);\n\nconsole.log(person.hobbies);\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 1,
+    "explanation": [
+      "Chúng ta tạo ra biến `pet` là một instance của clas `Flamingo`. Khi ta tạo ra instance, `constructor` bên trong `Flamingo` sẽ được gọi. Đầu tiên, `\"I'm pink. 🌸\"` được in ra, sau đó chúng ta gọi `super()`. `super()` sẽ gọi constructor ở class cha, tức `Bird`. Hàm constructor trong `Bird` được gọi và in ra `\"I'm a bird. 🦢\"`."
+    ],
+    "id": 142,
+    "options": [
+      "`I'm pink. 🌸`",
+      "`I'm pink. 🌸` `I'm a bird. 🦢`",
+      "`I'm a bird. 🦢` `I'm pink. 🌸`",
+      "Nothing, we didn't call any method"
+    ],
+    "problem": "class Bird {\n\tconstructor() {\n\t\tconsole.log(\"I'm a bird. 🦢\");\n\t}\n}\n\nclass Flamingo extends Bird {\n\tconstructor() {\n\t\tconsole.log(\"I'm pink. 🌸\");\n\t\tsuper();\n\t}\n}\n\nconst pet = new Flamingo();\n",
+    "question": "Output là gì?"
+  },
+  {
+    "answer": 3,
+    "explanation": [
+      "Từ khóa `const` làm cho ta không thể _định nghĩa lại_ giá trị của biến, nó là _read-only_. Tuy nhiên giá trị của bên trong nó thì không phải là bất biến. Các thuộc tính bên trong mảng `emojis` vẫn có thể được sửa đổi, ví dụ thêm phần tử, cắt, hoặc là đưa độ dài mảng về 0."
+    ],
+    "id": 143,
+    "options": [
+      "1",
+      "1 and 2",
+      "3 and 4",
+      "3"
+    ],
+    "problem": "const emojis = [\"🎄\", \"🎅🏼\", \"🎁\", \"⭐\"];\n\n/* 1 */ emojis.push(\"🦌\");\n/* 2 */ emojis.splice(0, 2);\n/* 3 */ emojis = [...emojis, \"🥂\"];\n/* 4 */ emojis.length = 0;\n",
+    "question": "Câu lệnh nào sẽ bị lỗi?"
+  },
+  {
+    "answer": 2,
+    "explanation": [
+      "Mặc định ta không thể duyệt qua được object. Trừ phi nó được cài đặt iterator protocol. Ta có thể cài đặt bằng cách thêm vào một iterator symbol `[Symbol.iterator]`, biến nó trở thành generator object (object có thể duyệt được), ví dụ `*[Symbol.iterator]() {}`.",
+      "Để generator này trả về được mảng các giá trị của các thuộc tính của object `person`, tức `Object.values` của object `person`, ta sẽ sử dụng cấu trúc `yield* Object.values(this)`."
+    ],
+    "id": 144,
+    "options": [
+      "Nothing, object are iterable by default",
+      "`*[Symbol.iterator]() { for (let x in this) yield* this[x] }`",
+      "`*[Symbol.iterator]() { for (let x in this) yield* Object.values(this) }`",
+      "`*[Symbol.iterator]() { for (let x in this) yield this }`"
+    ],
+    "problem": "const person = {\n  name: \"Lydia Hallie\",\n  age: 21\n}\n\n[...person] // [\"Lydia Hallie\", 21]\n",
+    "question": "Ta cần thêm gì vào object `person` để khi gọi `[...person]` sẽ cho kết quả là `[\"Lydia Hallie\", 21]`?"
+  }
+]

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 
-const Button = styled.button<{ tint?: string }>`
-  ${({ tint }) => css`
-    background-color: ${tint || '#6264a7'};
+const Button = styled.button`
+  ${({ isCorrect, selected, theme: { colors, fonts } }: { isCorrect: boolean, selected: boolean, theme: Theme }) => css`
+    background-color: ${isCorrect ? colors.right : selected ? colors.wrong : colors.primary};
     border: 0;
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: ${fonts.titles};
     font-size: 1.2rem;
     padding: .5rem 1rem;
     line-height: 1.7rem;
@@ -23,7 +23,7 @@ const Button = styled.button<{ tint?: string }>`
 
     & code {
       background-color: #FFFFFF20;
-      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      font-family: ${fonts.code};
       padding: .3rem .5rem;
     }
 
@@ -42,10 +42,8 @@ interface AnswerButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   isCorrect: boolean;
 }
 
-const AnswerButton: React.FC<AnswerButtonProps> = ({ selected, isCorrect, ...props }) => {
-  const color = isCorrect ? '#008272' : selected ? '#a4373a' : undefined;
-
-  return <Button {...props} tint={color} />;
-};
+const AnswerButton: React.FC<AnswerButtonProps> = ({ selected, isCorrect, ...props }) => (
+  <Button {...props} isCorrect={isCorrect} selected={selected} />
+);
 
 export default AnswerButton;

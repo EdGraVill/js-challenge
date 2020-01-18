@@ -11,43 +11,45 @@ const Container = styled.div`
 `;
 
 const CircleBase = css`
-  align-items: center;
-  border: 2px solid #777;
-  border-radius: 1.75rem;
-  color: #777;
-  display: flex;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 1.1rem;
-  justify-content: center;
-  margin: 0 .3rem;
-  padding: 0;
-  min-width: 2.5rem;
-  height: 2.5rem;
+  ${({ theme: { fonts } }: { theme: Theme }) => css`
+    align-items: center;
+    border: 2px solid #777;
+    border-radius: 1.75rem;
+    color: #777;
+    display: flex;
+    font-family: ${fonts.titles};
+    font-size: 1.1rem;
+    justify-content: center;
+    margin: 0 .3rem;
+    padding: 0;
+    min-width: 2.5rem;
+    height: 2.5rem;
 
-  @media screen and (max-width: 480px) {
-    font-size: .8rem;
-    height: 1.3rem;
-    min-width: 1.3rem;
-    margin: 0 .2rem;
-  }
+    @media screen and (max-width: 480px) {
+      font-size: .8rem;
+      height: 1.3rem;
+      min-width: 1.3rem;
+      margin: 0 .2rem;
+    }
+  `}
 `;
 
 const Circle = styled.div`
   ${CircleBase}
 `;
 
-const CircleButton = styled.button<{ isSelected: boolean, status: boolean | null }>`
+const CircleButton = styled.button`
   ${CircleBase}
-  ${({ isSelected, status }) => {
-    let borderColor = isSelected ? '#4E5085' : '#777';
+  ${({ isSelected, status, theme: { colors } }: { isSelected: boolean, status: boolean | null, theme: Theme }) => {
+    let borderColor = isSelected ? colors.primaryDark : colors.gray;
     if (status !== null) {
-      borderColor = status ? '#00827250' : '#a4373a50';
+      borderColor = status ? `${colors.right}50` : `${colors.wrong}50`;
     }
 
     return css`
-      background-color: ${isSelected ? '#6264a7' : 'transparent'};
+      background-color: ${isSelected ? colors.primary : colors.transparent};
       border-color: ${borderColor};
-      color: ${isSelected ? 'white' : '#777'};
+      color: ${isSelected ? 'white' : colors.gray};
       cursor: pointer;
       font-weight: bold;
     `;
