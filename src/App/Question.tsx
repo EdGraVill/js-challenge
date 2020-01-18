@@ -93,7 +93,7 @@ const Question: React.FC<QuestionProps> = ({ goTo, questionIx, safeAnswersHook: 
   React.useEffect(() => {
     const awr = safeAnswers.find(([id]) => secureQuestion.id === id)!;
     
-    if (awr[1] !== null) {
+    if (awr && awr[1] !== null) {
       setSelectedLow(awr[1]);
       setAnswer(getAnswer(awr[1]));
     }
@@ -121,7 +121,7 @@ const Question: React.FC<QuestionProps> = ({ goTo, questionIx, safeAnswersHook: 
         {l('question.previous')}
       </Button>
       <Button
-        disabled={safeAnswers.find(([id]) => secureQuestion.id === id)![1] === null}
+        disabled={safeAnswers.find(([id]) => secureQuestion.id === id)?.[1] === null}
         onClick={goTo(questionIx + 1)}
       >
         {l('question.next')}

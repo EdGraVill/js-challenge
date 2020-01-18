@@ -52,7 +52,11 @@ export const themes = {
 
 // Testing React context and a way to make it fit, Maybe I will replace it with redux
 
-export const defaultSettings: Settings = { language: 'en-US', theme: 'light', setSetting: () => {} };
+export const defaultSettings: Settings = {
+  language: localStorage.getItem('language') || 'en-US',
+  theme: 'light',
+  setSetting: () => {},
+};
 
 export const SettingsContext = React.createContext<Settings>(defaultSettings);
 
@@ -61,6 +65,10 @@ export const SettingsProvider: React.FC = ({ children }) => {
 
   const setSetting: SetSetting = ({ setting, value }) => {
     const newState = { ...settings, [setting]: value };
+
+    if (setting === 'language') {
+      localStorage.setItem('language', value);
+    }
 
     setSettingsRaw(newState);
   };
