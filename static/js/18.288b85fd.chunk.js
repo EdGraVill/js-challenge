@@ -1,0 +1,2 @@
+(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[18],{124:function(e){e.exports=JSON.parse('{"summary":{"title":"Super si!","body":"/10 - Mo\u017eete prije\u0107i na odre\u0111eno pitanje i vidjeti obja\u0161njenje"},"questions":{"loading":"U\u010ditavanje..."},"question":{"previous":"Prethodni","next":"Sljede\u0107i","explanation":"Obja\u0161njenje"}}')}}]);
+//# sourceMappingURL=18.288b85fd.chunk.js.map

@@ -1,0 +1,2 @@
+(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[22],{128:function(e){e.exports=JSON.parse('{"summary":{"title":"\xa1Eres incre\xedble!","body":"/10 - Puedes ir a la pregunta espec\xedfica y ver la explicaci\xf3n"},"questions":{"loading":"Cargando..."},"question":{"previous":"Anterior","next":"Siguiente","explanation":"Explicaci\xf3n"}}')}}]);
+//# sourceMappingURL=22.0f99e951.chunk.js.map

@@ -1,0 +1,2 @@
+(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[26],{132:function(e){e.exports=JSON.parse('{"summary":{"title":"Voc\xea \xe9 incr\xedvel!","body":"/10 - Voc\xea pode ir para uma pergunta espec\xedfica e ver a explica\xe7\xe3o"},"questions":{"loading":"Carregando..."},"question":{"previous":"Anterior","next":"Pr\xf3xima","explanation":"Explica\xe7\xe3o"}}')}}]);
+//# sourceMappingURL=26.adbb317a.chunk.js.map
