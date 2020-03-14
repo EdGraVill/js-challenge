@@ -1,2 +1,0 @@
-(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[15],{150:function(s,a,e){s.exports=e.p+"static/media/ua-UA.1f097ac4.svg"}}]);
-//# sourceMappingURL=15.de1f6a6c.chunk.js.map

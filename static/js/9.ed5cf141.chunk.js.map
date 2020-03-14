@@ -1,1 +1,0 @@
-{"version":3,"sources":["UI/flags/fr-FR.svg"],"names":["module","exports"],"mappings":"uGAAAA,EAAOC,QAAU,IAA0B","file":"static/js/9.ed5cf141.chunk.js","sourcesContent":["module.exports = __webpack_public_path__ + \"static/media/fr-FR.46904746.svg\";"],"sourceRoot":""}

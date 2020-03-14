@@ -1,0 +1,2 @@
+(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[12],{151:function(c,s,e){c.exports=e.p+"static/media/pt-BR.cfc24cc1.svg"}}]);
+//# sourceMappingURL=12.5c542961.chunk.js.map

@@ -1,0 +1,1 @@
+{"version":3,"sources":["UI/flags/ja-JA.svg"],"names":["module","exports"],"mappings":"wGAAAA,EAAOC,QAAU,IAA0B","file":"static/js/10.c4a87619.chunk.js","sourcesContent":["module.exports = __webpack_public_path__ + \"static/media/ja-JA.7a2b8c6c.svg\";"],"sourceRoot":""}
