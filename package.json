@@ -1,43 +1,32 @@
 {
   "name": "js-challenge",
   "version": "0.1.0",
-  "license": "MIT",
+  "private": true,
   "dependencies": {
-    "axios": "^0.19.1",
-    "chart.js": "^2.9.3",
-    "gh-pages": "^2.2.0",
-    "markdown-it": "^10.0.0",
-    "prismjs": "^1.19.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-select": "^3.0.8",
-    "styled-components": "^5.0.0"
+    "@octokit/rest": "^18.0.0",
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "unraw": "^2.0.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/chart.js": "^2.9.9",
-    "@types/gh-pages": "^2.0.1",
-    "@types/jest": "^24.0.0",
-    "@types/markdown-it": "^0.0.9",
-    "@types/node": "^13.1.6",
-    "@types/prismjs": "^1.16.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-select": "^3.0.10",
-    "@types/styled-components": "^4.4.2",
-    "react-scripts": "3.3.0",
-    "typescript": "~3.7.2"
+    "@testing-library/jest-dom": "4.2.4",
+    "@testing-library/react": "9.3.2",
+    "@testing-library/user-event": "7.1.2",
+    "@types/jest": "24.0.0",
+    "@types/node": "12.0.0",
+    "@types/react": "16.9.0",
+    "@types/react-dom": "16.9.0",
+    "react-scripts": "3.4.1",
+    "typescript": "3.7.2"
   },
   "scripts": {
-    "loadQuestions": "npx ts-node -T --skip-project ./src/bin/pullQuestions.ts",
-    "start": "yarn loadQuestions && react-scripts start",
-    "build": "yarn loadQuestions && react-scripts build",
+    "scraper": "npx ts-node -T --skip-project ./src/bin/scraper.ts",
+    "start": "yarn scraper && react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "yarn build",
-    "deploy": "npx ts-node -T --skip-project ./src/bin/deploy.ts"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,6 +42,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "homepage": "https://EdGraVill.github.io/js-challenge"
+  }
 }
