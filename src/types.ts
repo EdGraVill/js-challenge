@@ -17,6 +17,8 @@ export interface Question {
   question: string;
 }
 
+export type SafeQuestion = Omit<Question, 'answer' | 'explanation'>;
+
 export interface Content {
   isRTL: boolean;
   language: string;

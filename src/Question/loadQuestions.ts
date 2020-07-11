@@ -1,18 +1,20 @@
 import questions from "../questions.json";
 import { getStoredAnswers, submitQuestion } from "../antiCheatSystem";
 import { randomBetween } from "../util";
-import { Question } from "../types";
+import { Question, StoredAnswer, SafeQuestion } from "../types";
 
-type SafeQuestion = Omit<Question, 'answer' | 'explanation'>;
-type Response = { api: API, rightAnswer: Question };
-
-interface API {
+export interface QuestionsAPI {
   currentQuestion: SafeQuestion;
   previousQuestions: Question[];
-  submitAnswer: (answer: number) => Promise<Response>;
+  submitAnswer: (answer: number) => Promise<AnswerResponse>;
 }
 
-export default async function loadQuestions(locale: string, previousQuestions: Question[] = []): Promise<API> {
+export type AnswerResponse = { api: QuestionsAPI, rightAnswer: Question, myAnswer: StoredAnswer };
+
+export async function loadQuestions(
+  locale: string,
+  previousQuestions: Question[] = [],
+): Promise<QuestionsAPI> {
   const content = questions.find(({ language }) => locale === language);
 
   if (!content) {
@@ -36,10 +38,10 @@ export default async function loadQuestions(locale: string, previousQuestions: Q
 
   const startDate = Date.now();
 
-  const submitAnswer = async (answer: number): Promise<Response> => {
+  const submitAnswer = async (answer: number): Promise<AnswerResponse> => {
     const endDate = Date.now();
 
-    await submitQuestion({
+    const myAnswer = await submitQuestion({
       answer,
       date: Date.now(),
       id: currentQuestion.id,
@@ -52,6 +54,7 @@ export default async function loadQuestions(locale: string, previousQuestions: Q
     return {
       api,
       rightAnswer: currentQuestion,
+      myAnswer,
     };
   };
 

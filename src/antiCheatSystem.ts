@@ -50,7 +50,7 @@ const testIntegrity = async (answers: StoredAnswer[]): Promise<boolean> => {
 
 const antiCheatSystem = (): [
   () => void,
-  (answer: Omit<StoredAnswer, 'rightAnswer' | 'hash'>) => Promise<number>,
+  (answer: Omit<StoredAnswer, 'rightAnswer' | 'hash'>) => Promise<StoredAnswer>,
   (locale: string) => StoredAnswer[],
 ] => {
   const memory: StoredAnswer[] = [];
@@ -91,7 +91,7 @@ const antiCheatSystem = (): [
     });
   };
 
-  const submitQuestion = async (answer: Omit<StoredAnswer, 'rightAnswer' | 'hash'>): Promise<number> => {
+  const submitQuestion = async (answer: Omit<StoredAnswer, 'rightAnswer' | 'hash'>): Promise<StoredAnswer> => {
     const integrity = await testIntegrity(memory);
 
     if (!integrity) {
@@ -121,15 +121,17 @@ const antiCheatSystem = (): [
 
     const hash = await digest(memory);
 
-    memory.push({
+    const serializedAnswer = {
       ...answer,
       hash,
       rightAnswer: question.answer,
-    });
+    };
+
+    memory.push(serializedAnswer);
 
     store(memory);
 
-    return question.answer;
+    return serializedAnswer;
   };
 
   const getStoredAnswers = (locale: string): StoredAnswer[] => {
