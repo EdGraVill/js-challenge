@@ -12,26 +12,26 @@ export function* getFirstQuestionEffect() {
 
   yield put(questionsActions.getFirstQuestion(api.currentQuestion));
 
-  const createNextQuestionEffect = (
-    submitFunction: (answer: number) => Promise<AnswerResponse>,
-    n: number,
-  ) => function* nextQuestionEffect({ payload }: PayloadAction<number>): any {
+  const submitFunctions: Array<(answer: number) => Promise<AnswerResponse>> = [api.submitAnswer];
+
+  function* nextQuestionEffect({ payload }: PayloadAction<number>): any {
     const answeredCount = yield select(answeredCountSelector);
 
-    if (n === answeredCount) {
-      const { api: nexApi, myAnswer, rightAnswer }: AnswerResponse = yield call(submitFunction, payload);
-  
-      yield put(questionsActions.getAnswer({
-        currentQuestion: nexApi.currentQuestion,
-        myAnswer,
-        rightAnswer,
-      }));
-  
-      yield takeLatest(questionsActions.submitAnswer.type, createNextQuestionEffect(nexApi.submitAnswer, n + 1));
-    }
+    const { api: nexApi, myAnswer, rightAnswer }: AnswerResponse = yield call(
+      submitFunctions[answeredCount],
+      payload,
+    );
+
+    submitFunctions.push(nexApi.submitAnswer);
+
+    yield put(questionsActions.getAnswer({
+      currentQuestion: nexApi.currentQuestion,
+      myAnswer,
+      rightAnswer,
+    }));
   }
 
-  yield takeLatest(questionsActions.submitAnswer.type, createNextQuestionEffect(api.submitAnswer, 0));
+  yield takeLatest(questionsActions.submitAnswer.type, nextQuestionEffect);
 }
 
 export function* questionsRootSagas() {
