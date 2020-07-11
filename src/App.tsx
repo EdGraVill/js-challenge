@@ -2,8 +2,11 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import questions from './questions.json';
+import { loadQuestions } from './Question';
 
 function App() {
+  const a = () => loadQuestions('en-US');
+
   return (
     <div className="App">
       <header className="App-header">
