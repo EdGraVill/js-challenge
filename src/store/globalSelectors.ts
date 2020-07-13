@@ -7,3 +7,8 @@ export const languageSelector = createSelector(
   globalRootStateSelector,
   ({ locale }) => locale,
 );
+
+export const themeSelector = createSelector(
+  globalRootStateSelector,
+  ({ theme }) => theme,
+);

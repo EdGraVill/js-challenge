@@ -62,5 +62,10 @@ export const { actions: questionsActions, reducer: questionsReducer } = createSl
         state.currentQuestion -= 1;
       }
     },
+    goToQuestion(state, { payload }: PayloadAction<number>) {
+      if (payload >= 0 && payload <= state.answered.length) {
+        state.currentQuestion = payload;
+      } 
+    },
   },
 });

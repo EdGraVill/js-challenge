@@ -10,6 +10,11 @@ export const isQuestionsLoading = createSelector(
   ({ isLoading }) => isLoading,
 );
 
+export const currentQuestionSelector = createSelector(
+  questionsRootStateSelector,
+  ({ currentQuestion }) => currentQuestion,
+);
+
 export const answeredCountSelector = createSelector(
   questionsRootStateSelector,
   ({ answered }) => answered.length,

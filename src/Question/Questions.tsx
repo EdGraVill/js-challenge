@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { questionsActions } from './slicer';
+import { questionsActions, Answered } from './slicer';
 import { isQuestionsLoading, answeredCountSelector, selectedQuestionSelector } from './selectors';
+import Navigation from './Navigation';
+import Question from './Question';
 import { SafeQuestion } from '../types';
+import AnsweredQuestion from './AnsweredQuestion';
 
 const Questions: React.FC = () => {
   const dispatch = useDispatch();
@@ -20,35 +23,19 @@ const Questions: React.FC = () => {
 
   const selectedQuestion = useSelector(selectedQuestionSelector);
 
-  const onPrevious = React.useCallback(() => {
-    dispatch(questionsActions.previousQuestion());
-  }, [dispatch]);
-
-  const onNext = React.useCallback(() => {
-    dispatch(questionsActions.nextQuestion());
-  }, [dispatch]);
-
-  if (!answeredCount && isLoading) {
+  if ((!answeredCount && isLoading) || !selectedQuestion) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <pre>{JSON.stringify(selectedQuestion, undefined, 2)}</pre>
-      {
-        typeof selectedQuestion?.question === 'string' &&
-        (selectedQuestion as SafeQuestion)?.options.map((option, ix) => (
-          <button onClick={submitAnswer(ix)}>{option}</button>
-        ))
-      }
-      <br />
-      <br />
-      <button onClick={onPrevious}>Previous</button>
-      <br />
-      <button onClick={onNext}>Next</button>
-      <br />
-    </div>
-  )
+    <Navigation>
+      {typeof selectedQuestion.question === 'string' ? (
+        <Question question={selectedQuestion as SafeQuestion} />
+      ) : (
+        <AnsweredQuestion answer={selectedQuestion as Answered} />
+      )}
+    </Navigation>
+  );
 };
 
 export default Questions;

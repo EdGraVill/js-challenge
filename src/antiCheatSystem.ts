@@ -73,7 +73,9 @@ const antiCheatSystem = (): [
             if (!result) {
               erase('Bad Integrity');
             } else {
-              console.info(`Integrity is OK - ${memory.length} elements in ${endDate - startDate} ms`);
+              if (process.env.NODE_ENV !== 'production') {
+                console.info(`Integrity is OK - ${memory.length} elements in ${endDate - startDate} ms`);
+              }
             }
           });
         } else {

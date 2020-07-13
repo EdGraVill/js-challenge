@@ -19,3 +19,7 @@ export const randomBetween = (min: number, max: number, ignore?: number | number
 
   throw new Error(`Invalid operation:\n\n${JSON.stringify({ min, max, ignore }, undefined, 2)}`);
 };
+
+export const getDefaultTheme = (): 'light' | 'dark' =>
+  window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark' : 'light';

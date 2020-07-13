@@ -162,14 +162,18 @@ const parseRawFileToJSON = async (filePath: string): Promise<Content> => {
 
     // OPTIONS
     const options = [];
-    const optionsRegex = /(-.*:)(.*)/g;
+    const optionsRegex = /(^-[^:]*)(.*)/gm;
 
     let optionsResult;
     while ((optionsResult = optionsRegex.exec(match)) !== null) {
-      const optionIx = options.push(unraw(optionsResult[2]).trim()) - 1;
+      const option = unraw(optionsResult[2]).replace(':', '').trim();
 
-      if (optionsResult[0].includes(answerChart!)) {
-        answer = optionIx;
+      if (option) {
+        const optionIx = options.push(option) - 1;
+  
+        if (optionsResult[0].includes(answerChart!)) {
+          answer = optionIx;
+        }
       }
     }
 
