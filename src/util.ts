@@ -1,3 +1,5 @@
+import { themeObject } from "./theme";
+
 export const randomBetween = (min: number, max: number, ignore?: number | number[]): number => {
   let random = Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -20,6 +22,6 @@ export const randomBetween = (min: number, max: number, ignore?: number | number
   throw new Error(`Invalid operation:\n\n${JSON.stringify({ min, max, ignore }, undefined, 2)}`);
 };
 
-export const getDefaultTheme = (): 'light' | 'dark' =>
+export const getDefaultTheme = (): keyof (typeof themeObject) =>
   window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark' : 'light';

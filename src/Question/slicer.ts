@@ -24,11 +24,9 @@ export const { actions: questionsActions, reducer: questionsReducer } = createSl
     },
     requestFirstQuestion(state) {
       state.isLoading = true;
-      state.currentQuestion = 0;
     },
     getFirstQuestion(state, { payload }: PayloadAction<SafeQuestion>) {
       state.isLoading = false;
-      state.currentQuestion = 0;
 
       state.lastQuestion = payload;
     },

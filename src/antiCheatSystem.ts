@@ -37,15 +37,18 @@ const digest = async (answers: StoredAnswer[]): Promise<string> => {
 const testIntegrity = async (answers: StoredAnswer[]): Promise<boolean> => {
   let draft = [...answers].reverse();
 
+  // @ts-ignore
   const results = await Promise.allSettled(draft.map(async (answer, ix) => {
     const hash = await digest(draft.slice(ix + 1).reverse());
 
     return answer.hash === hash;
   }));
 
-  return results.map(res => Boolean(res?.value)).reduce((prev, curr) => Boolean(
-    Number(prev) * Number(curr),
-  ), true);
+  return results
+    .map((res: { status: 'fulfilled' | 'rejected', value?: boolean, reason?: boolean }) => Boolean(res?.value))
+    .reduce((prev: boolean, curr: boolean) => Boolean(
+      Number(prev) * Number(curr),
+    ), true);
 }
 
 const antiCheatSystem = (): [

@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { SafeQuestion } from '../types';
 import { questionsActions } from './slicer';
 import { Title } from './UI';
+import { Code } from '../UI';
 
 interface Props {
   question: SafeQuestion;
@@ -20,7 +21,7 @@ const Question: React.FC<Props> = ({ question }) => {
     <>
       <Title>{question.question}</Title>
       {question.code && (
-        <pre>{question.code}</pre>
+        <Code code={question.code} language={question.codeLanguage} />
       )}
       {question.options.map((option, ix) => (
         <button key={ix} onClick={submitQuestion(ix)}>

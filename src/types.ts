@@ -11,6 +11,7 @@ export interface StoredAnswer {
 export interface Question {
   answer: number;
   code?: string;
+  codeLanguage?: string;
   explanation: string;
   id: number;
   options: string[];

@@ -12,7 +12,10 @@ export function* getFirstQuestionEffect() {
 
   yield put(questionsActions.getFirstQuestion(api.currentQuestion));
 
-  const submitFunctions: Array<(answer: number) => Promise<AnswerResponse>> = [api.submitAnswer];
+  const firstAnsweredCount = yield select(answeredCountSelector);
+
+  const submitFunctions: Array<(answer: number) => Promise<AnswerResponse>> = [];
+  submitFunctions[firstAnsweredCount] = api.submitAnswer;
 
   function* nextQuestionEffect({ payload }: PayloadAction<number>): any {
     const answeredCount = yield select(answeredCountSelector);
@@ -22,7 +25,7 @@ export function* getFirstQuestionEffect() {
       payload,
     );
 
-    submitFunctions.push(nexApi.submitAnswer);
+    submitFunctions[answeredCount + 1] = nexApi.submitAnswer;
 
     yield put(questionsActions.getAnswer({
       currentQuestion: nexApi.currentQuestion,

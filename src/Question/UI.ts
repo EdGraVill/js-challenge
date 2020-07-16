@@ -2,9 +2,11 @@ import styled, { css } from "styled-components";
 
 export const Page = styled.div`
   align-items: center;
+  background-color: ${({ theme }) => theme.colors.background};
   display: flex;
   flex-flow: column nowrap;
   height: 100vh;
+  overflow-y: auto;
   width: 100vw;
 `;
 
@@ -19,9 +21,9 @@ export const StepsContainer = styled.div`
 `;
 
 export const RoundButton = styled.button<{ isCurrent?: boolean }>`
-  ${({ isCurrent }) => css`
-    background-color: ${isCurrent ? 'black' : 'transparent'};
-    border: 2px solid black;
+  ${({ isCurrent, theme: { colors } }) => css`
+    background-color: ${isCurrent ? colors.buttonActiveBackground : colors.buttonBackground};
+    border: 2px solid ${colors.buttonBorder};
     border-radius: 1.2rem;
     cursor: pointer;
     user-select: none;
@@ -29,7 +31,7 @@ export const RoundButton = styled.button<{ isCurrent?: boolean }>`
     min-width: 2.4rem;
 
     & > span {
-      color: ${isCurrent ? 'white' : 'black'};
+      color: ${isCurrent ? colors.buttonActiveColor : colors.buttonColor};
       font-size: 1.1rem;
       font-weight: bold;
     }
@@ -57,7 +59,7 @@ export const Button = styled(RoundButton)`
 `;
 
 export const Title = styled.h2`
-  color: black;
+  color: ${({ theme }) => theme.colors.text};
   font-size: 2rem;
   margin: 0;
 `;

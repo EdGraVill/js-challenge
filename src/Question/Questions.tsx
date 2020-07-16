@@ -14,10 +14,6 @@ const Questions: React.FC = () => {
     dispatch(questionsActions.requestFirstQuestion());
   }, [dispatch]);
 
-  const submitAnswer = React.useCallback((answer: number) => () => {
-    dispatch(questionsActions.submitAnswer(answer));
-  }, [dispatch]);
-
   const answeredCount = useSelector(answeredCountSelector);
   const isLoading = useSelector(isQuestionsLoading);
 

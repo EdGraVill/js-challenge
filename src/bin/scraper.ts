@@ -34,6 +34,7 @@ const getLocalesList = async (): Promise<{ [locale: string]: string }> => {
     'en-US': ''
   };
 
+  // @ts-ignore
   await Promise.allSettled((repoContent.data as any).map(async (file: any) => {
     if (file.name === 'README.md') {
       list['en-US'] = file.download_url;
@@ -82,6 +83,7 @@ const downloadRawFiles = async (): Promise<string[]> => {
     await promisify(mkdir)(folderPath, { recursive: true });
   }
 
+  // @ts-ignore
   await Promise.allSettled(Object.keys(localesList)
     .map(async (localeName) => downloadRawMD(localeName, localesList[localeName], folderPath)));
 
@@ -91,6 +93,7 @@ const downloadRawFiles = async (): Promise<string[]> => {
 interface Question {
   answer: number;
   code?: string;
+  codeLanguage?: string;
   explanation: string;
   id: number;
   options: string[];
@@ -147,11 +150,13 @@ const parseRawFileToJSON = async (filePath: string): Promise<Content> => {
 
     // CODE
     let code: string | undefined;
+    let codeLanguage: string | undefined;
     const codeRegex = /(```.*)([a-z]*\n[\s\S]*?\n)(```)/g;
 
     const codeResult = codeRegex.exec(match);
     code = codeResult?.[2];
     code = code ? unraw(code).trim() : undefined;
+    codeLanguage = codeResult?.[1].replace('```', '');
 
     // ANSWER
     let answer = 0;
@@ -188,6 +193,7 @@ const parseRawFileToJSON = async (filePath: string): Promise<Content> => {
     return {
       answer,
       code,
+      codeLanguage,
       explanation,
       id: ix,
       options,
@@ -205,11 +211,12 @@ const parseRawFileToJSON = async (filePath: string): Promise<Content> => {
 const generateQuestions = async () => {
   const locales = await downloadRawFiles();
 
+  // @ts-ignore
   const allContentRow = await Promise.allSettled(locales.map(async (locale) =>
     parseRawFileToJSON(`./content/raw/${locale}.md`)));
 
-  const allContent = allContentRow.map((locale) => {
-    if (locale.status === 'fulfilled' && locale.value.list.length) {
+  const allContent = allContentRow.map((locale: { status: 'fulfilled' | 'rejected', value?: Content, reason?: Content }) => {
+    if (locale.status === 'fulfilled' && locale?.value?.list.length) {
       return locale.value;
     }
 
