@@ -1,2 +1,0 @@
-(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[25],{133:function(e){e.exports=JSON.parse('{"summary":{"title":"\ub2f9\uc2e0\uc740 \uad49\uc7a5\ud569\ub2c8\ub2e4!","body":"/10 - \ud2b9\uc815 \uc9c8\ubb38\uc73c\ub85c \uac00\uc11c \uc124\uba85\uc744 \ubcfc \uc218 \uc788\uc2b5\ub2c8\ub2e4"},"questions":{"loading":"\ubd88\ub7ec\uc624\ub294 \uc911 ..."},"question":{"previous":"\uc774\uc804","next":"\ub2e4\uc74c","explanation":"\uc124\uba85"}}')}}]);
-//# sourceMappingURL=25.9dd31611.chunk.js.map

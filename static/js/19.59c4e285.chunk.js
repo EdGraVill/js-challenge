@@ -1,0 +1,2 @@
+(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[19],{128:function(e){e.exports=JSON.parse('{"summary":{"title":"Du bist unglaublich!","body":"/10 - Sie k\xf6nnen zu einer bestimmten Frage gehen und die Erkl\xe4rung sehen"},"questions":{"loading":"Wird geladen..."},"question":{"previous":"Bisherige","next":"N\xe4chster","explanation":"Erl\xe4uterung"}}')}}]);
+//# sourceMappingURL=19.59c4e285.chunk.js.map

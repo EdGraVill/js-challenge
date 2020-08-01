@@ -1,2 +1,0 @@
-(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[24],{132:function(e){e.exports=JSON.parse('{"summary":{"title":"\u3042\u306a\u305f\u306f\u7d20\u6674\u3089\u3057\u3044\u3067\u3059\uff01","body":"/10 - \u7279\u5b9a\u306e\u8cea\u554f\u306b\u79fb\u52d5\u3057\u3066\u8aac\u660e\u3092\u898b\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059"},"questions":{"loading":"\u8aad\u307f\u8fbc\u307f\u4e2d..."},"question":{"previous":"\u524d","next":"\u6b21","explanation":"\u8aac\u660e"}}')}}]);
-//# sourceMappingURL=24.311678cd.chunk.js.map
