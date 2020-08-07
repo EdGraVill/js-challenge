@@ -1,3 +1,12 @@
+/**
+ * Prism: Lightweight, robust, elegant syntax highlighting
+ *
+ * @license MIT <https://opensource.org/licenses/MIT>
+ * @author Lea Verou <https://lea.verou.me>
+ * @namespace
+ * @public
+ */
+
 /*!
  * Chart.js v2.9.3
  * https://www.chartjs.org
