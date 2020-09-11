@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "65db4dc0343b13cb57cb3e11d006157b",
+    "revision": "f45200247d1172b8e90531c0b04746d4",
     "url": "/js-challenge/index.html"
   },
   {
@@ -88,12 +88,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js-challenge/static/js/29.6be73732.chunk.js"
   },
   {
-    "revision": "ad64f8e3c23f3d8a40b1",
-    "url": "/js-challenge/static/js/3.7bf31d8c.chunk.js"
+    "revision": "4c962be57e0bd7909006",
+    "url": "/js-challenge/static/js/3.297f7e82.chunk.js"
   },
   {
-    "revision": "108219d28f86ade179979da455e12b04",
-    "url": "/js-challenge/static/js/3.7bf31d8c.chunk.js.LICENSE"
+    "revision": "ca6978106e5c04e40ade0cf0314d0333",
+    "url": "/js-challenge/static/js/3.297f7e82.chunk.js.LICENSE"
   },
   {
     "revision": "f5669068a3b8a0622220",
@@ -124,12 +124,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js-challenge/static/js/36.a8bc5328.chunk.js"
   },
   {
-    "revision": "743c5c404576331efc09",
-    "url": "/js-challenge/static/js/37.94cdd4d3.chunk.js"
+    "revision": "2871745be226d2c4a4d1",
+    "url": "/js-challenge/static/js/37.6a79e5f3.chunk.js"
   },
   {
-    "revision": "e83cf2eca6c38a13dcd5",
-    "url": "/js-challenge/static/js/38.91019b9e.chunk.js"
+    "revision": "22bf74a386005503bfc7",
+    "url": "/js-challenge/static/js/38.8382b942.chunk.js"
   },
   {
     "revision": "fdf441d34bfd84fd1e6a",
@@ -140,8 +140,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js-challenge/static/js/4.3fb9b6ba.chunk.js"
   },
   {
-    "revision": "abffe1989ba3feed25ef",
-    "url": "/js-challenge/static/js/40.3d156849.chunk.js"
+    "revision": "05fd84510a907ec118f7",
+    "url": "/js-challenge/static/js/40.a2f6b511.chunk.js"
   },
   {
     "revision": "97f51e9646929dc2e8e0",
@@ -156,12 +156,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js-challenge/static/js/43.6dc7bd7e.chunk.js"
   },
   {
-    "revision": "ffe5d54b8d85a0a79f73",
-    "url": "/js-challenge/static/js/44.c131db64.chunk.js"
+    "revision": "9fcc63493396d7e7d688",
+    "url": "/js-challenge/static/js/44.065cf8cc.chunk.js"
   },
   {
-    "revision": "13bb95700ab1c2a27f0a",
-    "url": "/js-challenge/static/js/45.3978946d.chunk.js"
+    "revision": "fbd663666edc974b5c67",
+    "url": "/js-challenge/static/js/45.14673a92.chunk.js"
   },
   {
     "revision": "62d60582cd1275a92362",
@@ -184,8 +184,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js-challenge/static/js/5.d6425b6d.chunk.js"
   },
   {
-    "revision": "12340f66850b5aeb135c",
-    "url": "/js-challenge/static/js/50.7308c15c.chunk.js"
+    "revision": "e9d299890a80490af6ca",
+    "url": "/js-challenge/static/js/50.777df61e.chunk.js"
   },
   {
     "revision": "1f48aec586cf1f8b2e7a",
@@ -212,8 +212,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js-challenge/static/js/main.8a4534d9.chunk.js"
   },
   {
-    "revision": "04da8b53126083e66fe8",
-    "url": "/js-challenge/static/js/runtime-main.96bd035c.js"
+    "revision": "0c1cd653a20e9fe8e5c5",
+    "url": "/js-challenge/static/js/runtime-main.391ba3f7.js"
   },
   {
     "revision": "4f0cd14a6640a9dab2da5e000cfccc2c",
