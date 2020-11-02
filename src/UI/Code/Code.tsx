@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Container = styled.div`
+export const CodeContainer = styled.div`
   ${({ theme: { colors, fonts } }) => css`
     color: #E5C07B;
     white-space: pre-wrap;
@@ -24,7 +24,9 @@ const Container = styled.div`
     border-radius: 1rem;
     box-sizing: border-box;
     font-family: ${fonts.code};
+    font-size: .9rem;
     padding: 1.25rem 2rem;
+    line-height: 1.3rem;
     width: 600px;
 
     &::selection, & *::selection {
@@ -66,11 +68,11 @@ const CodeSnippet: React.FC<CodeSnippetProps> = ({ code, language = 'javascript'
     return () => {
       document.removeEventListener('copy', listener);
     }
-  }, []);
+  }, [code]);
 
   return (
     <Wrapper>
-      <Container dangerouslySetInnerHTML={{ __html: parsedCode }} />
+      <CodeContainer dangerouslySetInnerHTML={{ __html: parsedCode }} />
     </Wrapper>
   )
 };

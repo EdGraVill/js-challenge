@@ -53,7 +53,7 @@ export const themeObject: { [theme: string]: ThemeDictionary } = {
       buttonColor: '#bdc3c7',
       codeBackground: '#282c34',
       codeSelected: '#677696',
-      inlineCodeBackground: '#DDDDDD',
+      inlineCodeBackground: '#CCC',
       inlineCodeColor: '#282c34',
       text: '#bdc3c7',
     },

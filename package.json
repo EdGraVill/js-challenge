@@ -1,46 +1,51 @@
 {
-  "name": "js-challenge",
+  "name": "test",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@octokit/rest": "^18.0.0",
+    "@octokit/rest": "^18.0.7",
     "@reduxjs/toolkit": "^1.4.0",
-    "@types/styled-components": "^5.1.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.0",
     "dotenv": "^8.2.0",
-    "prismjs": "^1.20.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-markdown": "^4.3.1",
-    "react-redux": "^7.2.0",
+    "prettier": "^2.1.2",
+    "prismjs": "^1.22.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-markdown": "^5.0.2",
+    "react-redux": "^7.2.2",
     "redux-saga": "^1.1.3",
-    "styled-components": "^5.1.1",
+    "remark-gfm": "^1.0.0",
+    "styled-components": "^5.2.1",
     "unraw": "^2.0.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "4.2.4",
-    "@testing-library/react": "9.3.2",
-    "@testing-library/user-event": "7.1.2",
-    "@types/jest": "24.0.0",
-    "@types/node": "12.0.0",
-    "@types/prismjs": "^1.16.1",
-    "@types/react": "16.9.0",
-    "@types/react-dom": "16.9.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/prismjs": "^1.16.2",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
-    "@typescript-eslint/eslint-plugin": "2.22.0",
-    "@typescript-eslint/parser": "2.22.0",
-    "react-scripts": "3.4.1",
-    "typescript": "3.7.2"
+    "@types/styled-components": "^5.1.4",
+    "react-scripts": "4.0.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3",
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "scraper": "npx ts-node -T --skip-project ./src/bin/scraper.ts",
+    "scraper": "ts-node -T --skip-project ./src/bin/scraper.ts && ts-node -T --skip-project ./src/bin/formatCode.ts",
     "start": "yarn scraper && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [

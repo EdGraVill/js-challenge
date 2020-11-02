@@ -24,4 +24,5 @@ export interface Content {
   isRTL: boolean;
   language: string;
   list: Question[];
+  locale: string;
 }
