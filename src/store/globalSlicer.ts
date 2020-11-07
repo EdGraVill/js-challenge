@@ -1,22 +1,29 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getDefaultTheme } from "../util";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getDefaultTheme } from '../util';
+import content from '../questions.json';
 
-export const globalInitialState = {
-  locale: "en-US",
+export const getGlobalInitialState = () => ({
+  locale: 'en-EN',
   theme: getDefaultTheme(),
-};
+});
 
-export type GlobalState = typeof globalInitialState;
+export type GlobalState = ReturnType<typeof getGlobalInitialState>;
 
 export const { actions: globalActions, reducer: globalReducer } = createSlice({
-  initialState: globalInitialState,
-  name: "global",
+  initialState: getGlobalInitialState(),
+  name: 'global',
   reducers: {
     restoreInitialState() {
-      return globalInitialState;
+      return getGlobalInitialState();
     },
     setLocale(state, { payload }: PayloadAction<string>) {
-      state.locale = payload;
+      const availableLocales = content.map(({ locale }) => locale);
+
+      if (availableLocales.includes(payload)) {
+        state.locale = payload;
+      } else {
+        state.locale = getGlobalInitialState().locale;
+      }
     },
     switchTheme(state) {
       state.theme = state.theme === 'dark' ? 'light' : 'dark';

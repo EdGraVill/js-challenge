@@ -1,11 +1,12 @@
 import { createGlobalStyle, css } from "styled-components";
 
-export default createGlobalStyle`
-  ${({ theme: { colors, fonts } }) => css`
+export default createGlobalStyle<{ isRTL: boolean }>`
+  ${({ isRTL, theme: { colors, fonts } }) => css`
     * {
       color: ${colors.text};
       box-sizing: border-box;
       font-family: ${fonts.common};
+      direction: ${isRTL ? 'rtl' : 'ltr'};
     }
 
     body, html {

@@ -1,11 +1,10 @@
 export interface ThemeDictionary {
   colors: {
     background: string;
-    buttonActiveBackground: string;
     buttonActiveColor: string;
     buttonBackground: string;
-    buttonBorder: string;
-    buttonColor: string;
+    buttonRight: string;
+    buttonWrong: string;
     codeBackground: string;
     codeSelected: string;
     inlineCodeBackground: string;
@@ -25,37 +24,35 @@ const commonTheme = {
   },
 };
 
-export const themeObject: { [theme: string]: ThemeDictionary } = {
+export const themeObject = {
   light: {
     ...commonTheme,
     colors: {
       background: 'white',
-      buttonActiveBackground: '#21252b',
-      buttonActiveColor: 'white',
-      buttonBackground: 'transparent',
-      buttonBorder: '#21252b',
-      buttonColor: '#21252b',
+      buttonActiveColor: '#f8b500',
+      buttonBackground: '#5c636e',
+      buttonRight: '#a1c45a',
+      buttonWrong: '#fd0054',
       codeBackground: '#282c34',
       codeSelected: '#677696',
       inlineCodeBackground: '#DDDDDD',
-      inlineCodeColor: '#282c34',
+      inlineCodeColor: '#ea7659',
       text: '#21252b',
     },
-  },
+  } as ThemeDictionary,
   dark: {
     ...commonTheme,
     colors: {
       background: '#21252b',
-      buttonActiveBackground: '#bdc3c7',
-      buttonActiveColor: 'black',
-      buttonBackground: 'transparent',
-      buttonBorder: '#bdc3c7',
-      buttonColor: '#bdc3c7',
+      buttonActiveColor: '#ea7659',
+      buttonBackground: '#5c636e',
+      buttonRight: '#a1c45a',
+      buttonWrong: '#e36161',
       codeBackground: '#282c34',
       codeSelected: '#677696',
-      inlineCodeBackground: '#CCC',
-      inlineCodeColor: '#282c34',
+      inlineCodeBackground: '#393e46',
+      inlineCodeColor: '#f8b500',
       text: '#bdc3c7',
     },
-  },
+  } as ThemeDictionary,
 };

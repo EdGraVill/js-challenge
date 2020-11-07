@@ -23,7 +23,7 @@ export const CodeContainer = styled.div`
     background-color: ${colors.codeBackground};
     border-radius: 1rem;
     box-sizing: border-box;
-    font-family: ${fonts.code};
+    direction: ltr;
     font-size: .9rem;
     padding: 1.25rem 2rem;
     line-height: 1.3rem;
@@ -35,6 +35,12 @@ export const CodeContainer = styled.div`
 
     @media screen and (max-width: 600px) {
       border-radius: 0; 
+    }
+
+    & * {
+      color: #bdc3c7;
+      direction: ltr;
+      font-family: ${fonts.code};
     }
   `}
 `;

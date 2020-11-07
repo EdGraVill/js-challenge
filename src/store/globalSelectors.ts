@@ -1,12 +1,18 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { State } from "./createStore";
 import { themeObject } from '../theme';
+import content from '../questions.json';
 
 export const globalRootStateSelector = (state: State) => state.global;
 
-export const languageSelector = createSelector(
+export const localeSelector = createSelector(
   globalRootStateSelector,
   ({ locale }) => locale,
+);
+
+export const isRTLSelector = createSelector(
+  globalRootStateSelector,
+  ({ locale }) => content.find(questions => questions.locale === locale)!.isRTL,
 );
 
 export const themeSelector = createSelector(
