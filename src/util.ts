@@ -25,3 +25,13 @@ export const randomBetween = (min: number, max: number, ignore?: number | number
 export const getDefaultTheme = (): keyof (typeof themeObject) =>
   window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark' : 'light';
+
+export const capitalize = (text: string, capitalizeEveryWord = false): string => {
+  if (capitalizeEveryWord) {
+    return text.split(' ').map((word) => capitalize(word)).join(' ');
+  }
+
+  const [firstLetter, ...rest] = text;
+
+  return `${firstLetter.toUpperCase()}${rest.join('')}`;
+}

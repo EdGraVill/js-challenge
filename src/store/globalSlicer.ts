@@ -9,7 +9,7 @@ export const getGlobalInitialState = () => ({
 
 export type GlobalState = ReturnType<typeof getGlobalInitialState>;
 
-export const { actions: globalActions, reducer: globalReducer } = createSlice({
+export const { actions: globalActions, reducer: globalReducer, name: globalReducerName } = createSlice({
   initialState: getGlobalInitialState(),
   name: 'global',
   reducers: {

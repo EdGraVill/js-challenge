@@ -1,6 +1,7 @@
 import { Middleware } from "@reduxjs/toolkit"
+import { getQuestionsInitialState, questionsReducerName } from "../QuestionsEngine";
 import { State } from './createStore';
-import { getGlobalInitialState } from "./globalSlicer";
+import { getGlobalInitialState, globalReducerName } from "./globalSlicer";
 
 const STORAGE_KEY = 'storeKeeper';
 
@@ -11,7 +12,8 @@ export const storeKeeper = (): [State, Middleware] => {
     stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
   } catch (error) {
     stored = {
-      global: getGlobalInitialState(),
+      [globalReducerName]: getGlobalInitialState(),
+      [questionsReducerName]: getQuestionsInitialState(),
     };
   }
 

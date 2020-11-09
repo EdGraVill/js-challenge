@@ -1,23 +1,36 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
-import content from '../questions.json';
-import { localeSelector } from '../store';
-import { Code, Explanation, Options, Question } from '../UI';
-import { randomBetween } from '../util';
+import { useDispatch, useSelector } from 'react-redux';
+import { isWelcomeScreenSelector, questionsActions, questionSelector } from '../QuestionsEngine';
+import { Code, Controls, Explanation, Options, Question } from '../UI';
+import WelcomeScreen from './WelcomeScreen';
 
 const Challenge: React.FC = () => {
-  const locale = useSelector(localeSelector);
-  const questions = content.find((questions) => questions.locale === locale)!;
+  const dispatch = useDispatch();
+  const isWelcomeScreen = useSelector(isWelcomeScreenSelector);
+  const question = useSelector(questionSelector);
 
-  // const question = questions.list[randomBetween(0, questions.list.length - 1)];
-  const question = questions.list.find(({ id }) => id === 10)!;
+  const onSelectOption = React.useCallback((answer: number) => {
+    dispatch(questionsActions.answer(answer));
+  }, [dispatch])
+
+  if (isWelcomeScreen) {
+    return <WelcomeScreen />;
+  }
 
   return (
     <div>
       <Question>{question.question}</Question>
-      {question.code && <Code code={question.code} language={question.codeLanguage} />}
-      <Options onOptionSelected={(ix) => console.log(ix)} options={question.options} />
-      <Explanation isHide={false}>
+      {question.code && (
+        <Code code={question.code} language={question.codeLanguage} />
+      )}
+      <Options
+        onSelecteOption={onSelectOption}
+        options={question.options}
+        rightOption={question.result?.right}
+        selectedOption={question.result?.selected}
+      />
+      <Controls />
+      <Explanation>
         {question.explanation}
       </Explanation>
     </div>

@@ -5,11 +5,13 @@ import {
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import { globalReducer } from "./globalSlicer";
+import { globalReducer, globalReducerName } from "./globalSlicer";
 import { storeKeeper } from "./storeKeeper";
+import { questionsReducer, questionsReducerName } from '../QuestionsEngine';
 
 export const reducersMap = {
-  global: globalReducer,
+  [globalReducerName]: globalReducer,
+  [questionsReducerName]: questionsReducer,
 };
 
 export type State = StateFromReducersMapObject<typeof reducersMap>;

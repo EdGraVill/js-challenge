@@ -21,7 +21,7 @@ const OptionList = styled.div`
 `;
 
 const Option = styled.button<{ isRight?: boolean, isRTL: boolean, isSelected?: boolean, letter: string }>`
-  ${({ isRight, isRTL, isSelected, letter, theme: { colors } }) => css`
+  ${({ isRight, isRTL, isSelected, letter, theme: { colors, fonts } }) => css`
     background: transparent;
     border: 1px solid ${colors.buttonBackground};
     border-radius: ${isRTL ? '.3rem 0 0 .3rem' : '0 .3rem .3rem 0'};
@@ -71,6 +71,7 @@ const Option = styled.button<{ isRight?: boolean, isRTL: boolean, isSelected?: b
       color: white;
       content: '${letter}:';
       display: flex;
+      font-family: ${fonts.code};
       height: calc(100% + .1rem);
       justify-content: center;
       position: absolute;
@@ -120,31 +121,30 @@ const Option = styled.button<{ isRight?: boolean, isRTL: boolean, isSelected?: b
 `;
 
 interface Props {
-  onOptionSelected(index: number): void;
+  onSelecteOption(index: number): void;
   options: string[];
   rightOption?: number;
+  selectedOption?: number;
 }
 
-const Options: React.FC<Props> = ({ onOptionSelected, options, rightOption = 0 }) => {
-  const [optionSelected, selectOption] = React.useState<null | number>(null);
+const Options: React.FC<Props> = ({ onSelecteOption, options, rightOption, selectedOption }) => {
   const isRTL = useSelector(isRTLSelector);
 
   const onPress = React.useCallback((ix: number) => () => {
-    if (!optionSelected) {
-      onOptionSelected(ix);
-      selectOption(ix);
+    if (!selectedOption) {
+      onSelecteOption(ix);
     }
-  }, [onOptionSelected, optionSelected]);
+  }, [onSelecteOption, selectedOption]);
 
   return (
     <OptionList>
       <div>
         {options.map((option, ix) => (
           <Option
-            disabled={typeof optionSelected === 'number'}
+            disabled={typeof selectedOption === 'number'}
             isRight={typeof rightOption === 'number' ? rightOption === ix : undefined}
             isRTL={isRTL}
-            isSelected={typeof optionSelected === 'number' ? optionSelected === ix : undefined}
+            isSelected={typeof selectedOption === 'number' ? selectedOption === ix : undefined}
             key={option}
             letter={String.fromCharCode(ix + 65)}
             onClick={onPress(ix)}

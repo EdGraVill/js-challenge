@@ -18,6 +18,7 @@ const Wrapper = styled.div`
 export const CodeContainer = styled.div`
   ${({ theme: { colors, fonts } }) => css`
     color: #E5C07B;
+    font-family: ${fonts.code};
     white-space: pre-wrap;
     ${prismTheme}
     background-color: ${colors.codeBackground};

@@ -55,31 +55,12 @@ const CodeSnipet = styled(CodeContainer)`
   width: 100%;
 `;
 
-interface Props {
-  children: string;
-  isHide: boolean;
-}
-
-const Explanation: React.FC<Props> = ({ isHide, children }) => {
-  const isRTL = useSelector(isRTLSelector);
-  const locale = useSelector(localeSelector);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const container = containerRef.current;
-
-    if (!isHide && container) {
-      setTimeout(() => {
-        container.scrollIntoView({ behavior: 'smooth' });
-      }, 3000);
-    }
-  }, [isHide]);
-
+const transformContent = (explanation: string) => {
   const content: JSX.Element[] = [];
 
   const codeRegex = /(```[a-z]*)([\s\S]*?)(```)/g
 
-  children
+  explanation
     .split(codeRegex)
     .map(chunk => chunk.trim())
     .forEach((chunk, ix, arr) => {
@@ -97,15 +78,37 @@ const Explanation: React.FC<Props> = ({ isHide, children }) => {
         content.push(<ReactMarkdown key={ix} plugins={[gfm]} allowDangerousHtml>{chunk}</ReactMarkdown>)
       }
     });
+  
+  return content;
+}
+
+interface Props {
+  children?: string;
+}
+
+const Explanation: React.FC<Props> = ({ children }) => {
+  const isRTL = useSelector(isRTLSelector);
+  const locale = useSelector(localeSelector);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const container = containerRef.current;
+
+    if (children && container) {
+      setTimeout(() => {
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 1000);
+    }
+  }, [children, containerRef]);
 
   return (
-    <Container isRTL={isRTL}>
-      {!isHide && (
+    <Container isRTL={isRTL} ref={containerRef}>
+      {children ? (
         <div>
-          <h3>{translations[locale].explanation}</h3>
-          {content}
+          <h3>{translations[locale]?.explanation}</h3>
+          {transformContent(children)}
         </div>
-      )}
+      ) : null}
     </Container>
   );
 };
