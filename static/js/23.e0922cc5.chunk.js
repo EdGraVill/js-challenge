@@ -1,2 +1,0 @@
-(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[23],{132:function(e){e.exports=JSON.parse('{"summary":{"title":"Vous \xeates g\xe9nial!","body":"/10 - Vous pouvez aller \xe0 une question sp\xe9cifique et voir l\'explication"},"questions":{"loading":"Chargement..."},"question":{"previous":"Pr\xe9c\xe9dent","next":"Prochain","explanation":"Explication"}}')}}]);
-//# sourceMappingURL=23.e0922cc5.chunk.js.map

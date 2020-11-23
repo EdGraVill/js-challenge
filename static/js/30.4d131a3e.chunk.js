@@ -1,2 +1,0 @@
-(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[30],{139:function(i){i.exports=JSON.parse('{"summary":{"title":"Harikas\u0131n!","body":"/10 - Belirli bir soruya gidebilir ve a\xe7\u0131klamay\u0131 g\xf6rebilirsiniz"},"questions":{"loading":"Y\xfckleniyor..."},"question":{"previous":"\xd6nceki","next":"Sonraki","explanation":"a\xe7\u0131klama"}}')}}]);
-//# sourceMappingURL=30.4d131a3e.chunk.js.map

@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAAA,WACE,2BAA4B,CAC5B,6DACF,CAEA,WACE,qBAAsB,CACtB,2DACF","file":"main.d2779b5f.chunk.css","sourcesContent":["@font-face {\n  font-family: 'Cascadia Code';\n  src: url('./CascadiaCode.ttf');\n}\n\n@font-face {\n  font-family: 'Display';\n  src: url('./DisplayOTF.otf');\n}\n"]}

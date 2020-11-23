@@ -1,2 +1,0 @@
-(this["webpackJsonpjs-challenge"]=this["webpackJsonpjs-challenge"]||[]).push([[0],{144:function(s,e,a){s.exports=a.p+"static/media/no-flag.007f2841.svg"}}]);
-//# sourceMappingURL=0.ed8518dd.chunk.js.map
