@@ -1,0 +1,14 @@
+{
+    "name": "JS Challenge",
+    "short_name": "JS Challenge",
+    "icons": [
+        {
+            "src": "/js-challenge/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#f7df1e",
+    "background_color": "#f7df1e",
+    "display": "standalone"
+}
