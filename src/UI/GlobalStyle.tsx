@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from "styled-components";
+import { createGlobalStyle, css } from 'styled-components';
 
 export default createGlobalStyle<{ isRTL: boolean }>`
   ${({ isRTL, theme: { colors, fonts } }) => css`
@@ -9,7 +9,8 @@ export default createGlobalStyle<{ isRTL: boolean }>`
       direction: ${isRTL ? 'rtl' : 'ltr'};
     }
 
-    body, html {
+    body,
+    html {
       background-color: ${colors.background};
       margin: 0;
       padding: 0;

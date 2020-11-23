@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import md5 from 'md5';
 import content from '../questions.json';
 import { randomBetween } from '../util';
@@ -40,9 +40,8 @@ export const getQuestionsInitialState = () => ({
 export type QuestionsState = ReturnType<typeof getQuestionsInitialState>;
 
 const getRandomQuestionId = (state: QuestionsState): number => {
-  const questionsCountForLocale = content
-    .find(questions =>questions.locale === state.sessionDetails.locale)!
-    .list
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const questionsCountForLocale = content.find((questions) => questions.locale === state.sessionDetails.locale)!.list
     .length;
 
   const alreadyTaken = [
@@ -50,13 +49,15 @@ const getRandomQuestionId = (state: QuestionsState): number => {
     ...state.results.map(({ id }) => id),
     // avoid repeat last questions asked
     ...state.history
-      .filter(({ sessionDetails }, ix) =>
-        // avoid first 60%
-        ix < Math.floor(questionsCountForLocale * .6)
-        // avoid only with the same name (If change name, can appear repeated questions)
-        && sessionDetails.name === state.sessionDetails.name
-        // avoid only with the same locale (If change locale, can appear repeated questions)
-        && sessionDetails.locale === state.sessionDetails.locale)
+      .filter(
+        ({ sessionDetails }, ix) =>
+          // avoid first 60%
+          ix < Math.floor(questionsCountForLocale * 0.6) &&
+          // avoid only with the same name (If change name, can appear repeated questions)
+          sessionDetails.name === state.sessionDetails.name &&
+          // avoid only with the same locale (If change locale, can appear repeated questions)
+          sessionDetails.locale === state.sessionDetails.locale,
+      )
       .reduce((prev, curr) => [...prev, ...curr.results.map(({ id }) => id)], [] as number[]),
   ];
 
@@ -69,7 +70,6 @@ export const { actions: questionsActions, reducer: questionsReducer, name: quest
   reducers: {
     start: {
       prepare(locale: string, name: string) {
-
         return { payload: [name, locale] } as PayloadAction<[string, string]>;
       },
       reducer(state, { payload: [name, locale] }: PayloadAction<[string, string]>) {
@@ -99,13 +99,17 @@ export const { actions: questionsActions, reducer: questionsReducer, name: quest
         state.sessionDetails.isActive = false;
       }
 
+      const now = new Date().toISOString();
+
       const result: Omit<Result, 'hash'> = {
-        finished: new Date().toISOString(),
+        finished: now,
         id: state.questionsId[state.questionIx],
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         right: content
-          .find(({ locale }) => locale === state.sessionDetails.locale)!.list
-          .find(({ id }) => id === state.questionsId[state.questionIx])!.answer,
+          .find(({ locale }) => locale === state.sessionDetails.locale)!
+          .list.find(({ id }) => id === state.questionsId[state.questionIx])!.answer,
         selected: payload,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         started: state.currentStart!,
       };
 
@@ -119,12 +123,26 @@ export const { actions: questionsActions, reducer: questionsReducer, name: quest
         ...result,
         hash,
       });
+
+      if (state.results.length === 10) {
+        state.sessionDetails.finished = new Date().toISOString();
+        state.sessionDetails.isActive = false;
+
+        state.history.push({
+          results: state.results,
+          sessionDetails: {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            finished: state.sessionDetails.finished!,
+            locale: state.sessionDetails.locale,
+            name: state.sessionDetails.name,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            started: state.sessionDetails.started!,
+          },
+        });
+      }
     },
     goNextQuestion(state) {
-      if (
-        state.questionIx === state.results.length
-        || state.questionIx === 10
-      ) {
+      if (state.questionIx === state.results.length || state.questionIx === 10) {
         return state;
       }
 
@@ -133,7 +151,7 @@ export const { actions: questionsActions, reducer: questionsReducer, name: quest
 
       if (isNew && !isLast) {
         const nextQuestionId = getRandomQuestionId(state);
-        
+
         state.currentStart = new Date().toISOString();
         state.questionsId.push(nextQuestionId);
       }
@@ -148,11 +166,24 @@ export const { actions: questionsActions, reducer: questionsReducer, name: quest
       state.questionIx -= 1;
     },
     goNQuestion(state, { payload }: PayloadAction<number>) {
-      if (payload < 0 || payload > 10 || payload > state.questionsId.length - 1) {
+      if (payload < 0 || payload > 10 || payload > state.questionsId.length) {
         return state;
       }
 
       state.questionIx = payload;
+    },
+    newChallenge(state) {
+      const initialState = getQuestionsInitialState();
+
+      return {
+        ...initialState,
+        history: state.history,
+        sessionDetails: {
+          ...initialState.sessionDetails,
+          locale: state.sessionDetails.locale,
+          name: state.sessionDetails.name,
+        },
+      };
     },
     // ONLY FOR DEV
     setCurrentQuestionId(state, { payload }: PayloadAction<number>) {
@@ -170,4 +201,4 @@ export const { actions: questionsActions, reducer: questionsReducer, name: quest
       state.currentStart = new Date().toISOString();
     },
   },
-})
+});

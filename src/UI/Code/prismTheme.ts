@@ -6,9 +6,9 @@ export default css`
   * Based on dabblet (http://dabblet.com)
   * @author Lea Verou
   */
-  code[class*="language-"],
-  pre[class*="language-"] {
-    color: #ABB2BF;
+  code[class*='language-'],
+  pre[class*='language-'] {
+    color: #abb2bf;
     background: none;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     text-align: left;
@@ -26,40 +26,44 @@ export default css`
     hyphens: none;
   }
 
-  pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
-  code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+  pre[class*='language-']::-moz-selection,
+  pre[class*='language-'] ::-moz-selection,
+  code[class*='language-']::-moz-selection,
+  code[class*='language-'] ::-moz-selection {
     text-shadow: none;
     background: #383e49;
   }
 
-  pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
-  code[class*="language-"]::selection, code[class*="language-"] ::selection {
+  pre[class*='language-']::selection,
+  pre[class*='language-'] ::selection,
+  code[class*='language-']::selection,
+  code[class*='language-'] ::selection {
     text-shadow: none;
     background: #9aa2b1;
   }
 
   @media print {
-    code[class*="language-"],
-    pre[class*="language-"] {
+    code[class*='language-'],
+    pre[class*='language-'] {
       text-shadow: none;
     }
   }
   /* Code blocks */
-  pre[class*="language-"] {
+  pre[class*='language-'] {
     padding: 1em;
-    margin: .5em 0;
+    margin: 0.5em 0;
     overflow: auto;
   }
 
-  :not(pre) > code[class*="language-"],
-  pre[class*="language-"] {
+  :not(pre) > code[class*='language-'],
+  pre[class*='language-'] {
     background: #282c34;
   }
 
   /* Inline code */
-  :not(pre) > code[class*="language-"] {
-    padding: .1em;
-    border-radius: .3em;
+  :not(pre) > code[class*='language-'] {
+    padding: 0.1em;
+    border-radius: 0.3em;
     white-space: normal;
   }
 
@@ -67,7 +71,7 @@ export default css`
   .token.prolog,
   .token.doctype,
   .token.cdata {
-    color: #5C6370;
+    color: #5c6370;
   }
 
   .token.punctuation {
@@ -134,7 +138,7 @@ export default css`
   }
 
   .token.parameter {
-    color: #E06C75;
+    color: #e06c75;
   }
 
   pre.line-numbers {
@@ -161,7 +165,6 @@ export default css`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
   }
 
   .line-numbers-rows > span {
@@ -172,7 +175,7 @@ export default css`
 
   .line-numbers-rows > span:before {
     content: counter(linenumber);
-    color: #5C6370;
+    color: #5c6370;
     display: block;
     padding-right: 0.8em;
     text-align: right;

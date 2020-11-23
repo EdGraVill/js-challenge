@@ -1,61 +1,41 @@
-import { format } from 'date-fns';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { questionsActions, questionSelector, startTimeSelector } from '../QuestionsEngine';
+import styled from 'styled-components';
+import {
+  canGoNextSelector,
+  canGoPrevSelector,
+  isLastQuestionSelector,
+  questionsActions,
+  questionSelector,
+  resultsSelector,
+  startTimeSelector,
+} from '../QuestionsEngine';
 import { localeSelector } from '../store';
 import translations from '../translations';
 import { capitalize } from '../util';
+import Bullets from './Bullets';
+import Button from './Button';
+import Clock from './Clock';
+import ResultsControls from './ResultsControls';
 
-const timer = (startTimeString: string, endTimeString: string, locale: string) => {
-  const startTime = new Date(startTimeString);
-  const endTime = new Date(endTimeString);
+const Container = styled.div`
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: 3rem 0;
+  width: 100%;
+`;
 
-  let distance = endTime.getTime() - startTime.getTime();
-  distance = distance < 0 ? 0 : distance;
-
-  if (distance >= 24 * 60 * 60 * 1000) {
-    const word = distance >= 48 * 60 * 60 * 1000
-      ? translations[locale].days
-      : translations[locale].day;
-    
-    return format(distance, `D ${word}, HH:mm:ss`);
-  } else if (distance >= 60 * 60 * 1000) {
-    return format(distance, 'HH:mm:ss');
-  }
-
-  return format(distance, 'mm:ss');
-}
-
-const Controls: React.FC = () => {
+export default function Controls() {
   const dispatch = useDispatch();
+  const canGoNext = useSelector(canGoNextSelector);
+  const canGoPrev = useSelector(canGoPrevSelector);
   const locale = useSelector(localeSelector);
-  const startTime = useSelector(startTimeSelector);
+  const isLastQuestion = useSelector(isLastQuestionSelector);
   const question = useSelector(questionSelector);
-  const [time, setTime] = React.useState(
-    question.result
-      ? timer(question.result.started, question.result.finished, locale)
-      : timer(startTime || new Date().toISOString(), new Date().toISOString(), locale),
-  );
-
-  React.useEffect(() => {
-    if (startTime && !question.result) {
-      setTime(timer(startTime, new Date().toUTCString(), locale));
-
-      const interval = setInterval(() => {
-        setTime(timer(startTime, new Date().toUTCString(), locale));
-      }, 1000);
-
-      return () => {
-        clearInterval(interval);
-      };
-    }
-  }, [startTime, locale, question]);
-
-  React.useEffect(() => {
-    if (question.result) {
-      setTime(timer(question.result.started, question.result.finished, locale));
-    }
-  }, [question, locale]);
+  const startTime = useSelector(startTimeSelector);
+  const results = useSelector(resultsSelector);
 
   const onPrev = React.useCallback(() => {
     dispatch(questionsActions.goPrevQuestion());
@@ -64,14 +44,19 @@ const Controls: React.FC = () => {
   const onNext = React.useCallback(() => {
     dispatch(questionsActions.goNextQuestion());
   }, [dispatch]);
-  
-  return (
-    <div>
-      <button onClick={onPrev}>{capitalize(translations[locale].previous)}</button>
-      <div>{time}</div>
-      <button onClick={onNext}>{capitalize(translations[locale].next)}</button>
-    </div>
-  );
-};
 
-export default Controls;
+  return (
+    <Container>
+      <Bullets />
+      <Button disabled={!canGoPrev} onClick={onPrev}>
+        {capitalize(translations[locale].previous)}
+      </Button>
+      {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+      <Clock startTime={question.result ? question.result.started : startTime!} endTime={question.result?.finished} />
+      <Button disabled={!canGoNext} onClick={onNext}>
+        {isLastQuestion ? capitalize(translations[locale].results) : capitalize(translations[locale].next)}
+      </Button>
+      {results.length === 10 && <ResultsControls />}
+    </Container>
+  );
+}

@@ -19,9 +19,11 @@ const SwitchTheme: React.FC = () => {
     <Container>
       <div>Default theme: {getGlobalInitialState().theme}</div>
       <div>Current theme: {theme}</div>
-      <div>Action: <button onClick={onSwitchTheme}>Switch Theme</button></div>
+      <div>
+        Action: <button onClick={onSwitchTheme}>Switch Theme</button>
+      </div>
     </Container>
   );
-}
+};
 
 export default SwitchTheme;

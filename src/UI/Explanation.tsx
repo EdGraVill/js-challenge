@@ -4,12 +4,14 @@ import gfm from 'remark-gfm';
 import styled, { css } from 'styled-components';
 import Prism from 'prismjs';
 import { useSelector } from 'react-redux';
+import purify from 'dompurify';
 import { CodeContainer, inlineCodeStyle } from './Code';
 import { isRTLSelector, localeSelector } from '../store';
 import translations from '../translations';
+import { isNextQuestionEmptySelector, questionSelector } from '../QuestionsEngine';
 
 const Container = styled.div<{ isRTL: boolean }>`
-  ${({ isRTL, theme: { colors, fonts } }) => css`
+  ${({ isRTL, theme: { colors } }) => css`
     color: ${colors.text};
     display: flex;
     font-size: 1.2rem;
@@ -58,59 +60,63 @@ const CodeSnipet = styled(CodeContainer)`
 const transformContent = (explanation: string) => {
   const content: JSX.Element[] = [];
 
-  const codeRegex = /(```[a-z]*)([\s\S]*?)(```)/g
+  const codeRegex = /(```[a-z]*)([\s\S]*?)(```)/g;
 
   explanation
     .split(codeRegex)
-    .map(chunk => chunk.trim())
+    .map((chunk) => chunk.trim())
     .forEach((chunk, ix, arr) => {
-      if (/^```[a-z]*/.test(chunk) || !chunk || chunk === '```') {
+      if (/^```[a-z]*/.test(chunk) || !chunk || chunk === '```') {
       } else if (ix !== 0 && !/^```[a-z]*/.test(chunk) && arr[ix - 1] !== '```' && /^```[a-z]*/.test(arr[ix - 1])) {
         try {
           const language = arr[ix - 1].replace('```', '');
           const parsedCode = Prism.highlight(chunk, Prism.languages[language], language);
-  
-          content.push(<CodeSnipet key={ix} dangerouslySetInnerHTML={{ __html: parsedCode }} />);
+
+          content.push(<CodeSnipet key={ix} dangerouslySetInnerHTML={{ __html: purify.sanitize(parsedCode) }} />);
         } catch (error) {
-          content.push(<ReactMarkdown key={ix} plugins={[gfm]} allowDangerousHtml>{chunk}</ReactMarkdown>)
+          content.push(
+            <ReactMarkdown key={ix} plugins={[gfm]} allowDangerousHtml>
+              {chunk}
+            </ReactMarkdown>,
+          );
         }
       } else if (chunk) {
-        content.push(<ReactMarkdown key={ix} plugins={[gfm]} allowDangerousHtml>{chunk}</ReactMarkdown>)
+        content.push(
+          <ReactMarkdown key={ix} plugins={[gfm]} allowDangerousHtml>
+            {chunk}
+          </ReactMarkdown>,
+        );
       }
     });
-  
+
   return content;
-}
+};
 
-interface Props {
-  children?: string;
-}
-
-const Explanation: React.FC<Props> = ({ children }) => {
+export default function Explanation() {
+  const question = useSelector(questionSelector);
   const isRTL = useSelector(isRTLSelector);
   const locale = useSelector(localeSelector);
+  const isNextQuestionEmpty = useSelector(isNextQuestionEmptySelector);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const container = containerRef.current;
 
-    if (children && container) {
+    if (question.explanation && container && isNextQuestionEmpty) {
       setTimeout(() => {
         container.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 1000);
     }
-  }, [children, containerRef]);
+  }, [question.explanation, containerRef, isNextQuestionEmpty]);
 
   return (
     <Container isRTL={isRTL} ref={containerRef}>
-      {children ? (
+      {question.explanation ? (
         <div>
           <h3>{translations[locale]?.explanation}</h3>
-          {transformContent(children)}
+          {transformContent(question.explanation)}
         </div>
       ) : null}
     </Container>
   );
-};
-
-export default Explanation;
+}

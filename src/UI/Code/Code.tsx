@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import prismTheme from './prismTheme';
 import Prism from 'prismjs';
+import purify from 'dompurify';
+import prismTheme from './prismTheme';
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ const Wrapper = styled.div`
 
 export const CodeContainer = styled.div`
   ${({ theme: { colors, fonts } }) => css`
-    color: #E5C07B;
+    color: #e5c07b;
     font-family: ${fonts.code};
     white-space: pre-wrap;
     ${prismTheme}
@@ -25,17 +26,18 @@ export const CodeContainer = styled.div`
     border-radius: 1rem;
     box-sizing: border-box;
     direction: ltr;
-    font-size: .9rem;
+    font-size: 0.9rem;
     padding: 1.25rem 2rem;
     line-height: 1.3rem;
     width: 600px;
 
-    &::selection, & *::selection {
+    &::selection,
+    & *::selection {
       background-color: ${`${colors.codeSelected}60`};
     }
 
     @media screen and (max-width: 600px) {
-      border-radius: 0; 
+      border-radius: 0;
     }
 
     & * {
@@ -46,22 +48,22 @@ export const CodeContainer = styled.div`
   `}
 `;
 
-interface CodeSnippetProps {
+interface Props {
   code: string;
   language?: string;
 }
 
-const CodeSnippet: React.FC<CodeSnippetProps> = ({ code, language = 'javascript' }) => {
+export default function CodeSnippet({ code, language = 'javascript' }: Props) {
   const parsedCode = Prism.highlight(code, Prism.languages[language], language);
 
   React.useEffect(() => {
-    const listener = function(e: ClipboardEvent) {
+    const listener = function (e: ClipboardEvent) {
       const text_only = document?.getSelection()?.toString();
       const clipdata = e.clipboardData;
 
       if (process.env.NODE_ENV === 'production' && text_only?.includes(code)) {
-        clipdata?.setData('text/plain', 'Don\'t be a cheater');
-        clipdata?.setData('text/html', 'Don\'t be a cheater');
+        clipdata?.setData('text/plain', "Don't be a cheater");
+        clipdata?.setData('text/html', "Don't be a cheater");
       } else {
         clipdata?.setData('text/plain', text_only || '');
         clipdata?.setData('text/html', text_only || '');
@@ -74,14 +76,12 @@ const CodeSnippet: React.FC<CodeSnippetProps> = ({ code, language = 'javascript'
 
     return () => {
       document.removeEventListener('copy', listener);
-    }
+    };
   }, [code]);
 
   return (
     <Wrapper>
-      <CodeContainer dangerouslySetInnerHTML={{ __html: parsedCode }} />
+      <CodeContainer dangerouslySetInnerHTML={{ __html: purify.sanitize(parsedCode) }} />
     </Wrapper>
-  )
-};
-
-export default CodeSnippet;
+  );
+}

@@ -21,9 +21,12 @@ const LocalePicker: React.FC = () => {
   const dispatch = useDispatch();
   const locale = useSelector(localeSelector);
 
-  const onLocaleChange = React.useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(globalActions.setLocale(event.currentTarget.value));
-  }, [dispatch]);
+  const onLocaleChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      dispatch(globalActions.setLocale(event.currentTarget.value));
+    },
+    [dispatch],
+  );
 
   return (
     <Container>
@@ -33,7 +36,9 @@ const LocalePicker: React.FC = () => {
         Action:
         <select onChange={onLocaleChange} value={locale}>
           {content.map(({ language, locale }) => (
-            <option key={locale} value={locale}>{language}</option>
+            <option key={locale} value={locale}>
+              {language}
+            </option>
           ))}
         </select>
       </div>

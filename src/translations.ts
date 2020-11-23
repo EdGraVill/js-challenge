@@ -232,7 +232,7 @@ const translations: { [locale: string]: Translations } = {
     day: 'день',
     days: 'днів',
     explanation: 'пояснення',
-    name: 'ім\'я',
+    name: "ім'я",
     new: 'новий',
     next: 'наступного',
     previous: 'попередній',

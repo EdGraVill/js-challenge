@@ -4,9 +4,8 @@ const STORE_KEY = 'store_key';
 
 const erase = (id: string): Error => {
   const commonMessage = 'Compromised stored data. Erasing data...';
-  const errorMessage = process.env.NODE_ENV === 'production'
-    ? commonMessage
-    : `${id}: Compromised stored data. Erasing data...`;
+  const errorMessage =
+    process.env.NODE_ENV === 'production' ? commonMessage : `${id}: Compromised stored data. Erasing data...`;
 
   console.warn(errorMessage);
   localStorage.removeItem(STORE_KEY);
@@ -14,42 +13,40 @@ const erase = (id: string): Error => {
   localStorage.setItem(STORE_KEY, JSON.stringify([]));
 
   return new Error(errorMessage);
-}
+};
 
 const store = (answers: StoredAnswer[]) => {
   localStorage.setItem(STORE_KEY, JSON.stringify(answers));
-}
+};
 
 const digest = async (answers: StoredAnswer[]): Promise<string> => {
   const encoder = new TextEncoder();
 
-  const data = !answers.length
-    ? encoder.encode('init')
-    : encoder.encode(JSON.stringify(answers));
+  const data = !answers.length ? encoder.encode('init') : encoder.encode(JSON.stringify(answers));
 
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 
   return hashHex;
-}
+};
 
 const testIntegrity = async (answers: StoredAnswer[]): Promise<boolean> => {
-  let draft = [...answers].reverse();
+  const draft = [...answers].reverse();
 
   // @ts-ignore
-  const results = await Promise.allSettled(draft.map(async (answer, ix) => {
-    const hash = await digest(draft.slice(ix + 1).reverse());
+  const results = await Promise.allSettled(
+    draft.map(async (answer, ix) => {
+      const hash = await digest(draft.slice(ix + 1).reverse());
 
-    return answer.hash === hash;
-  }));
+      return answer.hash === hash;
+    }),
+  );
 
   return results
-    .map((res: { status: 'fulfilled' | 'rejected', value?: boolean, reason?: boolean }) => Boolean(res?.value))
-    .reduce((prev: boolean, curr: boolean) => Boolean(
-      Number(prev) * Number(curr),
-    ), true);
-}
+    .map((res: { status: 'fulfilled' | 'rejected'; value?: boolean; reason?: boolean }) => Boolean(res?.value))
+    .reduce((prev: boolean, curr: boolean) => Boolean(Number(prev) * Number(curr)), true);
+};
 
 const antiCheatSystem = (): [
   () => void,
@@ -140,12 +137,10 @@ const antiCheatSystem = (): [
   };
 
   const getStoredAnswers = (locale: string): StoredAnswer[] => {
-    return memory
-      .filter(answer => answer.locale === locale)
-      .sort((a, b) => b.date - a.date);
-  }
+    return memory.filter((answer) => answer.locale === locale).sort((a, b) => b.date - a.date);
+  };
 
   return [init, submitQuestion, getStoredAnswers];
-}
+};
 
 export const [init, submitQuestion, getStoredAnswers] = antiCheatSystem();

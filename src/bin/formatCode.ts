@@ -27,6 +27,6 @@ const formatCode = async () => {
   }));
 
   await promisify(writeFile)('../questions.json', JSON.stringify(contentFormated, undefined, 2));
-}
+};
 
 formatCode();

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
 import gfm from 'remark-gfm';
-import styled from "styled-components";
-import { inlineCodeStyle } from "./Code";
+import styled from 'styled-components';
+import { inlineCodeStyle } from './Code';
 
 const Container = styled.h1`
   font-size: 2rem;
@@ -22,13 +22,13 @@ const Container = styled.h1`
 `;
 
 interface Props {
-  children: string;
+  children: string | string[];
 }
 
-const Question: React.FC<Props> = ({ children }) => (
-  <Container>
-    <ReactMarkdown plugins={[gfm]}>{children}</ReactMarkdown>
-  </Container>
-);
-
-export default Question;
+export default function Question({ children }: Props) {
+  return (
+    <Container>
+      <ReactMarkdown plugins={[gfm]}>{children instanceof Array ? children.join('') : children}</ReactMarkdown>
+    </Container>
+  );
+}
