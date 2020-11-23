@@ -1,7 +1,7 @@
 {
-  "name": "test",
-  "version": "0.1.0",
-  "private": true,
+  "name": "js-challenge",
+  "version": "1.0.0",
+  "license": "MIT",
   "dependencies": {
     "@octokit/rest": "^18.0.7",
     "@reduxjs/toolkit": "^1.4.0",
