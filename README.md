@@ -9,6 +9,6 @@ This project uses [@lydiahallie](https://github.com/lydiahallie)'s [javascript-q
 ## Todo
 
 - [x] i18n ([javascript-questions](https://github.com/lydiahallie/javascript-questions) provides multiple languajes)
-- [ ] Dark mode
-- [ ] Historical chart progress
+- [x] Dark mode
+- [x] Historical chart progress
 - [ ] Share your results
