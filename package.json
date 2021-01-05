@@ -5,7 +5,7 @@
   "dependencies": {
     "@octokit/rest": "^18.0.7",
     "@reduxjs/toolkit": "^1.4.0",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "date-fns": "^2.16.1",
     "dompurify": "^2.2.2",
