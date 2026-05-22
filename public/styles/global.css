@@ -1,0 +1,32 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+@font-face {
+  font-family: 'Cascadia Code';
+  src: url('../fonts/CascadiaCode-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cascadia Code';
+  src: url('../fonts/CascadiaCode-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cascadia Code';
+  src: url('../fonts/CascadiaCode-Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Cascadia Code';
+  src: url('../fonts/CascadiaCode-BoldItalic.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+}

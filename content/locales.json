@@ -1,0 +1,128 @@
+{
+  "en-EN": {
+    "flag": "🇬🇧",
+    "isRTL": false,
+    "language": "English",
+    "languageCode": "en-EN",
+    "url": "README.md"
+  },
+  "ar-AR": {
+    "flag": "🇸🇦",
+    "isRTL": true,
+    "language": "العربية",
+    "languageCode": "ar-AR",
+    "url": "ar-AR/README_AR.md"
+  },
+  "bs-BS": {
+    "flag": "🇧🇦",
+    "isRTL": false,
+    "language": "Bosanski",
+    "languageCode": "bs-BS",
+    "url": "bs-BS/README-bs_BS.md"
+  },
+  "de-DE": {
+    "flag": "🇩🇪",
+    "isRTL": false,
+    "language": "Deutsch",
+    "languageCode": "de-DE",
+    "url": "de-DE/README.md"
+  },
+  "es-ES": {
+    "flag": "🇪🇸",
+    "isRTL": false,
+    "language": "Español",
+    "languageCode": "es-ES",
+    "url": "es-ES/README-ES.md"
+  },
+  "fr-FR": {
+    "flag": "🇫🇷",
+    "isRTL": false,
+    "language": "Français",
+    "languageCode": "fr-FR",
+    "url": "fr-FR/README_fr-FR.md"
+  },
+  "id-ID": {
+    "flag": "🇮🇩",
+    "isRTL": false,
+    "language": "Indonesia",
+    "languageCode": "id-ID",
+    "url": "id-ID/README.md"
+  },
+  "it-IT": {
+    "flag": "🇮🇹",
+    "isRTL": false,
+    "language": "Italiano",
+    "languageCode": "it-IT",
+    "url": "it-IT/README.md"
+  },
+  "ja-JA": {
+    "flag": "🇯🇵",
+    "isRTL": false,
+    "language": "日本語",
+    "languageCode": "ja-JA",
+    "url": "ja-JA/README-ja_JA.md"
+  },
+  "ko-KR": {
+    "flag": "🇰🇷",
+    "isRTL": false,
+    "language": "한국어",
+    "languageCode": "ko-KR",
+    "url": "ko-KR/README-ko_KR.md"
+  },
+  "nl-NL": {
+    "flag": "🇳🇱",
+    "isRTL": false,
+    "language": "Nederlands",
+    "languageCode": "nl-NL",
+    "url": "nl-NL/README.md"
+  },
+  "pt-BR": {
+    "flag": "🇧🇷",
+    "isRTL": false,
+    "language": "Português",
+    "languageCode": "pt-BR",
+    "url": "pt-BR/README_pt_BR.md"
+  },
+  "ru-RU": {
+    "flag": "🇷🇺",
+    "isRTL": false,
+    "language": "Русский",
+    "languageCode": "ru-RU",
+    "url": "ru-RU/README.md"
+  },
+  "tr-TR": {
+    "flag": "🇹🇷",
+    "isRTL": false,
+    "language": "Türkçe",
+    "languageCode": "tr-TR",
+    "url": "tr-TR/README-tr_TR.md"
+  },
+  "uk-UA": {
+    "flag": "🇺🇦",
+    "isRTL": false,
+    "language": "Українська",
+    "languageCode": "uk-UA",
+    "url": "uk-UA/README.md"
+  },
+  "vi-VI": {
+    "flag": "🇻🇳",
+    "isRTL": false,
+    "language": "Tiếng",
+    "languageCode": "vi-VI",
+    "url": "vi-VI/README-vi.md"
+  },
+  "zh-CN": {
+    "flag": "🇨🇳",
+    "isRTL": false,
+    "language": "简体中文",
+    "languageCode": "zh-CN",
+    "url": "zh-CN/README-zh_CN.md"
+  },
+  "zh-TW": {
+    "flag": "🇹🇼",
+    "isRTL": false,
+    "language": "繁體中文",
+    "languageCode": "zh-TW",
+    "url": "zh-TW/README_zh-TW.md"
+  }
+}

@@ -1,0 +1,19 @@
+@keyframes hide {
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes hideBackdrop {
+  to {
+    opacity: 0;
+  }
+}
+
+.hideDialog {
+  animation: hide 0.3s ease normal;
+}
+
+.hideDialog::backdrop {
+  animation: hideBackdrop 0.3s ease normal;
+}

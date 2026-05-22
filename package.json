@@ -1,0 +1,58 @@
+{
+  "name": "js-challenge",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "scrap": "bun run scripts/scrap.ts",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@apptoolkit/form": "^0.1.10",
+    "@apptoolkit/jwt": "^0.1.0",
+    "@apptoolkit/rsa": "^0.1.0",
+    "@google-cloud/translate": "^7.2.1",
+    "@octokit/core": "^4.2.1",
+    "@types/node": "20.2.5",
+    "@types/react": "18.2.7",
+    "@types/react-dom": "18.2.4",
+    "autoprefixer": "10.4.14",
+    "classnames": "^2.3.2",
+    "date-fns": "^2.30.0",
+    "mongoose": "^7.2.3",
+    "next": "13.4.4",
+    "nodemailer": "^6.9.3",
+    "postcss": "8.4.24",
+    "prismjs": "^1.29.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "remark": "^14.0.3",
+    "tailwindcss": "3.3.2",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@apptoolkit/eslint-config": "^0.1.0",
+    "@storybook/addon-essentials": "^7.0.20",
+    "@storybook/addon-interactions": "^7.0.20",
+    "@storybook/addon-links": "^7.0.20",
+    "@storybook/addon-styling": "^1.1.0",
+    "@storybook/blocks": "^7.0.20",
+    "@storybook/nextjs": "^7.0.20",
+    "@storybook/react": "^7.0.20",
+    "@storybook/testing-library": "^0.0.14-next.2",
+    "@types/nodemailer": "^6.4.8",
+    "@types/prismjs": "^1.26.0",
+    "eslint-plugin-storybook": "^0.6.12",
+    "storybook": "^7.0.20",
+    "tsconfig-paths-webpack-plugin": "^4.0.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@apptoolkit/eslint-config"
+    ]
+  }
+}
